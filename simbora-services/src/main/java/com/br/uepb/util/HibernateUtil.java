@@ -14,7 +14,6 @@ public class HibernateUtil {
 	public static SessionFactory getSessionFactory() {
 		if (sessionFactory == null) {
 			try {
-				System.out.println("OK");
 				// Create the SessionFactory from standard (hibernate.cfg.xml)
 				// config file.
 				/*AnnotationConfiguration ac = new AnnotationConfiguration();
