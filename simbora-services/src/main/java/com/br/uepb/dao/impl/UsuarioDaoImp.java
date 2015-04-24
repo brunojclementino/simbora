@@ -30,7 +30,7 @@ public class UsuarioDaoImp implements UsuarioDao{
 	public List<UsuarioDomain> list() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		List<UsuarioDomain> lista = session.createQuery("from Usuario").list();
+		List<UsuarioDomain> lista = session.createQuery("from UsuarioDomain").list();
 		t.commit();
 		return lista;
 	}

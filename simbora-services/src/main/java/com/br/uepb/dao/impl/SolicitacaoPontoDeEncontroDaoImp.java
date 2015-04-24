@@ -31,7 +31,7 @@ public class SolicitacaoPontoDeEncontroDaoImp implements SolicitacaoPontoDeEncon
 	public List<SolicitacaoPontoDeEncontroDomain> list() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		List<SolicitacaoPontoDeEncontroDomain> lista = session.createQuery("from SolicitacaoPontoDeEncontro").list();
+		List<SolicitacaoPontoDeEncontroDomain> lista = session.createQuery("from SolicitacaoPontoDeEncontroDomain").list();
 		t.commit();
 		return lista;
 	}

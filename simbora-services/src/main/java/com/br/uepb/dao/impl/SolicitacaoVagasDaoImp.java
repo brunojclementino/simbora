@@ -30,7 +30,7 @@ public class SolicitacaoVagasDaoImp implements SolicitacaoVagasDao{
 	public List<SolicitacaoVagasDomain> list() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		List<SolicitacaoVagasDomain> lista = session.createQuery("from SolicitacaoVagas").list();
+		List<SolicitacaoVagasDomain> lista = session.createQuery("from SolicitacaoVagasDomain").list();
 		t.commit();
 		return lista;
 	}

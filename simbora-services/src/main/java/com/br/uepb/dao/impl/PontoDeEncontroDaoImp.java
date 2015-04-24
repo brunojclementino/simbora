@@ -31,7 +31,7 @@ public class PontoDeEncontroDaoImp implements PontoDeEncontroDao{
 	public List<PontoDeEncontroDomain> list() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		List<PontoDeEncontroDomain> lista = session.createQuery("from PontoDeEncontro").list();
+		List<PontoDeEncontroDomain> lista = session.createQuery("from PontoDeEncontroDomain").list();
 		t.commit();
 		return lista;
 	}

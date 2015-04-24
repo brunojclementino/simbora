@@ -29,7 +29,7 @@ public class CaronaDaoImp implements CaronaDao{
 	public List<CaronaDomain> list() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		List<CaronaDomain> lista = session.createQuery("from Carona").list();
+		List<CaronaDomain> lista = session.createQuery("from CaronaDomain").list();
 		t.commit();
 		return lista;
 	}
