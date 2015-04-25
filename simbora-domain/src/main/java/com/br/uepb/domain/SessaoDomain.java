@@ -1,9 +1,9 @@
 package com.br.uepb.domain;
 
 /**
- * A sess�o � aonde ser� guardada duas informa��es b�sicas do 
- * usu�rio do sistema. Ser�o gerados um identificador da sess�o, 
- * tamb�m guardada um identificador do usu�rio e o status 
+ * A sessão é aonde será guardada duas informações básicas do 
+ * usuário do sistema. Serão gerados um identificador da sessão, 
+ * também guardada um identificador do usuário e o status 
  * do usuario.
  * 
  * @author Lucas Miranda e Bruno Clementino
@@ -13,7 +13,6 @@ public class SessaoDomain {
 	
 	private String idSessao;
 	private String idUsuario;
-	
 	private boolean statusSessao = false;
 
 	/**

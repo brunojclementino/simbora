@@ -1,15 +1,15 @@
 package com.br.uepb.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.br.uepb.constants.UsuarioException;
 import com.br.uepb.dao.impl.UsuarioDaoImp;
 import com.br.uepb.domain.UsuarioDomain;
 
-
 /**
- * Essa Classe faz todas as opera��es de cria��o de usuario, getting e settings,
- * verificar se o login � valido e retorna nos atributos (origem, destino,
+ * Essa Classe faz todas as operações de criação de usuário, getting e settings,
+ * verificar se o login é válido e retorna nos atributos (origem, destino,
  * horario da corona e data).
  * 
  * 
@@ -21,14 +21,12 @@ public class UsuarioBusiness {
 	UsuarioDomain usuario;
 	String mensagemErro = "";
 
-	/**
-	 * Aqui acredito que foi uma paradigma de programa��o bem conhecida para
-	 * poder solucionar esse problema. POG (Programa��o Orientada a Gambiarra).
-	 * Basicamente o que eu fiz: Como tivemos que criar a Class
-	 * {@link SessaoBusiness} ai no metodo {@link SessaoBusiness}
-	 */
 	public static List<UsuarioDomain> usuarios = SessaoBusiness.getUsuarios();
-
+	
+	/**
+	 * Esse método faz duas ações: salva os dados dos usuários e limpa a lista
+	 * dos usuário. Para isso ele preserva as informações dos usuários.
+	 */
 	public void zerarSistema() {
 		for (UsuarioDomain usuario : usuarios) {
 			try {
@@ -40,8 +38,8 @@ public class UsuarioBusiness {
 	}
 
 	/**
-	 * Para criar o usuario, ele faz uma verifica��o se o usu�rio � valido ou
-	 * n�o
+	 * Para criar o usuario, ele faz uma verificação se o usuário é válido ou
+	 * não.
 	 * 
 	 * @param login
 	 * @param senha
@@ -68,20 +66,20 @@ public class UsuarioBusiness {
 	}
 
 	/**
-	 * Percorre a lista de {@link Usuario} e verifica se j� existe um Login ou
-	 * email iguais. Caso n�o tenha returna um <code>true</code>.
+	 * Percorre a lista de {@link Usuario} e verifica se já existe um Login ou
+	 * email iguais. Caso não tenha returna um <code>true</code>.
 	 * 
 	 * @param user
 	 * @return {@link Boolean}
 	 */
-	private boolean ehUsuarioNovo(UsuarioDomain user) { 
+	private boolean ehUsuarioNovo(UsuarioDomain user) {
 		for (UsuarioDomain usuario : usuarios) {
 			if (usuario.getLogin().equals(user.getLogin())) {
-				mensagemErro = "J� existe um usu�rio com este login";
+				mensagemErro = "Já existe um usuário com este login";
 				return false;
 			}
 			if (usuario.getEmail().equals(user.getEmail())) {
-				mensagemErro = "J� existe um usu�rio com este email";
+				mensagemErro = "Já existe um usuário com este email";
 				return false;
 			}
 		}
@@ -89,30 +87,30 @@ public class UsuarioBusiness {
 	}
 
 	/**
-	 * Verifica se o login, nome e e-mail est�o <code>null</code> ou v�zios.
+	 * Verifica se o login, nome e e-mail estão <code>null</code> ou vázios.
 	 * 
 	 * @param usuario
 	 * @return
 	 */
 	private boolean ehUsuarioValido(UsuarioDomain usuario) {
-		if (usuario.getLogin() == null || usuario.getLogin().isEmpty()) {
-			mensagemErro = "Login inv�lido";
+		if (usuario.getLogin() == null || usuario.getLogin().trim().isEmpty()) {
+			mensagemErro = "Login inválido";
 			return false;
 		}
-		if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
-			mensagemErro = "Nome inv�lido";
+		if (usuario.getNome() == null || usuario.getNome().trim().isEmpty()) {
+			mensagemErro = "Nome inválido";
 			return false;
 		}
-		if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
-			mensagemErro = "Email inv�lido";
+		if (usuario.getEmail() == null || usuario.getEmail().trim().isEmpty()) {
+			mensagemErro = "Email inválido";
 			return false;
 		}
 		return true;
 	}
 
 	/**
-	 * Retorna o atributo que usuario precisar (nome, endere�o ou email). Para isso 
-	 * ele chama os metoso ehLoginExistente e  ehAtributoExistente.
+	 * Retorna o atributo que usuario precisar (nome, endereço ou email). Para
+	 * isso ele chama os metoso ehLoginExistente e ehAtributoExistente.
 	 * 
 	 * @param login
 	 * @param atributo
@@ -122,14 +120,14 @@ public class UsuarioBusiness {
 	public String getAtributoUsuario(String login, String atributo)
 			throws UsuarioException {
 
-		if (login == null || login.isEmpty()) {
-			throw new UsuarioException("Login inv�lido");
+		if (login == null || login.trim().isEmpty()) {
+			throw new UsuarioException("Login inválido");
 		}
-		if (atributo == null || atributo.isEmpty()) {
-			throw new UsuarioException("Atributo inv�lido");
+		if (atributo == null || atributo.trim().isEmpty()) {
+			throw new UsuarioException("Atributo inválido");
 		}
 		if (!ehLoginExistente(login)) {
-			throw new UsuarioException("Usu�rio inexistente");
+			throw new UsuarioException("Usuário inexistente");
 		}
 		if (!ehAtributoExistente(atributo)) {
 			throw new UsuarioException("Atributo inexistente");
@@ -138,21 +136,22 @@ public class UsuarioBusiness {
 		for (UsuarioDomain usuario : usuarios) {
 			if (usuario.getLogin().equals(login)) {
 				switch (atributo) {
-				case "endereco":
-					return usuario.getEndereco();
-				case "nome":
-					return usuario.getNome();
-				case "email":
-					return usuario.getEmail();
-				}
-				return usuario.getNome();
+					case "endereco":
+						return usuario.getEndereco();
+					case "nome":
+						return usuario.getNome();
+					case "email":
+						return usuario.getEmail();
+					}
 			}
 		}
 		return "";
 	}
 
 	/**
-	 * Verifica se os atributos passados fazem parte dos atributos que seram mostrados.
+	 * Verifica se os atributos passados fazem parte dos atributos que seram
+	 * mostrados.
+	 * 
 	 * @param atributo
 	 * @return {@link Boolean}
 	 */
@@ -166,6 +165,7 @@ public class UsuarioBusiness {
 
 	/**
 	 * Verifica se o login existe.
+	 * 
 	 * @param login
 	 * @return {@link Boolean}
 	 */
@@ -177,11 +177,14 @@ public class UsuarioBusiness {
 		return false;
 	}
 
-	public void encerrarSistema() {
+	
+	public void encerrarSistema() { 
 
 	}
+
 	/**
 	 * retorna a quantidade de usuarios.
+	 * 
 	 * @return int
 	 */
 	public int getSize() {

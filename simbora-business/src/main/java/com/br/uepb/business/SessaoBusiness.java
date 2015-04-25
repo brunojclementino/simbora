@@ -19,15 +19,14 @@ public class SessaoBusiness {
 
 	private static List<SessaoDomain> sessoes = new ArrayList<SessaoDomain>();
 	/**
-	 * Foi necessario colocar <code>static</code> para n�o ser necess�rio
+	 * Foi necessario colocar <code>static</code> para não ser necessário
 	 * instanciar outra {@link List}.
 	 */
 	private static List<UsuarioDomain> usuarios = new UsuarioDaoImp().list();
-
 	/**
-	 * Ao abrir a sess�o � necess�rio o login e senha do usu�rio. Esse metodo
-	 * retornar� o idSessao que � o login do usu�rio. Caso os parametros tenham
-	 * sido inseridos errados ser� gerado um erro de <b>Usu�rio inexistente</b>
+	 * Ao abrir a sessão é necessário o login e senha do usuário. Esse método
+	 * retornará o idSessao que é o login do usuário. Caso os parametros tenham
+	 * sido inseridos errados será gerado um erro de <b>Usuário inexistente</b>
 	 *
 	 * <br>
 	 * 
@@ -35,7 +34,7 @@ public class SessaoBusiness {
 	 * 
 	 * @param login
 	 * @param senha
-	 * @return
+	 * @return idSessao
 	 * @throws SessaoException
 	 *
 	 */
@@ -44,23 +43,24 @@ public class SessaoBusiness {
 		for (UsuarioDomain usuario : usuarios) {
 			if (usuario.getLogin().equals(login)
 					&& usuario.getSenha().equals(senha)) {
+				
 				SessaoDomain ss = new SessaoDomain();
-				ss.setIdSessao(usuario.getLogin());
-				ss.setIdUsuario(login);
+					ss.setIdSessao(usuario.getLogin());
+					ss.setIdUsuario(login);
 				sessoes.add(ss);
 				return ss.getIdSessao();
-			} else if (login == null || login.isEmpty()
+			} else if (login == null || login.trim().isEmpty()
 					|| usuario.getLogin().equals(login)
 					|| usuario.getSenha().equals(senha)) {
-				throw new SessaoException("Login inv�lido");
+				throw new SessaoException("Login inválido");
 			}
 		}
-		throw new SessaoException("Usu�rio inexistente");
+		throw new SessaoException("Usuário inexistente");
 	}
 
 	/**
-	 * Encerra a Sess�o, para isso ele busca na {@link List} de {@link Usuario}
-	 * e quando achar o usu�rio correspondente ao login remove ele da lista de
+	 * Encerra a Sessão, para isso ele busca na {@link List} de {@link Usuario}
+	 * e quando achar o usuário correspondente ao login remove ele da lista de
 	 * {@link Sessao}.
 	 * 
 	 * @param login
