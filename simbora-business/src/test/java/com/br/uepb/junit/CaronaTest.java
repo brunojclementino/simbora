@@ -1,6 +1,6 @@
 package com.br.uepb.junit;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals; 
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,11 +18,10 @@ import com.br.uepb.domain.CaronaDomain;
 
 /**
  * Cria os tests referentes a carona. Utiliza do Anotation FixMethodOrder para
- * determina a ordem de execu��o dos metodos (Essa fun��o executa os metodos em
- * ordem alfabetica, por isso que os metodos est�o com o prefixo test[LETRA]_
+ * determina a ordem de execusão dos metodos (Essa fun��o executa os metodos em
+ * ordem alfabetica, por isso que os metodos estão com o prefixo test[LETRA]_
  * 
  * @author Lucas Miranda e Bruno Clementino
- *
  */
 public class CaronaTest {
 
@@ -40,14 +39,13 @@ public class CaronaTest {
 		carona = new CaronaDomain();
 		business = new CaronaBusiness();
 		usuarioBusiness = new UsuarioBusiness();
-
 		sessaoBusiness = new SessaoBusiness();
 
 	}
 
 	@Test
-	public void testA_CadastrarCarona() throws Exception {
-		// Ser�o criados 3 usuarios. (cria usuario, abrir sessao e criarCarona)
+	public void cadastrarCarona() throws Exception {
+		// Serão criados 3 usuarios. (cria usuario, abrir sessao e criarCarona)
 		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
 		try {
@@ -58,15 +56,15 @@ public class CaronaTest {
 
 		try {
 			String v = business.cadastrarCarona("mark", "Campina Grande",
-					"Jo�o Pessoa", "27/10/2014", "02:09", "4");
+					"João Pessoa", "27/10/2014", "02:09", "4");
 			System.out.println("idCarona_Mark: " + v);
 		} catch (SessaoException e) {
-			assertEquals("Sess�o inv�lida", e.getMessage());
+			assertEquals("Sessão inválida", e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		// Cria��o o 2� usu�rio
+		// Criação o segundo usuário
 		usuarioBusiness.criarUsuario("thiago", "thi@go", "Thiago Batista",
 				"Rua", "thiagobatista@gmail.com");
 		try {
@@ -240,7 +238,7 @@ public class CaronaTest {
 		
 		try {
 			assertEquals("{1,2}", business.localizarCarona("bruno",
-					"Campina Grande", "Jo�o Pessoa"));
+					"Campina Grande", "João Pessoa"));
 		} catch (CaronaException e) {
 			assertEquals("", e.getMessage());
 		}
@@ -248,16 +246,16 @@ public class CaronaTest {
 		// idSessao = null
 		try {
 			assertEquals("{}", business.localizarCarona(null,
-					"S�o Francisco", "Palo Alto"));
+					"São Francisco", "Palo Alto"));
 		} catch (CaronaException e) {
 			assertEquals("Sess�o inv�lida", e.getMessage());
 		}
 
 		try {
-			assertEquals("{}", business.localizarCarona("", "S�o Francisco",
+			assertEquals("{}", business.localizarCarona("", "São Francisco",
 					"Palo Alto"));
 		} catch (CaronaException e) {
-			assertEquals("Sess�o inv�lida", e.getMessage());
+			assertEquals("Sess�o inválida", e.getMessage());
 		}
 	}
 

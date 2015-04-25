@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.br.uepb.constants.CaronaException;
 import com.br.uepb.constants.SessaoException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
@@ -20,6 +22,8 @@ import com.br.uepb.domain.SessaoDomain;
  *
  */
 public class CaronaBusiness {
+	
+	public static Logger logger = Logger.getLogger(CaronaBusiness.class);
 
 	public static List<CaronaDomain> caronas = new CaronaDaoImp().list();
 	CaronaDomain carona;
