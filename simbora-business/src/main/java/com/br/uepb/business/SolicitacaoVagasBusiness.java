@@ -63,10 +63,8 @@ public class SolicitacaoVagasBusiness {
 					solicitacao.setStatus("Recusada");
 					return;
 				}else{
-					throw new Exception("Solicita��o inexistente");
-				}
-				
-				
+					throw new Exception("Solicitação inexistente");
+				}				
 			}
 			
 		}
