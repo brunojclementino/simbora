@@ -7,22 +7,21 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.br.uepb.constants.CaronaException;
-import com.br.uepb.constants.SessaoException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
 import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.SessaoDomain;
 
-
 /**
- * Classe respons�vel por gerenciar a carona. Define as funcionalidades de cadastrar carona, localizar caronas e
- * outras funcionalidades ligadas a carona.
+ * Classe responsável por gerenciar a carona. Define as funcionalidades de
+ * cadastrar carona, localizar caronas e outras funcionalidades ligadas a
+ * carona.
  * 
  * 
  * @author Lucas Miranda e Bruno Clementino
  *
  */
 public class CaronaBusiness {
-	
+
 	public static Logger logger = Logger.getLogger(CaronaBusiness.class);
 
 	public static List<CaronaDomain> caronas = new CaronaDaoImp().list();
@@ -40,18 +39,19 @@ public class CaronaBusiness {
 	}
 
 	/**
-	 * Esse metodo dever� retornar as poss�veis caronas cadastradas no sistema.
-	 * Dependendo dos valores passados nos parametros dever� ser retornado a 
-	 * origem e destino que se deseja.  
-	 *  
+	 * Esse metodo deverá retornar as possíveis caronas cadastradas no sistema.
+	 * Dependendo dos valores passados nos parametros deverá ser retornado a
+	 * origem e destino que se deseja.
+	 * 
 	 * @param idSessao
 	 * @param origem
 	 * @param destino
-	 * @return <code>Se</code> origem for <code>null</code> ent�o retorna 
-	 * @throws CaronaException 
+	 * @return <code>Se</code> origem for <code>null</code> então retorna
+	 * @throws CaronaException
 	 * @throws Exception
 	 */
-	public String localizarCarona(String idSessao, String origem, String destino) throws CaronaException {
+	public String localizarCarona(String idSessao, String origem, String destino)
+			throws CaronaException {
 		if (idSessao == null) {
 			throw new CaronaException("Sessão inválida");
 		}
@@ -122,7 +122,7 @@ public class CaronaBusiness {
 
 	private String origemCarona(String origem) {
 		String ids = "{";
-		boolean flag = true;// indica se a quantidade de ids � 0
+		boolean flag = true;// indica se a quantidade de ids é 0
 		for (CaronaDomain carona : caronas) {
 			if (carona.getLocalDeOrigem().equals(origem)) {
 				if (!flag) {
@@ -138,7 +138,7 @@ public class CaronaBusiness {
 
 	private String destinoCarona(String destino) {
 		String ids = "{";
-		boolean flag = true;// indica se a quantidade de ids � 0
+		boolean flag = true;// indica se a quantidade de ids é 0
 		for (CaronaDomain carona : caronas) {
 			if (carona.getLocalDeDestino().equals(destino)) {
 				if (!flag) {
@@ -162,11 +162,12 @@ public class CaronaBusiness {
 	 * @param hora
 	 * @param qtdDeVagas
 	 * @return idCarona
-	 * @throws CaronaException 
+	 * @throws CaronaException
 	 * @throws Exception
 	 */
-	public String cadastrarCarona(String idSessao, String origem, 
-			String destino, String data, String hora, String qtdDeVagas) throws CaronaException {
+	public String cadastrarCarona(String idSessao, String origem,
+			String destino, String data, String hora, String qtdDeVagas)
+			throws CaronaException {
 		if (idSessao == null || idSessao.trim().isEmpty()) {
 			throw new CaronaException("Sessão inválida");
 		}
@@ -191,8 +192,7 @@ public class CaronaBusiness {
 		if (!isHora(hora)) {
 			throw new CaronaException("Hora inválida");
 		}
-		if (qtdDeVagas == null 
-				|| qtdDeVagas.trim().isEmpty()) {
+		if (qtdDeVagas == null || qtdDeVagas.trim().isEmpty()) {
 			throw new CaronaException("Vaga inválida");
 		}
 		try {
@@ -202,12 +202,12 @@ public class CaronaBusiness {
 		}
 
 		carona = new CaronaDomain();
-			carona.setLocalDeOrigem(origem);
-			carona.setLocalDeDestino(destino);
-			carona.setData(data);
-			carona.setHorarioDeSaida(hora);
-			carona.setQtdDeVagas(qtdDeVagas);
-			carona.setIdSessao(idSessao);
+		carona.setLocalDeOrigem(origem);
+		carona.setLocalDeDestino(destino);
+		carona.setData(data);
+		carona.setHorarioDeSaida(hora);
+		carona.setQtdDeVagas(qtdDeVagas);
+		carona.setIdSessao(idSessao);
 
 		caronas.add(carona);
 
@@ -247,7 +247,7 @@ public class CaronaBusiness {
 	 * 
 	 * @param idCarona
 	 * @param atributo
-	 * @return 
+	 * @return
 	 * @throws CaronaException
 	 */
 	public String getAtributoCarona(String idCarona, String atributo)
@@ -315,18 +315,22 @@ public class CaronaBusiness {
 			Integer.valueOf(idCarona);
 		} catch (NumberFormatException e) {
 			throw new CaronaException("Trajeto Inexistente");
-		}		
+		}
 		try {
 			return caronas.get(Integer.valueOf(idCarona)).getLocalDeOrigem()
-				+ " - "
-				+ caronas.get(Integer.valueOf(idCarona)).getLocalDeDestino();
+					+ " - "
+					+ caronas.get(Integer.valueOf(idCarona))
+							.getLocalDeDestino();
 		} catch (Exception e) {
-			throw new CaronaException("");										
+			throw new CaronaException("");
 		}
-		
+
 	}
 
 	/**
+	 * Retorna uma frase parecido como se segue abaixo:
+	 *  <br>
+	 *  <b>Origem</b> para <b>destino</b>, no dia <b>tal</b>, as <b>tal Hora</b>
 	 * 
 	 * @param idCarona
 	 * @return
@@ -412,7 +416,7 @@ public class CaronaBusiness {
 
 	public String getCaronaUsuario(String idSessao, String indexCarona) {
 		try {
-			
+
 			int indice = Integer.parseInt(indexCarona) - 1;
 			int cont = 0;
 			// percorre as caronas para verificar qual a carona x do usuario

@@ -9,8 +9,6 @@ import com.br.uepb.domain.PontoDeEncontroDomain;
 import com.br.uepb.domain.SolicitacaoPontoDeEncontroDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
 
-
-
 /**
  * � respons�vel por gerenciar as solicita��es de pontos de encontros feitas por
  * usu�rios a determinadas caronas
@@ -68,15 +66,13 @@ public class SolicitacaoPontoDeEncontroBusiness {
 		pontoDeEncontro.setIdSessao(idSessao);
 
 		solicitacaoEncontro = new SolicitacaoPontoDeEncontroDomain();
-		// 0 indica que esse ponto � o sugerido pelo caroneiro
+		// 0 indica que esse ponto é o sugerido pelo caroneiro
 		solicitacaoEncontro.setPontoDeEncontro(pontoDeEncontro, 0);
 
 		solicitacoes.add(solicitacaoEncontro);
 		solicitacaoEncontro.setIdSugestao(solicitacoes
-				.indexOf(solicitacaoEncontro) + "PE");// Para gerar o id da
-														// solicita��o. PE
-														// identifica que �
-														// Ponto de Encontro
+				.indexOf(solicitacaoEncontro) + "PE");
+		// Para gerar o id da solicitação. PE identifica que é Ponto de Encontro
 		pontoDeEncontro.setIdPonto(solicitacaoEncontro.getIdSugestao() + "0");
 		return solicitacaoEncontro.getIdSugestao();
 	}
@@ -181,7 +177,8 @@ public class SolicitacaoPontoDeEncontroBusiness {
 
 			if (solicitacao.getIdSugestao().equals(idSolicitacao)
 					&& solicitacao.isEmAndamento()) {
-				PontoDeEncontroDomain encontro = solicitacao.getPontoDeEncontro(2);
+				PontoDeEncontroDomain encontro = solicitacao
+						.getPontoDeEncontro(2);
 				new CaronaBusiness().reduzQtdVagas(encontro.getIdCarona());
 				solicitacao.setEmAndamento(false);
 				return;
@@ -196,7 +193,8 @@ public class SolicitacaoPontoDeEncontroBusiness {
 
 			if (solicitacao.getIdSugestao().equals(idSolicitacao)
 					&& !solicitacao.isEmAndamento()) {
-				PontoDeEncontroDomain encontro = solicitacao.getPontoDeEncontro(2);
+				PontoDeEncontroDomain encontro = solicitacao
+						.getPontoDeEncontro(2);
 				new CaronaBusiness().aumentaQtdVagas(encontro.getIdCarona());
 				solicitacao.setEmAndamento(true);
 				return;
