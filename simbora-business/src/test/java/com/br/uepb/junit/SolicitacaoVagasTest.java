@@ -2,6 +2,8 @@ package com.br.uepb.junit;
 
 import static org.junit.Assert.assertEquals;
 
+import javax.swing.JOptionPane;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +21,6 @@ public class SolicitacaoVagasTest {
 	UsuarioBusiness usuario;
 	CaronaBusiness carona;
 	SessaoBusiness sessao;
-	SolicitacaoVagasBusiness solicitarVaga;
 	SolicitacaoPontoDeEncontroBusiness solicitarVagas;
 
 	@Before
@@ -27,13 +28,11 @@ public class SolicitacaoVagasTest {
 		usuario = new UsuarioBusiness();
 		carona = new CaronaBusiness();
 		sessao = new SessaoBusiness();
-		solicitarVaga = new SolicitacaoVagasBusiness();
 		solicitarVagas = new SolicitacaoPontoDeEncontroBusiness();
 
 		usuario.zerarSistema();
 		carona.getCaronas().clear();
 		sessao.getSessoes().clear();
-		solicitarVaga.solicitacoesVagas.clear();
 		solicitarVagas.solicitacoes.clear();
 	}
 
@@ -42,7 +41,6 @@ public class SolicitacaoVagasTest {
 		usuario.usuarios.clear();
 		carona.getCaronas().clear();
 		sessao.getSessoes().clear();
-		solicitarVaga.solicitacoesVagas.clear();
 		solicitarVagas.solicitacoes.clear();
 
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
@@ -127,7 +125,7 @@ public class SolicitacaoVagasTest {
 		}
 
 		try {
-			solicitarVagas.responderSugestaoPontoEncontro("mark", "3", "0",
+			solicitarVagas.responderSugestaoPontoEncontro("mark", "3", "0PE",
 					"Acude Velho;Parque da Crianca");
 		} catch (Exception e) {
 			e.getMessage();
@@ -161,7 +159,7 @@ public class SolicitacaoVagasTest {
 					solicitarVagas.getAtributoSolicitacao("0PE",
 							"Dono da carona"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 
 		try {
@@ -171,5 +169,158 @@ public class SolicitacaoVagasTest {
 		} catch (CaronaException e) {
 			e.getMessage();
 		}
+		
+		try {
+			assertEquals("Acude Velho",
+					solicitarVagas.getAtributoSolicitacao("0PE",
+							"Ponto de Encontro"));
+		} catch (CaronaException e) {
+			e.getMessage();
+		}
+		
+		sessao.encerrarSessao("bill");
+		
+		
+		// Aceitar a requisição
+		try {
+			sessao.abrirSessao("mark", "m@rk");
+		} catch (SessaoException e) {
+			e.getMessage();
+		}
+		
+		try {
+			solicitarVagas.aceitarSolicitacaoPontoEncontro("mark", "0PE");
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		try {
+			assertEquals("2", solicitarVagas.getAtributoSolicitacao("0PE", "vagas"));
+		} catch (CaronaException e) {
+			e.getMessage();
+		}
+		
+		try {
+			assertEquals("Acude Velho", solicitarVagas.getAtributoSolicitacao("0PE", "Ponto de Encontro"));
+		} catch (CaronaException e) {
+			e.getMessage();
+		}
+
+		// Abrir sessao de Bill
+		try {
+			sessao.abrirSessao("bill", "billz@o");
+		} catch (SessaoException e) {
+			e.getMessage();
+		}
+		
+		try {
+			solicitarVagas.aceitarSolicitacaoPontoEncontro("bill", "0PE");
+		} catch (Exception e) {
+			assertEquals("Solicitação inexistente", e.getMessage());			
+		}
+		try {
+			assertEquals("2", carona.getAtributoCarona("3", "vagas"));
+		} catch (CaronaException e) {
+			e.getMessage();
+		}
+		
+		// Sugerir ponto de encontro
+		try {
+			solicitarVagas.sugerirPontoEncontro("bill", "4", "Acude Velho; Hiper Bompreco");
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		// Resposta a requisição
+		try {
+			sessao.abrirSessao("mark", "m@rk");
+		} catch (SessaoException e) {
+			e.getMessage();
+		}
+		
+		try {
+			solicitarVagas.responderSugestaoPontoEncontro("mark", "4", "", "Acude Velho;Parque da Crianca");
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		// requisitar vaga carona
+		try {
+			solicitarVagas.desistirRequisicao("bill", "3", "0PE");
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		try {
+			solicitarVagas.sugerirPontoEncontro("bill", "3", "");
+		} catch (Exception e) {
+			assertEquals("Ponto Inválido", e.getMessage());
+		}
+		
+		try {
+			solicitarVagas.responderSugestaoPontoEncontro("mark", "3", "0PE", "");
+		} catch (Exception e) {
+			assertEquals("Ponto Inválido", e.getMessage());
+		}
+		
+		sessao.encerrarSessao("mark");
+		sessao.encerrarSessao("bill");
+		
+	}
+	
+	@Test
+	public void todosErros() {
+		usuario.usuarios.clear();
+		carona.getCaronas().clear();
+		sessao.getSessoes().clear();
+		solicitarVagas.solicitacoes.clear();
+		
+		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com");
+		
+		try {
+			sessao.abrirSessao("mark", "m@rk");
+		} catch (SessaoException e1) {
+			e1.getMessage();
+		}
+		try {
+			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "22/10/2014", "17:00", "3");
+		} catch (CaronaException e) {
+			e.getMessage();
+		}
+		
+		usuario.criarUsuario("bill", "billz@o", "Willian Henry Gates III",
+				"Medina, Washington", "billzin@gmail.com");
+		
+		try {
+			sessao.abrirSessao("bill", "billz@o");
+		} catch (SessaoException e) {
+			e.getMessage();
+		}
+		
+		// Test
+		try {
+			solicitarVagas.sugerirPontoEncontro("bill", "0", " ");
+		} catch (Exception e) {
+			assertEquals("Ponto Inválido", e.getMessage());
+		}
+		try {
+			solicitarVagas.sugerirPontoEncontro("bill", "0", null);
+		} catch (Exception e) {
+			assertEquals("Ponto Inválido", e.getMessage());
+		}
+		
+		
+		try {
+			solicitarVagas.responderSugestaoPontoEncontro("bill", "0", "0PE", null);
+		} catch (Exception e) {
+			assertEquals("Ponto Inválido", e.getMessage());
+		}
+		
+		
+	}
+	
+	@Test
+	public void zeraSistema() {
+		solicitarVagas.zerarSistema();
 	}
 }

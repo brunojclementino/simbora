@@ -11,10 +11,10 @@
 #Limpar os dados do sistema.
 zerarSistema
 
-#Criar usu�rio.
+#Criar usuário.
 criarUsuario login="mark" senha="m@rk" nome="Mark Zuckerberg" endereco="Palo Alto, California" email="mark@facebook.com"
 
-#Iniciar sess�o.
+#Iniciar sessão.
 sessaoMark=abrirSessao login="mark" senha="m@rk"
 
 #Cadastrar caronas.
@@ -51,15 +51,15 @@ expect "William Henry Gates III" getAtributoSolicitacao idSolicitacao=${solicita
 expect "Acude Velho" getAtributoSolicitacao idSolicitacao=${solicitacao1ID} atributo="Ponto de Encontro"
 encerrarSessao login="bill"
 
-#Aceitar requisi��o
+#Aceitar requisição
 sessaoMark=abrirSessao login="mark" senha="m@rk"
 aceitarSolicitacaoPontoEncontro idSessao=${sessaoMark} idSolicitacao=${solicitacao1ID}
 expect 2 getAtributoCarona idCarona=${carona4ID} atributo="vagas"
 expect "Acude Velho" getAtributoSolicitacao idSolicitacao=${solicitacao1ID} atributo="Ponto de Encontro"
 
-#Tentar aceitar novamente a requisi��o
+#Tentar aceitar novamente a requisição
 sessaoBill=abrirSessao login="bill" senha="billz@o"
-expectError "Solicita��o inexistente" aceitarSolicitacaoPontoEncontro idSessao=${sessaoBill} idSolicitacao=${solicitacao1ID}
+expectError "Solicitação inexistente" aceitarSolicitacaoPontoEncontro idSessao=${sessaoBill} idSolicitacao=${solicitacao1ID}
 expect 2 getAtributoCarona idCarona=${carona4ID} atributo="vagas"
 
 #Sugerir ponto de encontro para uma carona
@@ -73,8 +73,8 @@ respostaID=responderSugestaoPontoEncontro idSessao=${sessaoMark} idCarona=${caro
 desistirRequisicao idSessao=${sessaoBill} idCarona=${carona4ID} idSolicitacao=${solicitacao1ID}
 
 
-expectError "Ponto Inv�lido" sugestaoID=sugerirPontoEncontro idSessao=${sessaoBill} idCarona=${carona4ID} pontos=""
-expectError "Ponto Inv�lido" responderSugestaoPontoEncontro idSessao=${sessaoMark} idCarona=${carona4ID} idSugestao=${sugestaoID} pontos=""
+expectError "Ponto Inválido" sugestaoID=sugerirPontoEncontro idSessao=${sessaoBill} idCarona=${carona4ID} pontos=""
+expectError "Ponto Inválido" responderSugestaoPontoEncontro idSessao=${sessaoMark} idCarona=${carona4ID} idSugestao=${sugestaoID} pontos=""
 encerrarSessao login="mark"
 encerrarSessao login="bill"
 

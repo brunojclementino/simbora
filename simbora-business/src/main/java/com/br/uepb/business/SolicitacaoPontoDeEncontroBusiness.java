@@ -57,8 +57,8 @@ public class SolicitacaoPontoDeEncontroBusiness {
 	public String sugerirPontoEncontro(String idSessao, String idCarona,
 			String pontos) throws Exception {
 
-		if (pontos == null || pontos.isEmpty()) {
-			throw new Exception("Ponto Inv�lido");
+		if (pontos == null || pontos.trim().isEmpty()) {
+			throw new Exception("Ponto Inválido");
 		}
 		pontoDeEncontro = new PontoDeEncontroDomain();
 		pontoDeEncontro.setIdCarona(idCarona);
@@ -80,8 +80,8 @@ public class SolicitacaoPontoDeEncontroBusiness {
 	public String responderSugestaoPontoEncontro(String idSessao,
 			String idCarona, String idSugestao, String pontos) throws Exception {
 
-		if (pontos == null || pontos.isEmpty()) {
-			throw new Exception("Ponto Inv�lido");
+		if (pontos == null || pontos.trim().isEmpty()) {
+			throw new Exception("Ponto Inválido");
 		}
 
 		pontoDeEncontro = new PontoDeEncontroDomain();
@@ -184,7 +184,7 @@ public class SolicitacaoPontoDeEncontroBusiness {
 				return;
 			}
 		}
-		throw new Exception("Solicita��o inexistente");
+		throw new Exception("Solicitação inexistente");
 	}
 
 	public void desistirRequisicao(String idSessao, String idCarona,
@@ -200,7 +200,7 @@ public class SolicitacaoPontoDeEncontroBusiness {
 				return;
 			}
 		}
-		throw new Exception("Solicita��o inexistente");
+		throw new Exception("Solicitação inexistente");
 	}
 
 	public String getPontosSugeridos(String idSessao, String idCarona) {
