@@ -48,21 +48,21 @@ public class CaronaBusiness {
 	 * @param origem
 	 * @param destino
 	 * @return <code>Se</code> origem for <code>null</code> ent�o retorna 
+	 * @throws CaronaException 
 	 * @throws Exception
 	 */
-	public String localizarCarona(String idSessao, String origem, String destino)
-			throws Exception {
+	public String localizarCarona(String idSessao, String origem, String destino) throws CaronaException {
 		if (idSessao == null) {
-			throw new CaronaException("Sess�o inv�lida");
+			throw new CaronaException("Sessão inválida");
 		}
 
 		if (origem.equals("-") || origem.equals("()") || origem.equals("!")
 				|| origem.equals("!?")) {
-			throw new CaronaException("Origem inv�lida");
+			throw new CaronaException("Origem inválida");
 		}
 
 		if (destino.equals(".") || destino.equals("()") || destino.equals("!?")) {
-			throw new CaronaException("Destino inv�lido");
+			throw new CaronaException("Destino inválido");
 		}
 
 		if (!origem.isEmpty() && !destino.isEmpty()) {
@@ -162,52 +162,52 @@ public class CaronaBusiness {
 	 * @param hora
 	 * @param qtdDeVagas
 	 * @return idCarona
+	 * @throws CaronaException 
 	 * @throws Exception
 	 */
 	public String cadastrarCarona(String idSessao, String origem, 
-			String destino, String data, String hora, String qtdDeVagas)
-			throws Exception {
+			String destino, String data, String hora, String qtdDeVagas) throws CaronaException {
 		if (idSessao == null || idSessao.trim().isEmpty()) {
-			throw new SessaoException("Sess�o inv�lida");
+			throw new CaronaException("Sessão inválida");
 		}
 		if (!SessaoBusiness.hasSessao(idSessao)) {
-			throw new SessaoException("Sess�o inexistente");
+			throw new CaronaException("Sessão inexistente");
 		}
 		if (origem == null || origem.trim().isEmpty()) {
-			throw new CaronaException("Origem inv�lida");
+			throw new CaronaException("Origem inválida");
 		}
 		if (destino == null || destino.trim().isEmpty()) {
-			throw new CaronaException("Destino inv�lido");
+			throw new CaronaException("Destino inválido");
 		}
 		if (data == null || data.trim().isEmpty()) {
-			throw new CaronaException("Data inv�lida");
+			throw new CaronaException("Data inválida");
 		}
 		if (!isData(data)) {
-			throw new CaronaException("Data inv�lida");
+			throw new CaronaException("Data inválida");
 		}
 		if (hora == null || hora.trim().isEmpty()) {
-			throw new CaronaException("Hora inv�lida");
+			throw new CaronaException("Hora inválida");
 		}
 		if (!isHora(hora)) {
-			throw new CaronaException("Hora inv�lida");
+			throw new CaronaException("Hora inválida");
 		}
 		if (qtdDeVagas == null 
 				|| qtdDeVagas.trim().isEmpty()) {
-			throw new CaronaException("Vaga inv�lida");
+			throw new CaronaException("Vaga inválida");
 		}
 		try {
 			Integer.parseInt(qtdDeVagas);
 		} catch (Exception e) {
-			throw new CaronaException("Vaga inv�lida");
+			throw new CaronaException("Vaga inválida");
 		}
 
 		carona = new CaronaDomain();
-		carona.setLocalDeOrigem(origem);
-		carona.setLocalDeDestino(destino);
-		carona.setData(data);
-		carona.setHorarioDeSaida(hora);
-		carona.setQtdDeVagas(qtdDeVagas);
-		carona.setIdSessao(idSessao);
+			carona.setLocalDeOrigem(origem);
+			carona.setLocalDeDestino(destino);
+			carona.setData(data);
+			carona.setHorarioDeSaida(hora);
+			carona.setQtdDeVagas(qtdDeVagas);
+			carona.setIdSessao(idSessao);
 
 		caronas.add(carona);
 
@@ -243,24 +243,24 @@ public class CaronaBusiness {
 	}
 
 	/**
-	 * Retorna o atributo que o usu�rio precisar (origem, destino, data e hora).
+	 * Retorna o atributo que o usuário precisar (origem, destino, data e hora).
 	 * 
 	 * @param idCarona
 	 * @param atributo
-	 * @return
+	 * @return 
 	 * @throws CaronaException
 	 */
 	public String getAtributoCarona(String idCarona, String atributo)
 			throws CaronaException {
-		if (idCarona == null || idCarona.equals("")) {
-			throw new CaronaException("Identificador do carona � inv�lido");
+		if (idCarona == null || idCarona.trim().isEmpty()) {
+			throw new CaronaException("Identificador do carona é inválido");
 		}
 
 		if (atributo == null) {
-			throw new CaronaException("Atributo inv�lido");
+			throw new CaronaException("Atributo inválido");
 		}
-		if (atributo.equals("")) {
-			throw new CaronaException("Atributo inv�lido");
+		if (atributo.trim().isEmpty()) {
+			throw new CaronaException("Atributo inválido");
 		}
 		if (!idCaronaExistir(idCarona)) {
 			throw new CaronaException("Item inexistente");
@@ -306,7 +306,7 @@ public class CaronaBusiness {
 	 */
 	public String getTrajeto(String idCarona) throws CaronaException {
 		if (idCarona == null) {
-			throw new CaronaException("Trajeto Inv�lida");
+			throw new CaronaException("Trajeto Inválida");
 		}
 		if (idCarona.trim().isEmpty()) {
 			throw new CaronaException("Trajeto Inexistente");
@@ -334,9 +334,9 @@ public class CaronaBusiness {
 	 */
 	public String getCarona(String idCarona) throws CaronaException {
 		if (idCarona == null) {
-			throw new CaronaException("Carona Inv�lida");
+			throw new CaronaException("Carona Inválida");
 		}
-		if (idCarona.isEmpty()) {
+		if (idCarona.trim().isEmpty()) {
 			throw new CaronaException("Carona Inexistente");
 		}
 		int valor;

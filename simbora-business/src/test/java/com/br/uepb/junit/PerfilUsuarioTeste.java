@@ -58,14 +58,14 @@ public class PerfilUsuarioTeste {
 		try {
 			perfilUsuario.getAtributoPerfil(null, "historico de caronas");
 		} catch (PerfilException e) {
-			assertEquals("Login inv�lido", e.getMessage());
+			assertEquals("Login inválido", e.getMessage());
 		}
 
 		// Fazer os Tests de login errado
 		try {
 			perfilUsuario.getAtributoPerfil(" ", "historico de caronas");
 		} catch (PerfilException e) {
-			assertEquals("Login inv�lido", e.getMessage());
+			assertEquals("Login inválido", e.getMessage());
 		}
 
 		// Fazer os tests com login inexistente
@@ -75,22 +75,22 @@ public class PerfilUsuarioTeste {
 		} catch (PerfilException e) {
 			assertEquals("", e.getMessage());
 		} catch (UsuarioException e) {
-			assertEquals("Login inv�lido", e.getMessage());
+			assertEquals("Login inválido", e.getMessage());
 		}
 
-		// Acessar os perfis que n�o existam!
+		// Acessar os perfis que não existam!
 		try {
 			perfilUsuario.getAtributoPerfil("ana", null);
 
 		} catch (PerfilException e) {
-			assertEquals("Atributo inv�lido", e.getMessage());
+			assertEquals("Atributo inválido", e.getMessage());
 		}
 		
 		try {
 			perfilUsuario.getAtributoPerfil("ana", "      ");
 
 		} catch (PerfilException e) {
-			assertEquals("Atributo inv�lido", e.getMessage());
+			assertEquals("Atributo inválido", e.getMessage());
 		}		
 		
 		// Atributos que n�o existam!
@@ -122,9 +122,9 @@ public class PerfilUsuarioTeste {
 		try {
 			perfilUsuario.getAtributoPerfil("ana", "");
 		} catch (PerfilException e) {
-			assertEquals("Atributo inv�lido", e.getMessage());
+			assertEquals("Atributo inválido", e.getMessage());
 		} catch (UsuarioException e) {
-			assertEquals("Login inv�lido", e.getMessage());
+			assertEquals("Login inválido", e.getMessage());
 		}
 		
 		try {
@@ -132,7 +132,7 @@ public class PerfilUsuarioTeste {
 		} catch (PerfilException e) {
 			assertEquals("Atributo inexistente", e.getMessage());
 		} catch (UsuarioException e) {
-			assertEquals("Login inv�lido", e.getMessage());
+			assertEquals("Login inválido", e.getMessage());
 		}
 		
 		try {
@@ -140,7 +140,7 @@ public class PerfilUsuarioTeste {
 		} catch (PerfilException e) {
 			assertEquals("Atributo inexistente", e.getMessage());
 		} catch (UsuarioException e) {
-			assertEquals("Login inv�lido", e.getMessage());
+			assertEquals("Login inválido", e.getMessage());
 		}
 	}
 }
