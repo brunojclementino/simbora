@@ -10,7 +10,6 @@ import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.business.UsuarioBusiness;
 import com.br.uepb.constants.CaronaException;
 import com.br.uepb.constants.SessaoException;
-import com.br.uepb.constants.UsuarioException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
 import com.br.uepb.dao.impl.UsuarioDaoImp;
 import com.br.uepb.domain.CaronaDomain;
