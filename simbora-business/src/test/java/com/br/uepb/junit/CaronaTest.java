@@ -43,7 +43,7 @@ public class CaronaTest {
 
 	@Test
 	public void localizar_cadastrarCarona() {
-		usuarioBusiness.usuarios.clear();
+		usuarioBusiness.zerarSistema();
 		sessaoBusiness.getSessoes().clear();
 		carona.getCaronas().clear();
 		
@@ -86,7 +86,8 @@ public class CaronaTest {
 	public void cadastrarCarona() {
 		carona.caronas.clear();
 		usuarioBusiness.usuarios.clear();
-
+		sessaoBusiness.getSessoes().clear();
+		
 		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
 
@@ -459,20 +460,13 @@ public class CaronaTest {
 		} catch (CaronaException e) {
 			assertEquals("Destino inválido", e.getMessage());
 		}
-	}
 	
-	@Test
-	public void encerrarSessao() {
-
 		sessaoBusiness.encerrarSessao("m@rk");
 
 		// Limpar tudo do BD
 		usuarioBusiness.zerarSistema();
 		carona.zerarSistema();
-	}
 
-	@Test
-	public void zerarSistema() {
 		carona.caronas.clear();
 		assertEquals(null, carona.getCarona());
 	}

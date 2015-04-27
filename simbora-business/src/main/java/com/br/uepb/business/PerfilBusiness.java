@@ -31,12 +31,12 @@ public class PerfilBusiness {
 	
 	public String visualizarPerfil(String idSessao, String login) throws PerfilException{
 		
-		if(login==null || login.trim().isEmpty()){
-			throw new PerfilException("Login inv�lido"); 
+		if(login==null || login.trim().trim().isEmpty()){
+			throw new PerfilException("Login inválido"); 
 		}
 		
 		if(idSessao==null || idSessao.trim().isEmpty()){
-			throw new PerfilException("Sess�o inv�lida");
+			throw new PerfilException("Sessão inválida");
 		}
 		
 		for(UsuarioDomain usuario : new UsuarioBusiness().usuarios){
@@ -45,7 +45,7 @@ public class PerfilBusiness {
 			}
 		}
 		
-		throw new PerfilException("Login inv�lido");
+		throw new PerfilException("Login inválido");
 		
 	}
 	
@@ -98,7 +98,7 @@ public class PerfilBusiness {
 			return caron+"";
 		}
 		
-		if(atributo.equals("caronas que n�o funcionaram")){
+		if(atributo.equals("caronas que não funcionaram")){
 			int caron = 0;
 			for(String idCarona : caronasNaoFuncionaram){
 				if(CaronaBusiness.ehMotorista(login, idCarona)){
@@ -118,7 +118,7 @@ public class PerfilBusiness {
 			return caron+"";
 		}
 		
-		if(atributo.equals("presen�as em vagas de caronas")){
+		if(atributo.equals("presenças em vagas de caronas")){
 			int caron = 0;
 			for(String idUsuario : presenteNasVagas){
 				if(idUsuario.equals(login) && SolicitacaoVagasBusiness.ehCaroneiro(login)){
