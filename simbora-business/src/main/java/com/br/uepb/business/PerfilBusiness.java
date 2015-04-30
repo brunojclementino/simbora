@@ -131,4 +131,13 @@ public class PerfilBusiness {
 		return new UsuarioBusiness().getAtributoUsuario(login, atributo);
 	}
 
+	/**
+	 * Falta implementar
+	 */
+	public void zerarSistema(){
+		caronasSegurasTranquilas.clear();
+		caronasNaoFuncionaram.clear();
+		faltaramNasVagas.clear();
+		presenteNasVagas.clear();
+	}
 }

@@ -21,19 +21,27 @@ public class VisualizarPerfilTeste {
 	CaronaBusiness carona;
 	
 	@Before
-	public void test() {
+	public void inicializar() {
 		usuario = new UsuarioBusiness();
 		perfil = new PerfilBusiness();
 		sessao = new SessaoBusiness();
 		carona = new CaronaBusiness();
+		
+		usuario.zerarSistema();
+		perfil.zerarSistema();
+		sessao.getUsuarios().clear();
+		sessao.getSessoes().clear();
+		carona.zerarSistema();
 	}
 
 	@Test
 	public void criarUsuario() {
-		usuario.usuarios.clear();
-		perfil.presenteNasVagas.clear();
+		
+		usuario.zerarSistema();
+		perfil.zerarSistema();
+		sessao.getUsuarios().clear();
 		sessao.getSessoes().clear();
-		carona.caronas.clear();
+		carona.zerarSistema();
 		
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com");
 

@@ -85,7 +85,7 @@ public class CaronaTest {
 	@Test
 	public void cadastrarCarona() {
 		carona.caronas.clear();
-		usuarioBusiness.usuarios.clear();
+		usuarioBusiness.zerarSistema();
 		sessaoBusiness.getSessoes().clear();
 		
 		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
