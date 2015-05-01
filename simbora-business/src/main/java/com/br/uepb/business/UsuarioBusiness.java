@@ -1,6 +1,5 @@
 package com.br.uepb.business;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.br.uepb.constants.UsuarioException;

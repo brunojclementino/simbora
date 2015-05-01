@@ -8,7 +8,7 @@ import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
 
 /**
- * � respons�vel por gerenciar as solicita��es de vagas nas caronas pelos usu�rios
+ * O responsável por gerenciar as solicitações de vagas nas caronas pelos usuúrios
  * 
  * @author Lucas Miranda e Bruno Clementino
  *

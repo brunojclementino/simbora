@@ -1,6 +1,6 @@
 package com.br.uepb.junit;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals; 
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class CaronaTest {
 	SessaoBusiness sessaoBusiness;
 
 	@Before
-	public void test() {
+	public void inicializar() {
 
 		new CaronaDaoImp().excluirTudo();
 		new UsuarioDaoImp().excluirTudo();
@@ -42,7 +42,7 @@ public class CaronaTest {
 	}
 
 	@Test
-	public void localizar_cadastrarCarona() {
+	public void localizarCadastrarCarona() {
 		usuarioBusiness.zerarSistema();
 		sessaoBusiness.getSessoes().clear();
 		carona.getCaronas().clear();
@@ -472,7 +472,7 @@ public class CaronaTest {
 	}
 
 	@Test
-	public void test_US03 () {
+	public void localizarCaronasTests () {
 		usuarioBusiness.usuarios.clear();
 		sessaoBusiness.getSessoes().clear();
 		carona.getCaronas().clear();
