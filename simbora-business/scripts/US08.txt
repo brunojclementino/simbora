@@ -1,25 +1,25 @@
 #User Story 08 - Confirmação de Presença
 
-#US08 - Confirmação de presença: ap�s uma carona, um motorista pode marcar que usu�rios estiveram presentes ou n�o na sua carona e, 
-#opcionalmente, colocar um coment�rio sobre o comportamento deles. 
+#US08 - Confirmação de presença: após uma carona, um motorista pode marcar que usuários estiveram presentes ou não na sua carona e, 
+#opcionalmente, colocar um comentário sobre o comportamento deles. 
 #Caroneiros que faltaram levam uma falta, que deve aparecer no seu perfil, junto da quantidade de caronas pegas.
 
 #Limpar os dados do sistema.
 zerarSistema
 
-#Criar usu�rio.
+#Criar usuário.
 criarUsuario login="mark" senha="m@rk" nome="Mark Zuckerberg" endereco="Palo Alto, California" email="mark@facebook.com"
 criarUsuario login="bill" senha="bilz@o" nome="William Henry Gates III" endereco="Medina, Washington" email="billzin@gmail.com"
 criarUsuario login="vader" senha="d4rth" nome="Anakin Skywalker" endereco="Death Star I" email="darthvader@empire.com"
 
-#Iniciar sess�o.
+#Iniciar sessão.
 sessaoMark=abrirSessao login="mark" senha="m@rk"
 
 #Cadastrar caronas.
-carona4ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="Jo�o Pessoa" data="02/06/2013" hora="12:00" vagas=3
-carona5ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="Jo�o Pessoa" data="04/06/2013" hora="16:00" vagas=2
+carona4ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="João Pessoa" data="02/06/2013" hora="12:00" vagas=3
+carona5ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="João Pessoa" data="04/06/2013" hora="16:00" vagas=2
 
-#Iniciar sess�o com outro usu�rio.
+#Iniciar sessão com outro usuário.
 sessaoBill=abrirSessao login="bill" senha="bilz@o"
 
 #Requisitar vaga na carona.

@@ -43,8 +43,8 @@ public class CaronaBusiness {
 	 * Dependendo dos valores passados nos parametros deverá ser retornado a
 	 * origem e destino que se deseja.
 	 * 
-	 * @param idSessao
-	 * @param origem
+	 * @param idSessao Identificador da sessão.
+	 * @param origem Origem da carona.
 	 * @param destino
 	 * @return <code>Se</code> origem for <code>null</code> então retorna
 	 * @throws CaronaException

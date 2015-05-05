@@ -29,9 +29,6 @@ public class CaronaTest {
 	@Before
 	public void inicializar() {
 
-		new CaronaDaoImp().excluirTudo();
-		new UsuarioDaoImp().excluirTudo();
-
 		carona = new CaronaBusiness();
 		usuarioBusiness = new UsuarioBusiness();
 		sessaoBusiness = new SessaoBusiness();

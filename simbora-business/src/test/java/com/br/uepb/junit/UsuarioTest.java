@@ -9,21 +9,18 @@ import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.business.UsuarioBusiness;
 import com.br.uepb.constants.SessaoException;
 import com.br.uepb.constants.UsuarioException;
-import com.br.uepb.dao.impl.UsuarioDaoImp;
 
 public class UsuarioTest {
 
 	UsuarioBusiness usuario;
 	SessaoBusiness sessao;
 
-	@Before
+	@Before 
 	public void iniciarTest() {
 		usuario = new UsuarioBusiness();
 		sessao = new SessaoBusiness();
 
-		usuario.usuarios.clear();
-		new UsuarioDaoImp().excluirTudo();
-
+		usuario.zerarSistema();
 	}
 
 	/**
