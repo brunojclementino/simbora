@@ -162,4 +162,13 @@ public class PerfilBusiness {
 		faltaramNasVagas.clear();
 		presenteNasVagas.clear();
 	}
+	
+	public void reviewVagaEmCarona(String idSessao, String idCorona,
+			String loginCaroneiro, String review) {
+		
+	if (review.equals("faltou")) {
+		faltaramNasVagas.add(loginCaroneiro);
+	}
+		
+	}
 }

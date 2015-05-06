@@ -25,22 +25,22 @@ sessaoBill=abrirSessao login="bill" senha="bilz@o"
 #Requisitar vaga na carona.
 solicitacao1ID=solicitarVaga idSessao=${sessaoBill} idCarona=${carona4ID}
 expect "Campina Grande" getAtributoSolicitacao idSolicitacao=${solicitacao1ID} atributo="origem"
-expect "Jo�o Pessoa" getAtributoSolicitacao idSolicitacao=${solicitacao1ID} atributo="destino"
+expect "João Pessoa" getAtributoSolicitacao idSolicitacao=${solicitacao1ID} atributo="destino"
 expect "Mark Zuckerberg" getAtributoSolicitacao idSolicitacao=${solicitacao1ID} atributo="Dono da carona"
 expect "William Henry Gates III" getAtributoSolicitacao idSolicitacao=${solicitacao1ID} atributo="Dono da solicitacao"
 
-#Aceitar requisi��o
+#Aceitar requisição
 aceitarSolicitacao idSessao=${sessaoMark} idSolicitacao=${solicitacao1ID}
 expect 2 getAtributoCarona idCarona=${carona4ID} atributo="vagas"
 
 #Requisitar vaga na carona.
 solicitacao2ID=solicitarVaga idSessao=${sessaoBill} idCarona=${carona5ID}
 expect "Campina Grande" getAtributoSolicitacao idSolicitacao=${solicitacao2ID} atributo="origem"
-expect "Jo�o Pessoa" getAtributoSolicitacao idSolicitacao=${solicitacao2ID} atributo="destino"
+expect "João Pessoa" getAtributoSolicitacao idSolicitacao=${solicitacao2ID} atributo="destino"
 expect "Mark Zuckerberg" getAtributoSolicitacao idSolicitacao=${solicitacao2ID} atributo="Dono da carona"
 expect "William Henry Gates III" getAtributoSolicitacao idSolicitacao=${solicitacao2ID} atributo="Dono da solicitacao"
 
-#Aceitar requisi��o
+#Aceitar requisição
 aceitarSolicitacao idSessao=${sessaoMark} idSolicitacao=${solicitacao2ID}
 expect 1 getAtributoCarona idCarona=${carona5ID} atributo="vagas"
 
@@ -53,11 +53,12 @@ expect "billzin@gmail.com" getAtributoPerfil login="bill" atributo="email"
 expect [${carona4ID},${carona5ID}] getAtributoPerfil login="bill" atributo="historico de vagas em caronas"
 expect [] getAtributoPerfil login="bill" atributo="historico de caronas"
 expect "0" getAtributoPerfil login="bill" atributo="caronas seguras e tranquilas"
-expect "0" getAtributoPerfil login="bill" atributo="caronas que n�o funcionaram"
+expect "0" getAtributoPerfil login="bill" atributo="caronas que não funcionaram"
 expect "1" getAtributoPerfil login="bill" atributo="faltas em vagas de caronas"
-expect "0" getAtributoPerfil login="bill" atributo="presen�as em vagas de caronas"
+expect "0" getAtributoPerfil login="bill" atributo="presenças em vagas de caronas"
 
-reviewVagaEmCarona idSessao=${sessaoMark} idCarona=${carona5ID} loginCaroneiro=bill review="n�o faltou"
+###########
+reviewVagaEmCarona idSessao=${sessaoMark} idCarona=${carona5ID} loginCaroneiro=bill review="não faltou"
 perfilBill=visualizarPerfil idSessao=${sessaoBill} login=bill
 expect "William Henry Gates III" getAtributoPerfil login="bill" atributo="nome"
 expect "Medina, Washington" getAtributoPerfil login="bill" atributo="endereco"

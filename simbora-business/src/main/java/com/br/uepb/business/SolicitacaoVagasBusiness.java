@@ -137,7 +137,7 @@ public class SolicitacaoVagasBusiness {
 	
 	public static boolean ehCaroneiro(String login) {
 		
-		return false;
+		return true;
 	}
 
 	/**

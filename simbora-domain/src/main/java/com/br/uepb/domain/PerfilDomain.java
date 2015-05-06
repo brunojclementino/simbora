@@ -11,7 +11,7 @@ import java.util.List;
 public class PerfilDomain {
 	private String idUsuario;
 	private List<String> idCaronas;
-
+	private String statusCarona = "";
 	/**
 	 * @return the idUsuario
 	 */
@@ -42,4 +42,8 @@ public class PerfilDomain {
 		this.idCaronas = idCaronas;
 	}
 
+	public void reviewVagaEmCarona(String sessao, String sessaoCarona,
+									String loginCaroneiro, String review) {
+		statusCarona = review;
+	}
 }
