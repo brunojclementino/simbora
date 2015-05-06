@@ -1,10 +1,9 @@
 package com.br.uepb.domain;
 
-
 import java.util.List;
 
 /**
- * Em fase de constru��o!
+ * Define as informações básicas do usuário.
  * 
  * @author Lucas Miranda e Bruno Clementino
  *
@@ -12,31 +11,35 @@ import java.util.List;
 public class PerfilDomain {
 	private String idUsuario;
 	private List<String> idCaronas;
-	
+
 	/**
 	 * @return the idUsuario
 	 */
 	public String getIdUsuario() {
 		return idUsuario;
 	}
+
 	/**
-	 * @param idUsuario the idUsuario to set
+	 * @param idUsuario
+	 *            the idUsuario to set
 	 */
 	public void setIdUsuario(String idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+
 	/**
 	 * @return the idCaronas
 	 */
 	public List<String> getIdCaronas() {
 		return idCaronas;
 	}
+
 	/**
-	 * @param idCaronas the idCaronas to set
+	 * @param idCaronas
+	 *            the idCaronas to set
 	 */
 	public void setIdCaronas(List<String> idCaronas) {
 		this.idCaronas = idCaronas;
 	}
 
-	
 }

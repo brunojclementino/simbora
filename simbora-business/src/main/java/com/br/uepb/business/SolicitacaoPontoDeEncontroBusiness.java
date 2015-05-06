@@ -10,8 +10,8 @@ import com.br.uepb.domain.SolicitacaoPontoDeEncontroDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
 
 /**
- * � respons�vel por gerenciar as solicita��es de pontos de encontros feitas por
- * usu�rios a determinadas caronas
+ * O responsável por gerenciar as solicitações de pontos de encontros feitas por
+ * usuários a determinadas caronas
  * 
  * @author Lucas Miranda e Bruno Clementino
  *
@@ -34,6 +34,9 @@ public class SolicitacaoPontoDeEncontroBusiness {
 	private SolicitacaoPontoDeEncontroDomain solicitacaoEncontro;
 	private PontoDeEncontroDomain pontoDeEncontro;
 
+	/**
+	 * Salva os pontos de encontro que foram aceitas e que ainda estão pendentes. Depois a List é limpada.
+	 */
 	public void zerarSistema() {
 		for (SolicitacaoPontoDeEncontroDomain solicitacaoPontoDeEncontro : solicitacoes) {
 			try {
@@ -49,11 +52,20 @@ public class SolicitacaoPontoDeEncontroBusiness {
 				new SolicitacaoPontoDeEncontroDaoImp()
 						.save(solicitacaoPontoDeEncontro);
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		solicitacoes.clear();
 	}
 
+	/**
+	 * Faz uma sugestão do ponto de encontro. Trata os possiveis erros de parametro <code>null</code>.
+	 * @param idSessao
+	 * @param idCarona
+	 * @param pontos
+	 * @return id da sugestão.
+	 * @throws Exception
+	 */
 	public String sugerirPontoEncontro(String idSessao, String idCarona,
 			String pontos) throws Exception {
 
@@ -77,6 +89,15 @@ public class SolicitacaoPontoDeEncontroBusiness {
 		return solicitacaoEncontro.getIdSugestao();
 	}
 
+	/**
+	 * 
+	 * @param idSessao
+	 * @param idCarona
+	 * @param idSugestao
+	 * @param pontos
+	 * @return
+	 * @throws Exception
+	 */
 	public String responderSugestaoPontoEncontro(String idSessao,
 			String idCarona, String idSugestao, String pontos) throws Exception {
 
@@ -92,7 +113,7 @@ public class SolicitacaoPontoDeEncontroBusiness {
 		for (SolicitacaoPontoDeEncontroDomain solicitacao : solicitacoes) {
 			solicitacaoEncontro = solicitacao;
 			if (solicitacao.getIdSugestao().equals(idSugestao)) {
-				// 1 indica que esse ponto � resposta do motorista
+				// 1 indica que esse ponto é resposta do motorista
 				solicitacaoEncontro.setPontoDeEncontro(pontoDeEncontro, 1);
 				pontoDeEncontro.setIdPonto(solicitacaoEncontro.getIdSugestao()
 						+ "1");

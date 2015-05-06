@@ -1,7 +1,6 @@
 package com.br.uepb.business;
 
-
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -29,7 +28,14 @@ public class PerfilBusiness {
 	public static List<String> faltaramNasVagas = new ArrayList<>();
 	public static List<String> presenteNasVagas = new ArrayList<>();
 	
-	public String visualizarPerfil(String idSessao, String login) throws PerfilException{
+	/**
+	 * Retorna o login do usuario.
+	 * @param idSessao
+	 * @param login
+	 * @return
+	 * @throws PerfilException
+	 */
+	public String visualizarPerfil(String idSessao, String login) throws PerfilException {
 		
 		if(login==null || login.trim().trim().isEmpty()){
 			throw new PerfilException("Login inválido"); 
@@ -43,12 +49,20 @@ public class PerfilBusiness {
 			if(usuario.getLogin().equals(login)){
 				return usuario.getLogin();
 			}
-		}
-		
+		}		
 		throw new PerfilException("Login inválido");
-		
 	}
-	
+	/**
+	 * Retorna todas as informações solicitadas pelo parametro. 
+	 * 
+	 * @see getAtributo
+	 * @param login
+	 * @param atributo (historico das caronas, historico de vagas em caronas, caronas seguras e tranquilas,
+	 * caronas que não funcionaram, faltas em vagas de caronas, presenças em vagas de caronas)
+	 * @return informações dependendo do parametro.
+	 * @throws PerfilException
+	 *
+	 */
 	public String getAtributoPerfil(String login, String atributo) throws PerfilException{
 		if(atributo == null || atributo.trim().isEmpty()){ 
 			throw new PerfilException("Atributo inválido");
@@ -66,6 +80,14 @@ public class PerfilBusiness {
 		
 	}
 
+	/**
+	 * Este metodo retorna historico das caronas, historico de vagas em caronas, caronas seguras e tranquilas,
+	 * caronas que não funcionaram, faltas em vagas de caronas ou presenças em vagas de caronas. 
+	 * @param login
+	 * @param atributo
+	 * @return
+	 * @throws PerfilException
+	 */
 	private String getAtributo(String login, String atributo) throws PerfilException {
 		
 		if(atributo.equals("historico de caronas")){

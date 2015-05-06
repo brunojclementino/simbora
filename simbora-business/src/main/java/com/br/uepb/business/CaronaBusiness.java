@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.type.TrueFalseType;
 
 import com.br.uepb.constants.CaronaException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
@@ -28,11 +29,15 @@ public class CaronaBusiness {
 	CaronaDomain carona;
 	List<SessaoDomain> sessao = SessaoBusiness.getSessoes();
 
+	/**
+	 * Salva todos as caronas e em seguida limpa a List<CaronaDomain>.
+	 */
 	public void zerarSistema() {
 		for (CaronaDomain carona : caronas) {
 			try {
 				new CaronaDaoImp().save(carona);
 			} catch (Exception e) {
+				e.getMessage();
 			}
 		}
 		caronas.clear();
@@ -43,8 +48,10 @@ public class CaronaBusiness {
 	 * Dependendo dos valores passados nos parametros deverá ser retornado a
 	 * origem e destino que se deseja.
 	 * 
-	 * @param idSessao Identificador da sessão.
-	 * @param origem Origem da carona.
+	 * @param idSessao
+	 *            Identificador da sessão.
+	 * @param origem
+	 *            Origem da carona.
 	 * @param destino
 	 * @return <code>Se</code> origem for <code>null</code> então retorna
 	 * @throws CaronaException
@@ -84,9 +91,16 @@ public class CaronaBusiness {
 
 	}
 
+	/**
+	 * Esse método será chamado caso a origem e destino não for vazias!
+	 * 
+	 * @param origem
+	 * @param destino
+	 * @return os ids das coronas que correspendem ao mesmo destino e origem.
+	 */
 	private String origemDestinoCarona(String origem, String destino) {
 		String ids = "{";
-		boolean flag = true;// indica se a quantidade de ids � 0
+		boolean flag = true;// indica se a quantidade de ids é 0
 		for (CaronaDomain carona : caronas) {
 			if (carona.getLocalDeOrigem().equals(origem)
 					&& carona.getLocalDeDestino().equals(destino)) {
@@ -105,6 +119,12 @@ public class CaronaBusiness {
 		return ids + "}";
 	}
 
+	/**
+	 * Esse método será chamado se tanto a origem quanto o destino forem
+	 * <code>null</code>.
+	 * 
+	 * @return todos os id's das coronas.
+	 */
 	private String origemDestinoCarona() {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids � 0 (Serve para
@@ -120,6 +140,14 @@ public class CaronaBusiness {
 		return ids + "}";
 	}
 
+	/**
+	 * Esse método retorna todos os id's das caronas que têm a mesma origem do
+	 * parametro do metodo.
+	 * 
+	 * @param origem
+	 * @return todos os ids da carona que tem origem iguais ao passado pelo
+	 *         parametro.
+	 */
 	private String origemCarona(String origem) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
@@ -136,6 +164,14 @@ public class CaronaBusiness {
 		return ids + "}";
 	}
 
+	/**
+	 * Esse método retorna todos os id's das caronas que têm a mesmo destino do
+	 * parametro do metodo.
+	 * 
+	 * @param destino
+	 * @return todos os ids da carona que tem destino iguais ao passado pelo
+	 *         parametro.
+	 */
 	private String destinoCarona(String destino) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
@@ -217,6 +253,14 @@ public class CaronaBusiness {
 
 	}
 
+	/**
+	 * Verifica se o parametro data é um formato da data com o padrão
+	 * dia/mes/ano. Sendo que o dia tem dois digitos, o mes dois digitos e ano
+	 * quatro digitos. (dd/mm/aaaa)
+	 * 
+	 * @param data
+	 * @return se a data seguir o padrão (dd/mm/aaaa) retorna <code>true</code>, caso contrario <code>false</code>
+	 */
 	@SuppressWarnings("unused")
 	private boolean isData(String data) {
 		try {
@@ -230,6 +274,11 @@ public class CaronaBusiness {
 		}
 	}
 
+	/**
+	 * Verifica o parametro passado é do formato HH:mm. Sendo que os digitos são numeros. e mm não pode ser maior que 60. 
+	 * @param data
+	 * @return se for um horario retorna <code>true</code>, caso contrario <code>false</code>
+	 */
 	@SuppressWarnings("unused")
 	private boolean isHora(String data) {
 		try {
@@ -328,9 +377,8 @@ public class CaronaBusiness {
 	}
 
 	/**
-	 * Retorna uma frase parecido como se segue abaixo:
-	 *  <br>
-	 *  <b>Origem</b> para <b>destino</b>, no dia <b>tal</b>, as <b>tal Hora</b>
+	 * Retorna uma frase parecido como se segue abaixo: <br>
+	 * <b>Origem</b> para <b>destino</b>, no dia <b>tal</b>, as <b>tal Hora</b>
 	 * 
 	 * @param idCarona
 	 * @return
@@ -359,14 +407,21 @@ public class CaronaBusiness {
 				+ ", as " + carona.getHorarioDeSaida();
 	}
 
+	/**
+	 * @return lista de carona.
+	 */
 	public static List<CaronaDomain> getCaronas() {
 		return caronas;
 	}
 
+	/**
+	 * Seta a lista de {@link CaronaDomain}.
+	 * @param caronas
+	 */
 	public static void setCaronas(List<CaronaDomain> caronas) {
 		CaronaBusiness.caronas = caronas;
 	}
-
+	
 	public CaronaDomain getCarona() {
 		return carona;
 	}
@@ -383,6 +438,10 @@ public class CaronaBusiness {
 		this.sessao = sessao;
 	}
 
+	/**
+	 * Diminui a quantidade de vagas da carona.
+	 * @param idcarona
+	 */
 	public void reduzQtdVagas(String idcarona) {
 
 		for (CaronaDomain carona : caronas) {
@@ -393,6 +452,10 @@ public class CaronaBusiness {
 		}
 	}
 
+	/**
+	 * Aumenta a quantidade de vagas.
+	 * @param idcarona
+	 */
 	public void aumentaQtdVagas(String idcarona) {
 
 		for (CaronaDomain carona : caronas) {
@@ -403,6 +466,12 @@ public class CaronaBusiness {
 		}
 	}
 
+	/**
+	 * Verifica se é motorista.
+	 * @param login
+	 * @param idCarona
+	 * @return Se for motorista {@link TrueFalseType}, caso contrario <code>false</code>
+	 */
 	public static boolean ehMotorista(String login, String idCarona) {
 		for (CaronaDomain carona : caronas) {
 			if (idCarona.equals(carona.getIdCarona())
@@ -414,6 +483,12 @@ public class CaronaBusiness {
 		return false;
 	}
 
+	/**
+	 * Retorna o id da carona.
+	 * @param idSessao
+	 * @param indexCarona
+	 * @return
+	 */
 	public String getCaronaUsuario(String idSessao, String indexCarona) {
 		try {
 
@@ -428,16 +503,20 @@ public class CaronaBusiness {
 					cont++;
 				}
 			}
-
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		return "";
 	}
 
+	/**
+	 * Retorna todas as caronas dos usuarios.
+	 * @param idSessao
+	 * @return
+	 */
 	public String getTodasCaronasUsuario(String idSessao) {
 		String ids = "{";
-		boolean flag = true;// indica se a quantidade de ids � 0
+		boolean flag = true;// indica se a quantidade de ids é 0
 		for (CaronaDomain carona : caronas) {
 			if (carona.getIdSessao().equals(idSessao)) {
 				if (!flag) {
@@ -447,8 +526,6 @@ public class CaronaBusiness {
 				flag = false;
 			}
 		}
-
 		return ids + "}";
-
 	}
 }

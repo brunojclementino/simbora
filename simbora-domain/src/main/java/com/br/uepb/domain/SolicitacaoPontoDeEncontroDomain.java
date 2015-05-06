@@ -17,8 +17,8 @@ import javax.persistence.Table;
 @Table(name="SOLICITACAOPONTODEENCONTRO")
 public class SolicitacaoPontoDeEncontroDomain {
 	/**
-	 * Armazena respectivamente os pontos de sugest�o (0), resposta (1) e
-	 * confirma��o (2).
+	 * Armazena respectivamente os pontos de sugestão (0), resposta (1) e
+	 * confirmação (2).
 	 * 
 	 */
 	@OneToMany

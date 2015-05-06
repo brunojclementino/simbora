@@ -176,9 +176,11 @@ public class UsuarioBusiness {
 		return false;
 	}
 
-	
+	/**
+	 * Encerra o sistema. Por enquanto faz nada!
+	 */
 	public void encerrarSistema() { 
-
+		
 	}
 
 	/**

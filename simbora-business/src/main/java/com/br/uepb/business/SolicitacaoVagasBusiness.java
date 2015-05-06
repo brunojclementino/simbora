@@ -1,6 +1,5 @@
 package com.br.uepb.business;
 
-
 import java.util.List;
 
 import com.br.uepb.dao.impl.SolicitacaoVagasDaoImp;
@@ -8,7 +7,8 @@ import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
 
 /**
- * O responsável por gerenciar as solicitações de vagas nas caronas pelos usuúrios
+ * O responsável por gerenciar as solicitações de vagas nas caronas pelos
+ * usuúrios
  * 
  * @author Lucas Miranda e Bruno Clementino
  *
@@ -16,75 +16,111 @@ import com.br.uepb.domain.SolicitacaoVagasDomain;
 public class SolicitacaoVagasBusiness {
 
 	SolicitacaoVagasDomain solicitacaoVagas;
-	public static List<SolicitacaoVagasDomain> solicitacoesVagas = new SolicitacaoVagasDaoImp().list();
-	
-	public void zerarSistema(){
+	public static List<SolicitacaoVagasDomain> 
+		solicitacoesVagas = new SolicitacaoVagasDaoImp().list();
+
+	/**
+	 * Salva todoas as solicitacaoVagas e depois limpa a lista de
+	 * {@link SolicitacaoVagasDomain}.
+	 */
+	public void zerarSistema() {
 		for (SolicitacaoVagasDomain solicitacaoVagas : solicitacoesVagas) {
 			try {
 				new SolicitacaoVagasDaoImp().save(solicitacaoVagas);
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		solicitacoesVagas.clear();
 	}
-	
-	public String solicitarVaga(String idSessao, String idCarona){
-		
-		solicitacaoVagas=new SolicitacaoVagasDomain();
-		
+
+	/**
+	 * Cria uma solicitação de vaga na carona.
+	 * @param idSessao
+	 * @param idCarona
+	 * @return id da solicitação da vaga.
+	 */
+	public String solicitarVaga(String idSessao, String idCarona) {
+
+		solicitacaoVagas = new SolicitacaoVagasDomain();
+
 		solicitacaoVagas.setIdSessao(idSessao);
 		solicitacaoVagas.setIdCarona(idCarona);
-		
+
 		solicitacoesVagas.add(solicitacaoVagas);
-		
-		solicitacaoVagas.setIdSolicitacao(solicitacoesVagas.indexOf(solicitacaoVagas) +"V");//id da solicita��o de vaga
-		
+
+		solicitacaoVagas.setIdSolicitacao(solicitacoesVagas
+				.indexOf(solicitacaoVagas) + "V");// id da solicitação de vaga
+
 		return solicitacaoVagas.getIdSolicitacao();
 	}
-	
-	public void aceitarSolicitacao(String idSessao, String idSolicitacao){
-		
-		for(SolicitacaoVagasDomain solicitacao : solicitacoesVagas){
-			
-			if(solicitacao.getIdSolicitacao().equals(idSolicitacao)){
+
+	/**
+	 * Define o status da solicitação da carona para 'Aceita'.
+	 * @param idSessao
+	 * @param idSolicitacao
+	 */
+	public void aceitarSolicitacao(String idSessao, String idSolicitacao) {
+
+		for (SolicitacaoVagasDomain solicitacao : solicitacoesVagas) {
+
+			if (solicitacao.getIdSolicitacao().equals(idSolicitacao)) {
 				solicitacao.setStatus("Aceita");
 				new CaronaBusiness().reduzQtdVagas(solicitacao.getIdCarona());
 				return;
-			}			
-		}		
+			}
+		}
 	}
-	
-	public void rejeitarSolicitacao(String idSessao, String idSolicitacao) throws Exception{
-		for(SolicitacaoVagasDomain solicitacao : solicitacoesVagas){
-			
-			if(solicitacao.getIdSolicitacao().equals(idSolicitacao)){
-				if(solicitacao.getStatus().equals("Pendente")){
+
+	/**
+	 * Define o status da carona para 'Recusada' Se a solicitacaoVagas estiver 'Pendente'. Caso não encontre 
+	 * retornará 'Solicitação inexistente'.
+	 * @param idSessao
+	 * @param idSolicitacao
+	 * @throws Exception
+	 */
+	public void rejeitarSolicitacao(String idSessao, String idSolicitacao)
+			throws Exception {
+		for (SolicitacaoVagasDomain solicitacao : solicitacoesVagas) {
+
+			if (solicitacao.getIdSolicitacao().equals(idSolicitacao)) {
+				if (solicitacao.getStatus().equals("Pendente")) {
 
 					solicitacao.setStatus("Recusada");
 					return;
-				}else{
+				} else {
 					throw new Exception("Solicitação inexistente");
-				}				
+				}
 			}
-			
+
 		}
-		
+
 	}
-	
+
+	/**
+	 * Retorna o nome do Dono da solicitação ou Dono da Carona.
+	 * @param idSolicitacao
+	 * @param atributo
+	 * @return no do Dono da carona ou da Solicitação da carona.
+	 */
 	public String getAtributo(String idSolicitacao, String atributo) {
-		for(SolicitacaoVagasDomain solicitacao : solicitacoesVagas){
-			if(solicitacao.getIdSolicitacao().equals(idSolicitacao)){
+		for (SolicitacaoVagasDomain solicitacao : solicitacoesVagas) {
+			if (solicitacao.getIdSolicitacao().equals(idSolicitacao)) {
 				try {
-					return new CaronaBusiness().getAtributoCarona(solicitacao.getIdCarona(), atributo);
+					return new CaronaBusiness().getAtributoCarona(
+							solicitacao.getIdCarona(), atributo);
 				} catch (Exception e) {
-				}	
+					e.printStackTrace();
+				}
 				if (atributo.equals("Dono da carona")) {
-					for(CaronaDomain carona: CaronaBusiness.getCaronas()){
-						if(carona.getIdCarona().equals(solicitacao.getIdCarona())){
-							return new UsuarioBusiness().getAtributoUsuario(carona.getIdSessao(), "nome");
+					for (CaronaDomain carona : CaronaBusiness.getCaronas()) {
+						if (carona.getIdCarona().equals(
+								solicitacao.getIdCarona())) {
+							return new UsuarioBusiness().getAtributoUsuario(
+									carona.getIdSessao(), "nome");
 						}
 					}
-						
+
 				}
 
 				if (atributo.equals("Dono da solicitacao")) {
@@ -96,50 +132,62 @@ public class SolicitacaoVagasBusiness {
 
 		return "";
 	}
+
 	
-	public static boolean ehCaroneiro(String login){
+	public static boolean ehCaroneiro(String login) {
 		
 		return false;
 	}
 
+	/**
+	 * Retorna todos os ids das solicitações que foram aceitas.
+	 * @param idSessao
+	 * @param idCarona
+	 * @return
+	 */
 	public String getSolicitacoesConfirmadas(String idSessao, String idCarona) {
-		
-		String ids = "{";
-		boolean flag = true;// indica se a quantidade de ids � 0
-		for(SolicitacaoVagasDomain solicitacao : solicitacoesVagas){
 
-			if(solicitacao.getIdCarona().equals(idCarona) && 
-					CaronaBusiness.ehMotorista(idSessao, idCarona) &&
-					solicitacao.getStatus().equals("Aceita")){
-				
+		String ids = "{";
+		boolean flag = true;// indica se a quantidade de ids é 0
+		for (SolicitacaoVagasDomain solicitacao : solicitacoesVagas) {
+
+			if (solicitacao.getIdCarona().equals(idCarona)
+					&& CaronaBusiness.ehMotorista(idSessao, idCarona)
+					&& solicitacao.getStatus().equals("Aceita")) {
+
 				if (!flag) {
 					ids += ",";
 				}
 				ids += solicitacao.getIdSolicitacao();
 				flag = false;
-				
-			}			
+
+			}
 		}
 		return ids + "}";
 	}
-	
-	public String getSolicitacoesPendentes(String idSessao, String idCarona) {
+
+	/**
+	 * Retorna todos os ids das solicitações que estão pendentes.
+	 * @param idSessao
+	 * @param idCarona
+	 * @return
+	 */
+	public String getSolicitacoesPendentes(String idSessao, String idCarona) { 
 
 		String ids = "{";
-		boolean flag = true;// indica se a quantidade de ids � 0
-		for(SolicitacaoVagasDomain solicitacao : solicitacoesVagas){
+		boolean flag = true;// indica se a quantidade de ids é 0
+		for (SolicitacaoVagasDomain solicitacao : solicitacoesVagas) {
 
-			if(solicitacao.getIdCarona().equals(idCarona) && 
-					CaronaBusiness.ehMotorista(idSessao, idCarona) &&
-					solicitacao.getStatus().equals("Pendente")){
+			if (solicitacao.getIdCarona().equals(idCarona)
+					&& CaronaBusiness.ehMotorista(idSessao, idCarona)
+					&& solicitacao.getStatus().equals("Pendente")) {
 
 				if (!flag) {
 					ids += ",";
 				}
 				ids += solicitacao.getIdSolicitacao();
 				flag = false;
-
-			}			
+			}
 		}
 		return ids + "}";
 	}

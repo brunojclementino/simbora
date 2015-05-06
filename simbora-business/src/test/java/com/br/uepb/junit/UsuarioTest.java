@@ -71,9 +71,6 @@ public class UsuarioTest {
 		usuario.usuarios.clear();
 	}
 
-	/**
-	 * Faz o teste se consegue criar o usuário. ENTRADAS INVÁLIDAS
-	 */
 	@Test
 	public void criarUsuario_EI() {
 

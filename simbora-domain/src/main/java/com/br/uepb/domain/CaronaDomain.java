@@ -35,7 +35,7 @@ public class CaronaDomain {
 	
 	private String idSessao;
 	/**
-	 * M�todo construtor default.
+	 * Método construtor default.
 	 */
 	public CaronaDomain() {
 		// TODO Auto-generated constructor stub
