@@ -15,6 +15,7 @@ import com.br.uepb.dao.impl.PontoDeEncontroDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoPontoDeEncontroDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoVagasDaoImp;
 import com.br.uepb.dao.impl.UsuarioDaoImp;
+import com.br.uepb.util.HibernateUtil;
 
 /**
  * 
@@ -70,6 +71,7 @@ public class SimboraEasyAccept {
 		caronaBusiness.zerarSistema();
 		solicitacaoEncontroBusiness.zerarSistema();
 		solicitacaoVagasBusiness.zerarSistema();
+		HibernateUtil.closedSession();
 	}
 	
 	
