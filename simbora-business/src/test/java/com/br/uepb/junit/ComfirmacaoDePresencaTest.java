@@ -1,5 +1,7 @@
 package com.br.uepb.junit;
 
+import static org.junit.Assert.fail;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,33 +41,33 @@ public class ComfirmacaoDePresencaTest {
 		try {
 			sessao.abrirSessao("mark", "m@rk");
 		} catch (SessaoException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "02/06/2013", "12:00", "3");
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "04/06/2013", "16:00", "2");
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		// Iniciar Sessao
 		
 		try {
 			sessao.abrirSessao("bill", "bilz@o");
 		} catch (SessaoException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		// Requisitar vagas
 		try {
 		solicitarVagas.solicitarVaga("bill", "0");
 		} catch (Exception e) {
-		e.getMessage();	
+			fail();
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.br.uepb.junit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,8 +48,7 @@ public class PersistenciaTest {
 		try {
 			sessao.abrirSessao("steve", "5t3v3");
 		} catch (SessaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("Steve Paul Jobs",
@@ -68,7 +68,7 @@ public class PersistenciaTest {
 		try {
 			sessao.abrirSessao("mark", "m@rk");
 		} catch (SessaoException e) {
-			e.getMessage();
+			fail();
 		}
 
 		assertEquals("Mark Zuckerberg",
@@ -81,49 +81,43 @@ public class PersistenciaTest {
 			carona.cadastrarCarona("mark", "Cajazeiras", "Patos", "20/07/2013",
 					"14:00", "4");
 		} catch (CaronaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			carona.cadastrarCarona("mark", "São Francisco", "Palo Alto",
 					"12/09/2013", "21:00", "2");
 		} catch (CaronaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 		try {
 			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa",
 					"01/06/2013", "12:00", "1");
 		} catch (CaronaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 		try {
 			carona.cadastrarCarona("steve", "Campina Grande", "João Pessoa",
 					"04/06/2013", "16:00", "3");
 		} catch (CaronaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 		try {
 			carona.cadastrarCarona("steve", "Campina Grande", "João Pessoa",
 					"20/07/2013", "14:00", "4");
 		} catch (CaronaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 		try {
-			carona.cadastrarCarona("steve", "Leeds", "Londres",
-					"10/02/2013", "10:00", "3");
+			carona.cadastrarCarona("steve", "Leeds", "Londres", "10/02/2013",
+					"10:00", "3");
 		} catch (CaronaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
-		
+
 		sessao.encerrarSessao("mark");
 
 		sessao.encerrarSessao("steve");
@@ -149,46 +143,40 @@ public class PersistenciaTest {
 			assertEquals("São Francisco",
 					solicitarPontoVaga.getAtributoSolicitacao("0V", "origem"));
 		} catch (CaronaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("Palo Alto",
 					solicitarPontoVaga.getAtributoSolicitacao("0V", "destino"));
 		} catch (CaronaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("Mark Zuckerberg",
 					solicitarPontoVaga.getAtributoSolicitacao("0V",
 							"Dono da carona"));
 		} catch (CaronaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("Steve Paul Jobs",
 					solicitarPontoVaga.getAtributoSolicitacao("0V",
 							"Dono da solicitacao"));
 		} catch (CaronaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 		// Aceitar Solicitacao
 		try {
 			sessao.abrirSessao("mark", "m@rk");
 		} catch (SessaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		solicitarVaga.aceitarSolicitacao("mark", "0V");
 		try {
 			assertEquals("3", carona.getAtributoCarona("3", "vagas"));
 		} catch (CaronaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 		sessao.encerrarSessao("mark");
@@ -200,14 +188,12 @@ public class PersistenciaTest {
 		try {
 			sessao.abrirSessao("mark", "m@rk");
 		} catch (SessaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			sessao.abrirSessao("steve", "5t3v3");
 		} catch (SessaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 		assertEquals("Steve Paul Jobs",
@@ -222,139 +208,121 @@ public class PersistenciaTest {
 		try {
 			assertEquals("0", carona.getCaronaUsuario("mark", "1"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("Cajazeiras", carona.getAtributoCarona("0", "origem"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("Patos", carona.getAtributoCarona("0", "destino"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 		try {
 			assertEquals("1", carona.getCaronaUsuario("mark", "2"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();			
 		}
 		try {
 			assertEquals("São Francisco",
 					carona.getAtributoCarona("1", "origem"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("Palo Alto", carona.getAtributoCarona("1", "destino"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		// Carona 03
 		try {
 			assertEquals("2", carona.getCaronaUsuario("mark", "3"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("Campina Grande",
 					carona.getAtributoCarona("2", "origem"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("João Pessoa",
 					carona.getAtributoCarona("2", "destino"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		// Carona 04
 		try {
 			assertEquals("3", carona.getCaronaUsuario("steve", "1"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("Campina Grande",
 					carona.getAtributoCarona("3", "origem"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("João Pessoa",
 					carona.getAtributoCarona("3", "destino"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 		// Carona 05
 		try {
 			assertEquals("4", carona.getCaronaUsuario("steve", "2"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("Campina Grande",
 					carona.getAtributoCarona("4", "origem"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
 			assertEquals("João Pessoa",
 					carona.getAtributoCarona("4", "destino"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
-	
+
 		// Carona 06
 		try {
 			assertEquals("5", carona.getCaronaUsuario("steve", "3"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
-			assertEquals("Leeds",
-					carona.getAtributoCarona("5", "origem"));
+			assertEquals("Leeds", carona.getAtributoCarona("5", "origem"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		try {
-			assertEquals("Londres",
-					carona.getAtributoCarona("5", "destino"));
+			assertEquals("Londres", carona.getAtributoCarona("5", "destino"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-		
+			fail();
+		}
+
 		// Recuperar todas as caronas cadastradas
 		assertEquals("{0,1,2}", carona.getTodasCaronasUsuario("mark"));
 		assertEquals("{3,4,5}", carona.getTodasCaronasUsuario("steve"));
-		
+
 		// Recuperar solicitacoes confirmadas
-		assertEquals("{0V}", solicitarVaga.getSolicitacoesConfirmadas("mark", "1"));
+		assertEquals("{0V}",
+				solicitarVaga.getSolicitacoesConfirmadas("mark", "1"));
 		assertEquals("{}", solicitarVaga.getSolicitacoesPendentes("mark", "1"));
 		assertEquals("[]", solicitarPontoVaga.getPontosEncontro("mark", "1"));
-		
-		assertEquals("[Acude Velho;Hiper Bompreco]", solicitarPontoVaga.getPontosSugeridos("mark", "1"));
-		
+
+		assertEquals("[Acude Velho;Hiper Bompreco]",
+				solicitarPontoVaga.getPontosSugeridos("mark", "1"));
+
 		usuario.encerrarSistema();
 	}
 }

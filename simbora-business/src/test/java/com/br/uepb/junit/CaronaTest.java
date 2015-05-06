@@ -1,6 +1,7 @@
 package com.br.uepb.junit;
 
 import static org.junit.Assert.assertEquals; 
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +11,6 @@ import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.business.UsuarioBusiness;
 import com.br.uepb.constants.CaronaException;
 import com.br.uepb.constants.SessaoException;
-import com.br.uepb.dao.impl.CaronaDaoImp;
-import com.br.uepb.dao.impl.UsuarioDaoImp;
 
 /**
  * Cria os tests referentes a carona. Utiliza do Anotation FixMethodOrder para
@@ -33,9 +32,9 @@ public class CaronaTest {
 		usuarioBusiness = new UsuarioBusiness();
 		sessaoBusiness = new SessaoBusiness();
 
-		usuarioBusiness.usuarios.clear();
+		usuarioBusiness.zerarSistema();
 		sessaoBusiness.getSessoes().clear();
-		carona.getCaronas().clear();
+		carona.zerarSistema();
 	}
 
 	@Test
@@ -58,24 +57,21 @@ public class CaronaTest {
 			assertEquals("{}", carona.localizarCarona("mark",
 					"Campina Grande", "João Pessoa"));
 		} catch (CaronaException e) {
-			assertEquals("", e.getMessage());
-			e.printStackTrace();
+			fail();
 		}
 
 		try {
 			assertEquals("{}", carona.localizarCarona("mark",
 					"São Francisco", "Palo Alto"));
 		} catch (CaronaException e) {
-			assertEquals("", e.getMessage());
-			e.printStackTrace();
+			fail();
 		}
 
 		try {
 			assertEquals("{}", carona.localizarCarona("mark",
 					"Rio de Janeiro", "São Paulo"));
 		} catch (CaronaException e) {
-			assertEquals("", e.getMessage());
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -99,30 +95,28 @@ public class CaronaTest {
 					carona.cadastrarCarona("mark", "Campina Grande",
 							"João Pessoa", "23/06/2013", "16:00", "3"));
 		} catch (CaronaException e) {
-			assertEquals("", e.getMessage());
-		} catch (Exception e) {
-
-		}
+			fail();
+		} 
 
 		try {
 			assertEquals("Campina Grande",
 					carona.getAtributoCarona("0", "origem"));
 		} catch (CaronaException e) {
-			System.out.println(e.getMessage());
+			fail();
 		}
 
 		try {
 			assertEquals("João Pessoa",
 					carona.getAtributoCarona("0", "destino"));
 		} catch (CaronaException e) {
-			System.out.println(e.getMessage());
+			fail();
 		}
 
 		try {
 			assertEquals("Campina Grande - João Pessoa",
 					carona.getTrajeto("0"));
 		} catch (CaronaException e) {
-			System.out.println(e.getMessage());
+			fail();
 		}
 
 		// Cadastrando a segunda carona
@@ -130,19 +124,19 @@ public class CaronaTest {
 			assertEquals("1", carona.cadastrarCarona("mark",
 					"Rio de Janeiro", "São Paulo", "31/05/2013", "08:00", "2"));
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			fail();
 		}
 
 		try {
 			assertEquals("31/05/2013", carona.getAtributoCarona("1", "data"));
 		} catch (Exception e) {
-			e.getMessage();
+			fail();
 		}
 
 		try {
 			assertEquals("2", carona.getAtributoCarona("1", "vagas"));
 		} catch (Exception e) {
-			e.getMessage();
+			fail();
 		}
 
 		// Cadastrando a Terceira carona
@@ -150,14 +144,14 @@ public class CaronaTest {
 			assertEquals("2", carona.cadastrarCarona("mark", "João Pessoa",
 					"Campina Grande", "25/11/2026", "06:59", "4"));
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			fail();
 		}
 		try {
 			assertEquals(
 					"João Pessoa para Campina Grande, no dia 25/11/2026, as 06:59",
 					carona.getCarona("2"));
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			fail();
 		}
 
 		// Cadastro da quarta carona
@@ -165,60 +159,60 @@ public class CaronaTest {
 			assertEquals("3", carona.cadastrarCarona("mark", "João Pessoa",
 					"Lagoa Seca", "25/11/2026", "05:00", "4"));
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			fail();
 		}
 		try {
 			assertEquals(
 					"João Pessoa para Lagoa Seca, no dia 25/11/2026, as 05:00",
 					carona.getCarona("3"));
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			fail();
 		}
 		// Cadastro da quinto carona
 		try {
 			assertEquals("4", carona.cadastrarCarona("mark", "João Pessoa",
 					"Lagoa Seca", "25/11/2017", "05:00", "4"));
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			fail();
 		}
 		try {
 			assertEquals(
 					"João Pessoa para Lagoa Seca, no dia 25/11/2017, as 05:00",
 					carona.getCarona("4"));
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			fail();
 		}
 		
 		// Localizar caronas
 		try {
 			assertEquals("{}", carona.localizarCarona("mark", "São Francisco", "Palo Alto"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		try {
 			assertEquals("{1}", carona.localizarCarona("mark", "Rio de Janeiro", "São Paulo"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		try {
 			assertEquals("{2}", carona.localizarCarona("mark", "João Pessoa", "Campina Grande"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		try {
 			assertEquals("{2,3,4}", carona.localizarCarona("mark", "João Pessoa", ""));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		try {
 			assertEquals("{1}", carona.localizarCarona("mark", "", "São Paulo"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		try {
 			assertEquals("{0,1,2,3,4}", carona.localizarCarona("mark", "", ""));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		
 	}
@@ -226,7 +220,7 @@ public class CaronaTest {
 	@Test
 	public void cadastrarCaronasTest() {
 		usuarioBusiness.usuarios.clear();
-		carona.caronas.clear();
+		carona.zerarSistema();
 		
 		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
@@ -470,9 +464,9 @@ public class CaronaTest {
 
 	@Test
 	public void localizarCaronasTests () {
-		usuarioBusiness.usuarios.clear();
+		usuarioBusiness.zerarSistema();
 		sessaoBusiness.getSessoes().clear();
-		carona.getCaronas().clear();
+		carona.zerarSistema();
 		
 		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
@@ -486,51 +480,51 @@ public class CaronaTest {
 		try {
 			assertEquals("{}", carona.localizarCarona("mark", "Campina Grande", "João Pessoa"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("{}", carona.localizarCarona("mark", "São Francisco", "Palo Alto"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("{}", carona.localizarCarona("mark", "Rio de Janeiro", "São Paulo"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		// Cadastrar Caronas
 		try {
 			assertEquals("0", carona.cadastrarCarona("mark", "Cajazeiras", "Patos", "20/07/2013", "14:00", "4"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		try {
 			assertEquals("1", carona.cadastrarCarona("mark", "São Francisco", "Palo Alto", "12/09/2013", "21:00", "2"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		try {
 			assertEquals("2", carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "01/06/2013", "12:00", "1"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		try {
 			assertEquals("3", carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "02/06/2013", "12:00", "3"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		try {
 			assertEquals("4", carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "04/06/2013", "16:00", "2"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		try {
 			assertEquals("5", carona.cadastrarCarona("mark", "Leeds", "Londres", "10/02/2013", "10:00", "3"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		// Localizar as contas
@@ -538,18 +532,18 @@ public class CaronaTest {
 		try {
 			assertEquals("{1}", carona.localizarCarona("mark", "São Francisco", "Palo Alto"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("{}", carona.localizarCarona("mark", "Rio de Janeiro", "São Paulo"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		try {
 			assertEquals("{2,3,4}", carona.localizarCarona("mark", "Campina Grande", "João Pessoa"));
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		// Testar os possiveis erros

@@ -1,6 +1,7 @@
 package com.br.uepb.junit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,143 +49,143 @@ public class VisualizarPerfilTeste {
 		try {
 			sessao.abrirSessao("mark", "m@rk");
 		} catch (SessaoException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			perfil.visualizarPerfil("mark", "mark");
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("Mark Zuckerberg", perfil.getAtributoPerfil("mark", "nome"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("Palo Alto, California", perfil.getAtributoPerfil("mark", "endereco"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("mark@facebook.com", perfil.getAtributoPerfil("mark", "email"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("[]", perfil.getAtributoPerfil("mark", "historico de caronas"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("[]", perfil.getAtributoPerfil("mark", "historico de vagas em caronas"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("0", perfil.getAtributoPerfil("mark", "caronas seguras e tranquilas"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("0", perfil.getAtributoPerfil("mark", "caronas que não funcionaram"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("0", perfil.getAtributoPerfil("mark", "faltas em vagas de caronas"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		try {
 			assertEquals("0", perfil.getAtributoPerfil("mark", "presenças em vagas de caronas"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		// Cadastrar carona
 		try {
 			carona.cadastrarCarona("mark", "São Francisco", "Palo Alto", "12/09/2013", "21:00", "2");
 		} catch (CaronaException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		// 
 		try {
 			perfil.visualizarPerfil("mark", "mark");
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("Mark Zuckerberg", perfil.getAtributoPerfil("mark", "nome"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("Palo Alto, California", perfil.getAtributoPerfil("mark", "endereco"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("mark@facebook.com", perfil.getAtributoPerfil("mark", "email"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("[0]", perfil.getAtributoPerfil("mark", "historico de caronas"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("[]", perfil.getAtributoPerfil("mark", "historico de vagas em caronas"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("0", perfil.getAtributoPerfil("mark", "caronas seguras e tranquilas"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("0", perfil.getAtributoPerfil("mark", "caronas que não funcionaram"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("0", perfil.getAtributoPerfil("mark", "faltas em vagas de caronas"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 		
 		try {
 			assertEquals("0", perfil.getAtributoPerfil("mark", "presenças em vagas de caronas"));
 		} catch (PerfilException e) {
-			e.getMessage();
+			fail();
 		}
 	}
 	
 	@Test
 	public void errosPossiveis() {
-		usuario.usuarios.clear();
-		perfil.presenteNasVagas.clear(); 
+		usuario.zerarSistema();
+		perfil.zerarSistema(); 
 		sessao.getSessoes().clear();
-		carona.caronas.clear();
+		carona.zerarSistema();
 		
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com");
 

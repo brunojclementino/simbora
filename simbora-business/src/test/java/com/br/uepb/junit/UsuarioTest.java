@@ -1,6 +1,7 @@
 package com.br.uepb.junit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +46,7 @@ public class UsuarioTest {
 		try {
 			sessao.abrirSessao("mark", "m@rk");
 		} catch (SessaoException e) {
-			assertEquals("", "");
+			fail();
 		}
 		//
 		assertEquals("Mark Zuckerberg",
