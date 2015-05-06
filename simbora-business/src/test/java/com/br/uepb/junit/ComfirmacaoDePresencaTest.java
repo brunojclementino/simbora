@@ -26,9 +26,9 @@ public class ComfirmacaoDePresencaTest {
 		sessao = new SessaoBusiness();
 		solicitarVagas = new SolicitacaoVagasBusiness();
 		
-		usuario.zerarSistema();
-		carona.zerarSistema();
-		solicitarVagas.zerarSistema();
+		usuario.encerrarSistema();
+		carona.encerrarSistema();
+		solicitarVagas.encerrarSistema();
 		
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com");
 		usuario.criarUsuario("bill", "bilz@o", "Willian Henry Gates III", "Medina, Washington", "billzin@gmail.com");

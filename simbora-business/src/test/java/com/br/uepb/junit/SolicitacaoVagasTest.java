@@ -33,7 +33,7 @@ public class SolicitacaoVagasTest {
 		solicitarVagas = new SolicitacaoPontoDeEncontroBusiness();
 		solicitacao = new SolicitacaoVagasBusiness();
 
-		usuario.zerarSistema();
+		usuario.encerrarSistema();
 		carona.getCaronas().clear();
 		sessao.getSessoes().clear();
 		solicitarVagas.solicitacoes.clear();
@@ -328,16 +328,16 @@ public class SolicitacaoVagasTest {
 
 	@Test
 	public void zeraSistema() {
-		solicitarVagas.zerarSistema();
+		solicitarVagas.encerrarSistema();
 	}
 
 	@Test
 	public void solicitacoesVagasUS05() {
-		usuario.zerarSistema();
-		carona.zerarSistema();
+		usuario.encerrarSistema();
+		carona.encerrarSistema();
 		sessao.getSessoes().clear();
-		solicitarVagas.zerarSistema();
-		solicitacao.zerarSistema();
+		solicitarVagas.encerrarSistema();
+		solicitacao.encerrarSistema();
 		
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");

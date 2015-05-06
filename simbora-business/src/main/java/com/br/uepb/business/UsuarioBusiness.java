@@ -26,10 +26,11 @@ public class UsuarioBusiness {
 	 * Esse método faz duas ações: salva os dados dos usuários e limpa a lista
 	 * dos usuário. Para isso ele preserva as informações dos usuários.
 	 */
-	public void zerarSistema() {
+	public void encerrarSistema() {
 		for (UsuarioDomain usuario : usuarios) {
 			try {
-				new UsuarioDaoImp().save(usuario);
+				UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
+				usuarioDaoImp.save(usuario);
 			} catch (Exception e) {
 			}
 		}
@@ -174,13 +175,6 @@ public class UsuarioBusiness {
 				return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Encerra o sistema. Por enquanto faz nada!
-	 */
-	public void encerrarSistema() { 
-		
 	}
 
 	/**

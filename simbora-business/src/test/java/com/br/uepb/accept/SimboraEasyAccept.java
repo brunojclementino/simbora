@@ -67,10 +67,10 @@ public class SimboraEasyAccept {
 	}
 	
 	public void encerrarSistema(){
-		usuarioBusiness.zerarSistema();
-		caronaBusiness.zerarSistema();
-		solicitacaoEncontroBusiness.zerarSistema();
-		solicitacaoVagasBusiness.zerarSistema();
+		usuarioBusiness.encerrarSistema();
+		caronaBusiness.encerrarSistema();
+		solicitacaoEncontroBusiness.encerrarSistema();
+		solicitacaoVagasBusiness.encerrarSistema();
 		HibernateUtil.closedSession();
 	}
 	

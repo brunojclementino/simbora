@@ -21,7 +21,7 @@ public class UsuarioTest {
 		usuario = new UsuarioBusiness();
 		sessao = new SessaoBusiness();
 
-		usuario.zerarSistema();
+		usuario.encerrarSistema();
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class UsuarioTest {
 	 */
 	@Test
 	public void criarUsuarios_EV() {
-		usuario.zerarSistema();
+		usuario.encerrarSistema();
 		sessao.getSessoes().clear();
 		sessao.getUsuarios().clear();
 

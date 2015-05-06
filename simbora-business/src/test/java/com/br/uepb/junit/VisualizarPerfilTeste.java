@@ -28,21 +28,21 @@ public class VisualizarPerfilTeste {
 		sessao = new SessaoBusiness();
 		carona = new CaronaBusiness();
 		
-		usuario.zerarSistema();
+		usuario.encerrarSistema();
 		perfil.zerarSistema();
 		sessao.getUsuarios().clear();
 		sessao.getSessoes().clear();
-		carona.zerarSistema();
+		carona.encerrarSistema();
 	}
 
 	@Test
 	public void criarUsuario() {
 		
-		usuario.zerarSistema();
+		usuario.encerrarSistema();
 		perfil.zerarSistema();
 		sessao.getUsuarios().clear();
 		sessao.getSessoes().clear();
-		carona.zerarSistema();
+		carona.encerrarSistema();
 		
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com");
 
@@ -182,10 +182,10 @@ public class VisualizarPerfilTeste {
 	
 	@Test
 	public void errosPossiveis() {
-		usuario.zerarSistema();
+		usuario.encerrarSistema();
 		perfil.zerarSistema(); 
 		sessao.getSessoes().clear();
-		carona.zerarSistema();
+		carona.encerrarSistema();
 		
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com");
 

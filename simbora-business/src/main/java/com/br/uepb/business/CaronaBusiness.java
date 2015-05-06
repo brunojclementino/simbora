@@ -32,10 +32,11 @@ public class CaronaBusiness {
 	/**
 	 * Salva todos as caronas e em seguida limpa a List<CaronaDomain>.
 	 */
-	public void zerarSistema() {
+	public void encerrarSistema() {
 		for (CaronaDomain carona : caronas) {
 			try {
-				new CaronaDaoImp().save(carona);
+				CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
+				caronaDaoImp.save(carona);
 			} catch (Exception e) {
 				e.getMessage();
 			}

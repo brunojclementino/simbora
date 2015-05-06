@@ -23,10 +23,11 @@ public class SolicitacaoVagasBusiness {
 	 * Salva todoas as solicitacaoVagas e depois limpa a lista de
 	 * {@link SolicitacaoVagasDomain}.
 	 */
-	public void zerarSistema() {
+	public void encerrarSistema() {
 		for (SolicitacaoVagasDomain solicitacaoVagas : solicitacoesVagas) {
 			try {
-				new SolicitacaoVagasDaoImp().save(solicitacaoVagas);
+				SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
+				solicitacaoVagasDaoImp.save(solicitacaoVagas);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

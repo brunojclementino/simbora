@@ -34,8 +34,8 @@ public class PersistenciaTest {
 		sessao.getSessoes().clear();
 		sessao.getUsuarios().clear();
 		carona.getCaronas().clear();
-		solicitarPontoVaga.zerarSistema();
-		solicitarVaga.zerarSistema();
+		solicitarPontoVaga.encerrarSistema();
+		solicitarVaga.encerrarSistema();
 	}
 
 	@Test
@@ -182,7 +182,6 @@ public class PersistenciaTest {
 		sessao.encerrarSessao("mark");
 		sessao.encerrarSessao("steve");
 
-		usuario.encerrarSistema();
 
 		// Inicializar o sistemam
 		try {

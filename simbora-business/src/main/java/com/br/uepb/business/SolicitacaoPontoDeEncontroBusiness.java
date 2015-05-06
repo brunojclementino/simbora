@@ -37,20 +37,21 @@ public class SolicitacaoPontoDeEncontroBusiness {
 	/**
 	 * Salva os pontos de encontro que foram aceitas e que ainda estão pendentes. Depois a List é limpada.
 	 */
-	public void zerarSistema() {
+	public void encerrarSistema() {
 		for (SolicitacaoPontoDeEncontroDomain solicitacaoPontoDeEncontro : solicitacoes) {
 			try {
+				PontoDeEncontroDaoImp pontoDeEncontroDaoImp = new PontoDeEncontroDaoImp();
 				if (solicitacaoPontoDeEncontro.getPontoDeEncontro(0) != null)
-					new PontoDeEncontroDaoImp().save(solicitacaoPontoDeEncontro
+					pontoDeEncontroDaoImp.save(solicitacaoPontoDeEncontro
 							.getPontoDeEncontro(0));
 				if (solicitacaoPontoDeEncontro.getPontoDeEncontro(1) != null)
-					new PontoDeEncontroDaoImp().save(solicitacaoPontoDeEncontro
+					pontoDeEncontroDaoImp.save(solicitacaoPontoDeEncontro
 							.getPontoDeEncontro(1));
 				if (solicitacaoPontoDeEncontro.getPontoDeEncontro(2) != null)
-					new PontoDeEncontroDaoImp().save(solicitacaoPontoDeEncontro
+					pontoDeEncontroDaoImp.save(solicitacaoPontoDeEncontro
 							.getPontoDeEncontro(2));
-				new SolicitacaoPontoDeEncontroDaoImp()
-						.save(solicitacaoPontoDeEncontro);
+				SolicitacaoPontoDeEncontroDaoImp solicitacaoPontoDeEncontroDaoImp = new SolicitacaoPontoDeEncontroDaoImp();
+				solicitacaoPontoDeEncontroDaoImp.save(solicitacaoPontoDeEncontro);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

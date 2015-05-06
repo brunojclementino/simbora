@@ -32,14 +32,14 @@ public class CaronaTest {
 		usuarioBusiness = new UsuarioBusiness();
 		sessaoBusiness = new SessaoBusiness();
 
-		usuarioBusiness.zerarSistema();
+		usuarioBusiness.encerrarSistema();
 		sessaoBusiness.getSessoes().clear();
-		carona.zerarSistema();
+		carona.encerrarSistema();
 	}
 
 	@Test
 	public void localizarCadastrarCarona() {
-		usuarioBusiness.zerarSistema();
+		usuarioBusiness.encerrarSistema();
 		sessaoBusiness.getSessoes().clear();
 		carona.getCaronas().clear();
 		
@@ -78,7 +78,7 @@ public class CaronaTest {
 	@Test
 	public void cadastrarCarona() {
 		carona.caronas.clear();
-		usuarioBusiness.zerarSistema();
+		usuarioBusiness.encerrarSistema();
 		sessaoBusiness.getSessoes().clear();
 		
 		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
@@ -220,7 +220,7 @@ public class CaronaTest {
 	@Test
 	public void cadastrarCaronasTest() {
 		usuarioBusiness.usuarios.clear();
-		carona.zerarSistema();
+		carona.encerrarSistema();
 		
 		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
@@ -455,8 +455,8 @@ public class CaronaTest {
 		sessaoBusiness.encerrarSessao("m@rk");
 
 		// Limpar tudo do BD
-		usuarioBusiness.zerarSistema();
-		carona.zerarSistema();
+		usuarioBusiness.encerrarSistema();
+		carona.encerrarSistema();
 
 		carona.caronas.clear();
 		assertEquals(null, carona.getCarona());
@@ -464,9 +464,9 @@ public class CaronaTest {
 
 	@Test
 	public void localizarCaronasTests () {
-		usuarioBusiness.zerarSistema();
+		usuarioBusiness.encerrarSistema();
 		sessaoBusiness.getSessoes().clear();
-		carona.zerarSistema();
+		carona.encerrarSistema();
 		
 		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
