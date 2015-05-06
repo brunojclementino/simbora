@@ -27,31 +27,57 @@ public class SolicitacaoPontoDeEncontroDomain {
 	
 	@Id
 	@Column(name = "idSugestao")
-	private String idSugestao;
-	private boolean emAndamento = true;// Se a solicita��o ainda n�o foi
-										// conclu�da
+	private String idSugestao; 
+	private boolean emAndamento = true;
+		// Se a solicitação ainda não foi concluída
 
+	/**
+	 * Retorna o ponto de encontro.
+	 * @param indice
+	 * @return ponto de encontro.
+	 */
 	public PontoDeEncontroDomain getPontoDeEncontro(int indice) {
 		return pontoDeEncontro[indice];
 	}
 
+	/**
+	 * Define o ponto de encontro. Dependendo do indice poderá definida como sugestão (0), 
+	 * resposta (1) ou confirmação (2).
+	 * @param pontoDeEncontro
+	 * @param indice
+	 */
 	public void setPontoDeEncontro(PontoDeEncontroDomain pontoDeEncontro, int indice) {
 		this.pontoDeEncontro[indice] = pontoDeEncontro;
 	}
 
-	public String getIdSugestao() {
+	/**
+	 * @return id da sugestão.
+	 */
+	public String getIdSugestao() { 
 		return idSugestao;
 	}
 
-	public void setIdSugestao(String idSugestao) {
+	/**
+	 * Atribui o id da sugestão da carona.
+	 * @param idSugestao
+	 */
+	public void setIdSugestao(String idSugestao) { 
 		this.idSugestao = idSugestao;
 	}
-
-	public boolean isEmAndamento() {
+	
+	/**
+	 * 
+	 * @return status do andamento da sugestão da carona. <code>true</code> ou <code>false</code>.
+	 */
+	public boolean isEmAndamento() { 
 		return emAndamento;
 	}
 
-	public void setEmAndamento(boolean emAndamento) {
+	/**
+	 * Define o status da sugestão da carona.
+	 * @param emAndamento
+	 */
+	public void setEmAndamento(boolean emAndamento) { 
 		this.emAndamento = emAndamento;
 	}
 }

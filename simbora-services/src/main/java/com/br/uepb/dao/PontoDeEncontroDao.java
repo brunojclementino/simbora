@@ -1,5 +1,7 @@
+/**
+ * Pacote com as interfaces.
+ */
 package com.br.uepb.dao;
-
 
 import java.util.List;
 

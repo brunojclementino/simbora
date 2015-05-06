@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Esta classe regista as solicita��es do caroneiro. 
+ * Esta classe regista as solicitações do caroneiro. 
  * 
  * @author Lucas Miranda e Bruno Clementino
  *
@@ -18,9 +18,11 @@ public class SolicitacaoVagasDomain {
 	@Id
 	@Column(name = "idSolicitacao")
 	private String idSolicitacao;
-	private String idSessao;//identifica��o de quem solicitou a vaga
+	private String idSessao;
+	//identificação de quem solicitou a vaga
 	private String idCarona;
-	private String status = "Pendente";//Se a solicita��o foi Aceita, est� Pendente, ou foi Recusada.
+	private String status = "Pendente";
+	//Se a solicitação foi Aceita, está Pendente, ou foi Recusada.
 	
 	/**
 	 * @return the idSolicitacao
@@ -70,6 +72,5 @@ public class SolicitacaoVagasDomain {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 		
 }

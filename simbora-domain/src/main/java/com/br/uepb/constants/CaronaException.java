@@ -1,7 +1,7 @@
 package com.br.uepb.constants;
 
 /**
- * Essa classe � usada para a excess�o.  
+ * Essa classe é usada para a excessão.  
  * @author Lucas Miranda e Bruno Clementino
  *
  */
