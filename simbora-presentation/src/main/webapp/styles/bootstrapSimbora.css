@@ -1,0 +1,44 @@
+.row_principal {
+	width: 100%;
+	height: 25%;
+	
+}
+#span_name_logo {
+	width: 75%;
+	margin: 0px;
+	float: left;
+}
+
+#span_user {
+	width: 25%;
+	margin-top: 15px;
+	float: left;
+	padding-top: 30px;
+	
+	text-align: right;
+}
+
+.manager_user {
+	color: #400040;
+	font-size: 14px;
+}
+
+#logomarca {
+	margin-left: 20%;
+}
+
+.caret {
+	float: right;
+}
+
+.btnUsuario_login {
+	width: 100%;
+	height: 20%;
+	background-color: transparent;
+	border: 2px;
+	border-style: groove;
+	border-radius: 6px;
+}
+
+
+

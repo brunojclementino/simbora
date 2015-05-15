@@ -1,6 +1,6 @@
 package com.br.uepb.business;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.br.uepb.dao.UserDAO;
