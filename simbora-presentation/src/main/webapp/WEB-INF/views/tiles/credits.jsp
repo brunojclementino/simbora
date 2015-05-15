@@ -1,6 +1,6 @@
 
 
-<div id="footerText">UEPB. All Rights Reserved</div>
+<div id="footerText">Alunos: Bruno José e Lucas Miranda. All Rights Reserved</div>
 
 </html>
 

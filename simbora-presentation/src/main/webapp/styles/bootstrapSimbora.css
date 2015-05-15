@@ -1,21 +1,22 @@
 .row_principal {
 	width: 100%;
 	height: 25%;
-	
+	margin-top: 20px;
 }
 #span_name_logo {
-	width: 75%;
+	width: 70%;
 	margin: 0px;
 	float: left;
 }
 
 #span_user {
-	width: 25%;
-	margin-top: 15px;
+	width: 30%;
+	height: 100%;
+	margin-top: 0px;
+	padding-right: 5px;
 	float: left;
-	padding-top: 30px;
-	
-	text-align: right;
+	padding-top: 30px;	
+	text-align: right; 
 }
 
 .manager_user {
@@ -24,7 +25,10 @@
 }
 
 #logomarca {
-	margin-left: 20%;
+	margin-left: 10%;
+	float: left;
+	padding: 5px;
+	
 }
 
 .caret {
@@ -39,6 +43,16 @@
 	border-style: groove;
 	border-radius: 6px;
 }
+.btnUsuario_login.span {
+	margin-top: 15px;
+}
+.title-site {
+	color: #0080ff;
+	text-align: left;
+	padding: 5px;
+	font-size: 40px;
+}
 
-
-
+a:HOVER {
+	text-decoration: none;
+}
