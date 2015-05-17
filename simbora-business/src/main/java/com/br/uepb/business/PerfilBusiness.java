@@ -12,163 +12,223 @@ import com.br.uepb.domain.SolicitacaoVagasDomain;
 import com.br.uepb.domain.UsuarioDomain;
 
 /**
- * Esta classe gerencia o perfil do usuário. Responsável por transmitir as informações relacionadas
- * as atividades dos usuários.
- * Define os métodos de acesso público: visualizarPerfil e getAtributoPerfil
+ * Esta classe gerencia o perfil do usuário. Responsável por transmitir as
+ * informações relacionadas as atividades dos usuários. Define os métodos de
+ * acesso público: visualizarPerfil e getAtributoPerfil
  * 
  * @author Lucas Miranda e Bruno Clementino
  *
  */
 public class PerfilBusiness {
-	
+
 	public final static Logger logger = Logger.getLogger(PerfilBusiness.class);
-	
+
 	public static List<String> caronasSegurasTranquilas = new ArrayList<>();
 	public static List<String> caronasNaoFuncionaram = new ArrayList<>();
 	public static List<String> faltaramNasVagas = new ArrayList<>();
 	public static List<String> presenteNasVagas = new ArrayList<>();
+	private List<SolicitacaoVagasDomain> solicitacoesVagas = SolicitacaoVagasBusiness.solicitacoesVagas;
 	
 	/**
 	 * Retorna o login do usuario.
+	 * 
 	 * @param idSessao
 	 * @param login
 	 * @return
 	 * @throws PerfilException
 	 */
-	public String visualizarPerfil(String idSessao, String login) throws PerfilException {
-		
-		if(login==null || login.trim().trim().isEmpty()){
-			throw new PerfilException("Login inválido"); 
+	public String visualizarPerfil(String idSessao, String login)
+			throws PerfilException {
+
+		if (login == null || login.trim().trim().isEmpty()) {
+			throw new PerfilException("Login inválido");
 		}
-		
-		if(idSessao==null || idSessao.trim().isEmpty()){
+
+		if (idSessao == null || idSessao.trim().isEmpty()) {
 			throw new PerfilException("Sessão inválida");
 		}
-		
-		for(UsuarioDomain usuario : new UsuarioBusiness().usuarios){
-			if(usuario.getLogin().equals(login)){
+
+		for (UsuarioDomain usuario : new UsuarioBusiness().usuarios) {
+			if (usuario.getLogin().equals(login)) {
 				return usuario.getLogin();
 			}
-		}		
+		}
 		throw new PerfilException("Login inválido");
 	}
+
 	/**
-	 * Retorna todas as informações solicitadas pelo parametro. 
+	 * Retorna todas as informações solicitadas pelo parametro.
 	 * 
 	 * @see getAtributo
 	 * @param login
-	 * @param atributo (historico das caronas, historico de vagas em caronas, caronas seguras e tranquilas,
-	 * caronas que não funcionaram, faltas em vagas de caronas, presenças em vagas de caronas)
+	 * @param atributo
+	 *            (historico das caronas, historico de vagas em caronas, caronas
+	 *            seguras e tranquilas, caronas que não funcionaram, faltas em
+	 *            vagas de caronas, presenças em vagas de caronas)
 	 * @return informações dependendo do parametro.
 	 * @throws PerfilException
 	 *
 	 */
-	public String getAtributoPerfil(String login, String atributo) throws PerfilException{
-		if(atributo == null || atributo.trim().isEmpty()){ 
+	public String getAtributoPerfil(String login, String atributo)
+			throws PerfilException {
+		if (atributo == null || atributo.trim().isEmpty()) {
 			throw new PerfilException("Atributo inválido");
 		}
-		if(login==null || login.trim().isEmpty()){
+		if (login == null || login.trim().isEmpty()) {
 			throw new PerfilException("Login inválido");
 		}
-	
-		for(UsuarioDomain usuario : new UsuarioBusiness().usuarios) {
-			if(usuario.getLogin().equals(login)){
-				return getAtributo(login, atributo); 
-			}  
+
+		for (UsuarioDomain usuario : new UsuarioBusiness().usuarios) {
+			if (usuario.getLogin().equals(login)) {
+				return getAtributo(login, atributo);
+			}
 		}
 		throw new UsuarioException("Login inválido");
-		
+
 	}
 
 	/**
-	 * Este metodo retorna historico das caronas, historico de vagas em caronas, caronas seguras e tranquilas,
-	 * caronas que não funcionaram, faltas em vagas de caronas ou presenças em vagas de caronas. 
+	 * Este metodo retorna historico das caronas, historico de vagas em caronas,
+	 * caronas seguras e tranquilas, caronas que não funcionaram, faltas em
+	 * vagas de caronas ou presenças em vagas de caronas.
+	 * 
 	 * @param login
 	 * @param atributo
 	 * @return
 	 * @throws PerfilException
 	 */
-	private String getAtributo(String login, String atributo) throws PerfilException {
-		
-		if(atributo.equals("historico de caronas")){
+	private String getAtributo(String login, String atributo)
+			throws PerfilException {
+
+		if (atributo.equals("historico de caronas")) {
 			String caron = "[";
-			for(CaronaDomain carona : CaronaBusiness.getCaronas()){
-				if(carona.getIdSessao().equals(login)){
-					caron+=carona.getIdCarona();
+			for (CaronaDomain carona : CaronaBusiness.getCaronas()) {
+				if (carona.getIdSessao().equals(login)) {
+					caron += carona.getIdCarona();
 				}
-			} 
-			return caron+"]";
+			}
+			return caron + "]";
 		}
-		
-		if(atributo.equals("historico de vagas em caronas")){
+
+		if (atributo.equals("historico de vagas em caronas")) {
+			boolean flag = true;// indica se a quantidade de ids é 0
 			String caron = "[";
-			for(SolicitacaoVagasDomain solicitacaoVagas : SolicitacaoVagasBusiness.solicitacoesVagas){
-				if(solicitacaoVagas.getIdSessao().equals(login)){
-					caron+=solicitacaoVagas.getIdCarona();
+			for (SolicitacaoVagasDomain solicitacaoVagas : SolicitacaoVagasBusiness.solicitacoesVagas) {
+				if (solicitacaoVagas.getIdSessao().equals(login)) {
+					if (!flag) {
+						caron += ",";
+					}
+					caron += solicitacaoVagas.getIdCarona();
+					flag = false;
 				}
 			}
-			return caron+"]";
+			return caron + "]";
 		}
-		
-		if(atributo.equals("caronas seguras e tranquilas")){
+
+		if (atributo.equals("caronas seguras e tranquilas")) {
 			int caron = 0;
-			for(String idCarona : caronasSegurasTranquilas){
-				if(CaronaBusiness.ehMotorista(login, idCarona)){
+			for (String idCarona : caronasSegurasTranquilas) {
+				if (CaronaBusiness.ehMotorista(login, idCarona)) {
 					caron++;
 				}
 			}
-			return caron+"";
+			return caron + "";
 		}
-		
-		if(atributo.equals("caronas que não funcionaram")){
+
+		if (atributo.equals("caronas que não funcionaram")) {
 			int caron = 0;
-			for(String idCarona : caronasNaoFuncionaram){
-				if(CaronaBusiness.ehMotorista(login, idCarona)){
+			String caronas = "";
+			for (String idCarona : caronasNaoFuncionaram) {
+				if (CaronaBusiness.ehMotorista(login, idCarona)) {
 					caron++;
 				}
 			}
-			return caron+"";
+			return caron + "";
 		}
-		
-		if(atributo.equals("faltas em vagas de caronas")){
+
+		if (atributo.equals("faltas em vagas de caronas")) {
 			int caron = 0;
-			for(String idUsuario : faltaramNasVagas){
-				if(idUsuario.equals(login) && SolicitacaoVagasBusiness.ehCaroneiro(login)){
+			for (String idUsuario : faltaramNasVagas) {
+				if (idUsuario.equals(login)) {
 					caron++;
 				}
 			}
-			return caron+"";
+			return caron + "";
 		}
-		
-		if(atributo.equals("presenças em vagas de caronas")){
+
+		if (atributo.equals("presenças em vagas de caronas")) {
 			int caron = 0;
-			for(String idUsuario : presenteNasVagas){
-				if(idUsuario.equals(login) && SolicitacaoVagasBusiness.ehCaroneiro(login)){
+			for (String idUsuario : presenteNasVagas) {
+				if (idUsuario.equals(login)) {
 					caron++;
 				}
 			}
-			return caron+"";
+			return caron + "";
 		}
-		
+
 		return new UsuarioBusiness().getAtributoUsuario(login, atributo);
 	}
 
 	/**
 	 * Falta implementar
 	 */
-	public void zerarSistema(){
+	public void zerarSistema() {
 		caronasSegurasTranquilas.clear();
 		caronasNaoFuncionaram.clear();
 		faltaramNasVagas.clear();
 		presenteNasVagas.clear();
 	}
-	
-	public void reviewVagaEmCarona(String idSessao, String idCorona,
-			String loginCaroneiro, String review) {
+
+	public void reviewVagaEmCarona(String idSessao, String idCarona,
+			String loginCaroneiro, String review) throws PerfilException {
+		/*precisa validar os atributos recebidos neste métodos*/
+		if(!SolicitacaoVagasBusiness.ehCaroneiro(loginCaroneiro, idCarona)){
+			throw new PerfilException("Usuário não possui vaga na carona.");
+		}
 		
-	if (review.equals("faltou")) {
-		faltaramNasVagas.add(loginCaroneiro);
+		if (review.equals("faltou")) {
+			faltaramNasVagas.add(loginCaroneiro);
+			return;
+		}
+		
+		if (review.equals("não faltou")) {
+			presenteNasVagas.add(loginCaroneiro);
+			return;
+		} else if (review.equals("não funcionou")) {
+			caronasNaoFuncionaram.add(idCarona);
+			return;
+		} else if (review.equals("funcionou")) {
+			caronasNaoFuncionaram.add(idCarona);
+			return;
+		}
+		
+		throw new PerfilException("Opção inválida.");
+		
 	}
+
+	
+	public void reviewCarona(String idSessao, String idCaroneiro, String review)
+			throws PerfilException {
 		
+		if (!ehCaroneiro(idCaroneiro)) {
+			throw new PerfilException("Usuário não possui vaga na carona.");
+		} else {
+			if (review.equals("segura e tranquila")) {
+				caronasSegurasTranquilas.add(idCaroneiro);
+			} else if (review.equals("não funcionou")) {
+				caronasNaoFuncionaram.add(idCaroneiro);
+			} else{
+				throw new PerfilException("Opção inválida");
+			}
+		}
+	}
+
+	private boolean ehCaroneiro(String caroneiro) {
+		for (SolicitacaoVagasDomain solicitacoes : solicitacoesVagas) {
+			if (caroneiro.equals(solicitacoes.getIdCarona())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

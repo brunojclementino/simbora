@@ -28,7 +28,7 @@
 				<tr class="#colunas_botao_login">
 					<th></th>
 					<th id="colunas_botao_login">
-						<form:button id="btnlogin">Entrar</form:button>
+						<form:button id="btnlogin" value="#">Entrar</form:button>
 					</th>
 				</tr>
 				<tr>

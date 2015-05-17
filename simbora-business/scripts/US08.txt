@@ -71,12 +71,12 @@ expect "1" getAtributoPerfil login="bill" atributo="faltas em vagas de caronas"
 expect "1" getAtributoPerfil login="bill" atributo="presen�as em vagas de caronas"
 
 #possiveis erros
-expectError "Op��o inv�lida." reviewVagaEmCarona idSessao=${sessaoMark} idCarona=${carona5ID} loginCaroneiro=bill review="n�o dou mais carona"
+expectError "Opção inválida." reviewVagaEmCarona idSessao=${sessaoMark} idCarona=${carona5ID} loginCaroneiro=bill review="não dou mais carona"
 
-#Iniciar sess�o com outro usu�rio.
+#Iniciar sessão com outro usuário.
 sessaoVader=abrirSessao login="vader" senha="d4rth"
 
-expectError "Usu�rio n�o possui vaga na carona." reviewVagaEmCarona idSessao=${sessaoMark} idCarona=${carona5ID} loginCaroneiro=vader review="n�o funcionou"
+expectError "Usuário não possui vaga na carona." reviewVagaEmCarona idSessao=${sessaoMark} idCarona=${carona5ID} loginCaroneiro=vader review="não funcionou"
 
 encerrarSistema
 quit

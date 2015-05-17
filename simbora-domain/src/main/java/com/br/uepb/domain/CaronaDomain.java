@@ -31,7 +31,6 @@ public class CaronaDomain {
 	private String data;
 	private String horarioDeSaida;
 	private String qtdDeVagas;
-
 	
 	private String idSessao;
 	/**

@@ -135,9 +135,17 @@ public class SolicitacaoVagasBusiness {
 	}
 
 	
-	public static boolean ehCaroneiro(String login) {
+public static boolean ehCaroneiro(String login, String idCarona) {
 		
-		return true;
+		for (SolicitacaoVagasDomain solicitacaoVagas : solicitacoesVagas) {
+			
+			if(solicitacaoVagas.getIdCarona().equals(idCarona) && solicitacaoVagas.getIdSessao().equals(login)){
+				return true;
+			}
+			
+		}
+		
+		return false;
 	}
 
 	/**

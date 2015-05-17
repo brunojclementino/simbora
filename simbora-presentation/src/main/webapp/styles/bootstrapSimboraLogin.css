@@ -1,13 +1,14 @@
 .login_simbora {
 	float: left;
 	width: 60%;
+	min-width: 550px;
 	height: 50%;
 	max-width: 900px;
-	max-height: 700px;
+	max-height: 500px;
 	margin-left: 20%;
 	margin-right: 20%;
 	background-color: #f1f1f1;
-	
+	min-width: 700px;
 }
 
 #login_title {
@@ -22,7 +23,8 @@
 }
 
 .tabela_login_nome {
-	width: 100%;	
+	width: 100%;
+	padding-right: 10px;
 	height: 40px;		
 }
 
@@ -55,7 +57,8 @@
 }
 
 .formLogin {
-	width: 400px;
+	width: 70%;
+	min-width: 100px;
 	height: 40px;
 	margin-right: 110px;
 	float: right;	

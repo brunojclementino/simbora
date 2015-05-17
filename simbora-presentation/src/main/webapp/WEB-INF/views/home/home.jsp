@@ -3,8 +3,6 @@
 
 <html>
 <body>
-
 	<%@ include file="../home/login.jsp"%>
-	
 </body>
 </html>

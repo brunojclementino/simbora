@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.Logger;
 import org.hibernate.type.TrueFalseType;
 
@@ -28,7 +30,8 @@ public class CaronaBusiness {
 	public static List<CaronaDomain> caronas = new CaronaDaoImp().list();
 	CaronaDomain carona;
 	List<SessaoDomain> sessao = SessaoBusiness.getSessoes();
-
+	private boolean ehMunicipal;
+	
 	/**
 	 * Salva todos as caronas e em seguida limpa a List<CaronaDomain>.
 	 */
@@ -245,12 +248,16 @@ public class CaronaBusiness {
 		carona.setHorarioDeSaida(hora);
 		carona.setQtdDeVagas(qtdDeVagas);
 		carona.setIdSessao(idSessao);
-
+		
 		caronas.add(carona);
 
 		carona.setIdCarona((caronas.indexOf(carona)) + "");
-
-		return carona.getIdCarona() + "";
+		String id = carona.getIdCarona() + "";
+		if (isEhMunicipal()) {
+			id = carona.getIdCarona() + "m";
+		}
+		
+		return id;
 
 	}
 
@@ -260,7 +267,8 @@ public class CaronaBusiness {
 	 * quatro digitos. (dd/mm/aaaa)
 	 * 
 	 * @param data
-	 * @return se a data seguir o padrão (dd/mm/aaaa) retorna <code>true</code>, caso contrario <code>false</code>
+	 * @return se a data seguir o padrão (dd/mm/aaaa) retorna <code>true</code>,
+	 *         caso contrario <code>false</code>
 	 */
 	@SuppressWarnings("unused")
 	private boolean isData(String data) {
@@ -276,9 +284,12 @@ public class CaronaBusiness {
 	}
 
 	/**
-	 * Verifica o parametro passado é do formato HH:mm. Sendo que os digitos são numeros. e mm não pode ser maior que 60. 
+	 * Verifica o parametro passado é do formato HH:mm. Sendo que os digitos são
+	 * numeros. e mm não pode ser maior que 60.
+	 * 
 	 * @param data
-	 * @return se for um horario retorna <code>true</code>, caso contrario <code>false</code>
+	 * @return se for um horario retorna <code>true</code>, caso contrario
+	 *         <code>false</code>
 	 */
 	@SuppressWarnings("unused")
 	private boolean isHora(String data) {
@@ -315,7 +326,7 @@ public class CaronaBusiness {
 		if (!idCaronaExistir(idCarona)) {
 			throw new CaronaException("Item inexistente");
 		}
-
+		
 		if (atributo.equals("origem")) {
 			return caronas.get(Integer.valueOf(idCarona)).getLocalDeOrigem();
 		}
@@ -328,7 +339,7 @@ public class CaronaBusiness {
 		if (atributo.equals("vagas")) {
 			return caronas.get(Integer.valueOf(idCarona)).getQtdDeVagas() + "";
 		}
-
+				
 		throw new CaronaException("Atributo inexistente");
 	}
 
@@ -417,12 +428,13 @@ public class CaronaBusiness {
 
 	/**
 	 * Seta a lista de {@link CaronaDomain}.
+	 * 
 	 * @param caronas
 	 */
 	public static void setCaronas(List<CaronaDomain> caronas) {
 		CaronaBusiness.caronas = caronas;
 	}
-	
+
 	public CaronaDomain getCarona() {
 		return carona;
 	}
@@ -441,6 +453,7 @@ public class CaronaBusiness {
 
 	/**
 	 * Diminui a quantidade de vagas da carona.
+	 * 
 	 * @param idcarona
 	 */
 	public void reduzQtdVagas(String idcarona) {
@@ -455,6 +468,7 @@ public class CaronaBusiness {
 
 	/**
 	 * Aumenta a quantidade de vagas.
+	 * 
 	 * @param idcarona
 	 */
 	public void aumentaQtdVagas(String idcarona) {
@@ -469,9 +483,11 @@ public class CaronaBusiness {
 
 	/**
 	 * Verifica se é motorista.
+	 * 
 	 * @param login
 	 * @param idCarona
-	 * @return Se for motorista {@link TrueFalseType}, caso contrario <code>false</code>
+	 * @return Se for motorista {@link TrueFalseType}, caso contrario
+	 *         <code>false</code>
 	 */
 	public static boolean ehMotorista(String login, String idCarona) {
 		for (CaronaDomain carona : caronas) {
@@ -486,6 +502,7 @@ public class CaronaBusiness {
 
 	/**
 	 * Retorna o id da carona.
+	 * 
 	 * @param idSessao
 	 * @param indexCarona
 	 * @return
@@ -512,6 +529,7 @@ public class CaronaBusiness {
 
 	/**
 	 * Retorna todas as caronas dos usuarios.
+	 * 
 	 * @param idSessao
 	 * @return
 	 */
@@ -528,5 +546,37 @@ public class CaronaBusiness {
 			}
 		}
 		return ids + "}";
+	}
+
+	/**
+	 * Carona feitas na zona urbana serão identificadas como uma carona
+	 * qualquer, mas para identificar que é dentro na cidade terá o
+	 * identificador da carona um 'm' no final do codigo.
+	 * 
+	 * @param idSessao
+	 * @param origem
+	 * @param destino
+	 * @param cidade
+	 * @param data
+	 * @param hora
+	 * @param vagas
+	 * @return
+	 * @throws CaronaException
+	 */
+	public String cadastrarCaronaMunicipal(String idSessao, String origem,
+			String destino, String cidade, String data, String hora,
+			String vagas) throws CaronaException {
+		setEhMunicipal(true);
+		String municipal = cadastrarCarona(idSessao, origem, destino, data,
+				hora, vagas);
+		return municipal;
+	}
+
+	public boolean isEhMunicipal() {
+		return ehMunicipal;
+	}
+
+	public void setEhMunicipal(boolean ehMunicipal) {
+		this.ehMunicipal = ehMunicipal;
 	}
 }
