@@ -12,23 +12,32 @@
 			<h1 id="login_title">Login</h1>
 			
 			<table class="tabela_login">
-				<tr class="linhas_login">
-					<td class="colunas_loginNome">Nome:</td>
-					<td class="colunas_login"><form:input path="nome"
-							placeholder="Nome" /></td>
+				
+				<tr class="linhas_login_nome">
+					<th class="colunas_loginNome">Nome:</th>
+					<th class="colunas_login"><form:input class="formLogin" path="nome"
+							placeholder="Nome" /></th>
 				</tr>
-
-				<tr class="linhas_login">
-					<td class="colunas_loginNome">Senha:</td>
-					<td class="colunas_login"><form:password path="nome"
-							placeholder="senha" /></td>
+	
+				<tr class="linhas_login_senha">
+					<th class="colunas_loginNome">Senha:</th>
+					<th class="colunas_login"><form:password class="formLogin" path="nome"
+							placeholder="senha" /></th>
 				</tr>
 
 				<tr class="#colunas_botao_login">
 					<th></th>
-					<td id="colunas_botao_login"><form:button>Logar</form:button></td>
+					<th id="colunas_botao_login">
+						<form:button id="btnlogin">Entrar</form:button>
+					</th>
+				</tr>
+				<tr>
+					<th></th>
+					<th id="esqueciSenha"><a href="#">Esqueceu a senha?</a></th>
+					
 				</tr>
 			</table>
+		
 		</div>
 	</form:form>
 </body>

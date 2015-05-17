@@ -45,7 +45,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/home/home.html", method = RequestMethod.POST)
-	public ModelAndView addNewUser(@ModelAttribute("usuarioDomain") @Valid UsuarioDom usuarioDom, BindingResult bindingResult, HttpServletRequest request) {
+	public ModelAndView addNewUser(@ModelAttribute("usuarioDom") @Valid UsuarioDom usuarioDomain, BindingResult bindingResult, HttpServletRequest request) {
 		
 		LOG.debug("Iniciada a execucao do metodo: addNewUser");
 
@@ -53,16 +53,16 @@ public class HomeController {
 		modelAndView.setViewName("home");
 		
 		if(bindingResult.hasErrors()){
-			usuarioDom.setLstUsers((List<UsuarioDom>) request.getSession().getAttribute("lstUsers"));
-			modelAndView.addObject("usuarioDomain", usuarioDom);
+			usuarioDomain.setLstUsers((List<UsuarioDom>) request.getSession().getAttribute("lstUsers"));
+			modelAndView.addObject("usuarioDom", usuarioDomain);
 			modelAndView.addObject("userName", "Noca Connected");
 			return modelAndView;
 		}
 		
 		UsuarioDom ud = new UsuarioDom();
 		
-		ud.setCpf(usuarioDom.getCpf());
-		ud.setNome(usuarioDom.getNome());
+		ud.setCpf(usuarioDomain.getCpf());
+		ud.setNome(usuarioDomain.getNome());
 		ud.setLstUsers((List<UsuarioDom>) request.getSession().getAttribute("lstUsers"));
 		ud.getLstUsers().add(ud);
 		

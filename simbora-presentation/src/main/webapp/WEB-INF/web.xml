@@ -8,16 +8,6 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-    <servlet>
-    	<servlet-name>Faces Servlet</servlet-name>
-    	<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-    	<load-on-startup>1</load-on-startup>
-    </servlet>
-  
-  	<servlet-mapping>
-  		<servlet-name>Faces Servelet</servlet-name>
-  		<url-pattern>*.faces</url-pattern>
-  	</servlet-mapping>
   <servlet>
     <servlet-name>spring-dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

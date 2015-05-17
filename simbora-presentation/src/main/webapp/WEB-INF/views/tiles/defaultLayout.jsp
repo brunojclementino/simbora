@@ -11,6 +11,9 @@
 <title>Simbora</title>
 <%@ include file="/WEB-INF/views/imports.jsp"%>
 <%@ include file="/WEB-INF/views/includeTags.jsp"%>
+
+
+<link rel="shortcut icon" href="../images/caronaLogo2.png" >
 </head>
 <body>
 	<tiles:insertAttribute name="header" />
