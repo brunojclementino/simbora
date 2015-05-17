@@ -1,9 +1,9 @@
 package com.br.uepb.dao;
 
-import com.br.uepb.domain.UsuarioDomain;
+import com.br.uepb.domain.UsuarioDom;
 
 public interface UserDAO {
 
-	public UsuarioDomain getUser(String cpf);
+	public UsuarioDom getUser(String cpf);
 	
 }
