@@ -62,6 +62,7 @@ a:HOVER {
 	width: 100%;
 	height: 100px;
 	float: left;
+	text-align: left;
 }
 
 #footerText {
@@ -70,4 +71,5 @@ a:HOVER {
 	color: black;
 	padding-top: 40px;
 	padding-left: 10px;
+	
 }
