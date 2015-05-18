@@ -31,7 +31,7 @@ public class CaronaDomain {
 	private String data;
 	private String horarioDeSaida;
 	private String qtdDeVagas;
-	
+	private String cidade = "";
 	private String idSessao;
 	/**
 	 * Método construtor default.
@@ -122,5 +122,17 @@ public class CaronaDomain {
 	 */
 	public void setIdSessao(String idSessao) {
 		this.idSessao = idSessao;
+	}
+	/**
+	 * @return the cidade
+	 */
+	public String getCidade() {
+		return cidade;
+	}
+	/**
+	 * @param cidade the cidade to set
+	 */
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 }

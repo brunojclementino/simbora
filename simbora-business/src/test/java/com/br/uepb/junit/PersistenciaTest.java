@@ -78,8 +78,8 @@ public class PersistenciaTest {
 
 		// Cadastrar Caronas
 		try {
-			carona.cadastrarCarona("mark", "Cajazeiras", "Patos", "20/07/2013",
-					"14:00", "4");
+			assertEquals("0", carona.cadastrarCarona("mark", "Cajazeiras", "Patos", "20/07/2013",
+					"14:00", "4"));
 		} catch (CaronaException e) {
 			fail();
 		}

@@ -48,7 +48,7 @@ public class InterMunicipaisUrbanas {
 				"Death Star I", "dartvander@empire.com");
 
 	}
-	
+
 	@Test
 	public void cadastrarCaronas() {
 		try {
@@ -58,44 +58,126 @@ public class InterMunicipaisUrbanas {
 		}
 
 		try {
-			assertEquals("0", carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa",
-					"02/06/2013", "12:00", "3"));
+			assertEquals("0", carona.cadastrarCarona("mark", "Campina Grande",
+					"João Pessoa", "02/06/2013", "12:00", "3"));
 		} catch (CaronaException e) {
 			fail();
 		}
 
 		try {
-			assertEquals("1",carona.cadastrarCarona("mark", "Souza", "João Pessoa",
-					"08/06/2013", "14:00", "2"));
+			assertEquals("1", carona.cadastrarCarona("mark", "Souza",
+					"João Pessoa", "08/06/2013", "14:00", "2"));
 		} catch (CaronaException e) {
 			fail();
 		}
 
 		try {
-			assertEquals("2",carona.cadastrarCarona("mark", "Campina Grande", "Patos",
-					"25/06/2013", "8:00", "1"));
+			assertEquals("2", carona.cadastrarCarona("mark", "Campina Grande",
+					"Patos", "25/06/2013", "8:00", "1"));
+		} catch (CaronaException e) {
+			fail();
+		}
+
+		try {
+			assertEquals("3m", carona.cadastrarCaronaMunicipal("mark",
+					"Açude Velho", "Shopping Boulevard", "Campina Grande",
+					"04/06/2013", "20:00", "2"));
+		} catch (CaronaException e) {
+			fail();
+		}
+
+		try {
+			assertEquals("4m", carona.cadastrarCaronaMunicipal("mark",
+					"Praía do Cajá", "Villa São Paulo", "João Pessoa",
+					"04/06/2013", "20:00", "2"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		
 		try {
-			assertEquals("3m",carona.cadastrarCaronaMunicipal("mark", "Açude Velho", "Shopping Boulevard",
-					"Campina Grande", "04/06/2013", "20:00", "2"));
+			assertEquals("5m", carona.cadastrarCaronaMunicipal("mark",
+					"Manaíra Shopping", "Parque Solon de Lucena", "João Pessoa",
+					"04/06/2013", "14:00", "2"));
 		} catch (CaronaException e) {
 			fail();
 		}
-//		
-//		try {
-//			carona.getAtributoCarona("3m", "ehMunicipal");
-//		} catch (CaronaException e1) {
-//			fail();
-//		}
-//		
-//		try {
-//			assertEquals("bill", sessao.abrirSessao("bill", "bilz@o"));
-//		} catch (SessaoException e) {
-//			fail();
-//		}		
+		
+		// GetAtributos
+		try {
+			assertEquals("false", carona.getAtributoCarona("0", "ehMunicipal"));
+		} catch (CaronaException e1) {
+			fail();
+		}
+
+		try {
+			assertEquals("false", carona.getAtributoCarona("1", "ehMunicipal"));
+		} catch (CaronaException e1) {
+			fail();
+		}
+
+		try {
+			assertEquals("false", carona.getAtributoCarona("2", "ehMunicipal"));
+		} catch (CaronaException e1) {
+			fail();
+		}
+		try {
+			assertEquals("true", carona.getAtributoCarona("3m", "ehMunicipal"));
+		} catch (CaronaException e1) { 
+			fail();
+		}
+
+		try {
+			assertEquals("true", carona.getAtributoCarona("4m", "ehMunicipal"));
+		} catch (CaronaException e1) {
+			fail();
+		}
+		
+		try {
+			assertEquals("true", carona.getAtributoCarona("5m", "ehMunicipal"));
+		} catch (CaronaException e1) {
+			fail();
+		}
+		
+		
+		try {
+			assertEquals("bill", sessao.abrirSessao("bill", "bilz@o"));
+		} catch (SessaoException e) {
+			fail();
+		}
+		
+		try {
+			assertEquals("{}", carona.localizarCarona("bill", "Campina Grande", "João Pessoa"));
+		} catch (CaronaException e) {
+			fail();
+		}
+		
+		try {
+			assertEquals("{3m}", carona.localizarCaronaMunicipal("bill", "Campina Grande", "Açude Velho", "Shopping Boulevard"));
+		} catch (CaronaException e) {
+			fail();
+		}
+		
+		try {
+			assertEquals("{4m,5m}", carona.localizarCaronaMunicipal("mark", "João Pessoa"));
+		} catch (CaronaException e) {
+			fail();
+		}
+		
+		// Testar possiveis erros no sistema 
+		try {
+			carona.localizarCaronaMunicipal("bill", null, "Açude Velho", "Shopping Boulevard");
+		} catch (CaronaException e) {
+			assertEquals("Cidade inexistente", e.getMessage());
+		}
+		 
+		try {
+			carona.localizarCaronaMunicipal("bill", "", "Açude Velho", "Shopping Boulevard");
+		} catch (CaronaException e) {
+			assertEquals("Cidade inexistente", e.getMessage());
+		}
+		
+		carona.encerrarSistema();
+		
 	}
 
 }

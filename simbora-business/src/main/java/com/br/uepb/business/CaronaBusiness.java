@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.tools.Diagnostic;
 
 import org.apache.log4j.Logger;
 import org.hibernate.type.TrueFalseType;
@@ -30,8 +31,8 @@ public class CaronaBusiness {
 	public static List<CaronaDomain> caronas = new CaronaDaoImp().list();
 	CaronaDomain carona;
 	List<SessaoDomain> sessao = SessaoBusiness.getSessoes();
-	private boolean ehMunicipal;
-	
+	private boolean ehMunicipal = false;
+
 	/**
 	 * Salva todos as caronas e em seguida limpa a List<CaronaDomain>.
 	 */
@@ -242,21 +243,18 @@ public class CaronaBusiness {
 		}
 
 		carona = new CaronaDomain();
+
+		carona.setIdCarona((caronas.size()) + "");
+		String id = carona.getIdCarona() + "";
+		
 		carona.setLocalDeOrigem(origem);
 		carona.setLocalDeDestino(destino);
 		carona.setData(data);
 		carona.setHorarioDeSaida(hora);
 		carona.setQtdDeVagas(qtdDeVagas);
 		carona.setIdSessao(idSessao);
-		
-		caronas.add(carona);
 
-		carona.setIdCarona((caronas.indexOf(carona)) + "");
-		String id = carona.getIdCarona() + "";
-		if (isEhMunicipal()) {
-			id = carona.getIdCarona() + "m";
-		}
-		
+		caronas.add(carona);
 		return id;
 
 	}
@@ -326,7 +324,14 @@ public class CaronaBusiness {
 		if (!idCaronaExistir(idCarona)) {
 			throw new CaronaException("Item inexistente");
 		}
-		
+
+		if (atributo.equals("ehMunicipal")) {
+			if (idCarona.contains("m")) {
+				return "true";
+			}
+			return "false";
+		}
+
 		if (atributo.equals("origem")) {
 			return caronas.get(Integer.valueOf(idCarona)).getLocalDeOrigem();
 		}
@@ -339,7 +344,7 @@ public class CaronaBusiness {
 		if (atributo.equals("vagas")) {
 			return caronas.get(Integer.valueOf(idCarona)).getQtdDeVagas() + "";
 		}
-				
+
 		throw new CaronaException("Atributo inexistente");
 	}
 
@@ -567,9 +572,58 @@ public class CaronaBusiness {
 			String destino, String cidade, String data, String hora,
 			String vagas) throws CaronaException {
 		setEhMunicipal(true);
-		String municipal = cadastrarCarona(idSessao, origem, destino, data,
-				hora, vagas);
-		return municipal;
+		if (idSessao == null || idSessao.trim().isEmpty()) {
+			throw new CaronaException("Sessão inválida");
+		}
+		if (!SessaoBusiness.hasSessao(idSessao)) {
+			throw new CaronaException("Sessão inexistente");
+		}
+		if (origem == null || origem.trim().isEmpty()) {
+			throw new CaronaException("Origem inválida");
+		}
+		if (destino == null || destino.trim().isEmpty()) {
+			throw new CaronaException("Destino inválido");
+		}
+		if (data == null || data.trim().isEmpty()) {
+			throw new CaronaException("Data inválida");
+		}
+		if (!isData(data)) {
+			throw new CaronaException("Data inválida");
+		}
+		if (hora == null || hora.trim().isEmpty()) {
+			throw new CaronaException("Hora inválida");
+		}
+		if (!isHora(hora)) {
+			throw new CaronaException("Hora inválida");
+		}
+		if (vagas == null || vagas.trim().isEmpty()) {
+			throw new CaronaException("Vaga inválida");
+		}
+		try {
+			Integer.parseInt(vagas);
+		} catch (Exception e) {
+			throw new CaronaException("Vaga inválida");
+		}
+
+		carona = new CaronaDomain();
+
+		carona.setIdCarona((caronas.size()) + "");
+		String id = carona.getIdCarona() + "";
+		if (isEhMunicipal()) {
+			id = carona.getIdCarona() + "m";
+			carona.setIdCarona(id);
+		}
+		
+		carona.setLocalDeOrigem(origem);
+		carona.setLocalDeDestino(destino);
+		carona.setCidade(cidade);
+		carona.setData(data);
+		carona.setHorarioDeSaida(hora);
+		carona.setQtdDeVagas(vagas);
+		carona.setIdSessao(idSessao);
+
+		caronas.add(carona);
+		return id;
 	}
 
 	public boolean isEhMunicipal() {
@@ -578,5 +632,72 @@ public class CaronaBusiness {
 
 	public void setEhMunicipal(boolean ehMunicipal) {
 		this.ehMunicipal = ehMunicipal;
+	}
+
+	public String localizarCaronaMunicipal(String idSessao, String cidade, 
+			String origem, String destino) throws CaronaException{
+		
+		if (idSessao == null) {
+			throw new CaronaException("Sessão inválida");
+		}
+
+		if (cidade == null || cidade.isEmpty()) {
+			throw new CaronaException("Cidade inexistente");
+		}
+				
+		if (origem.equals("-") || origem.equals("()") || origem.equals("!")
+				|| origem.equals("!?")) {
+			throw new CaronaException("Origem inválida");
+		}
+
+		if (destino.equals(".") || destino.equals("()") || destino.equals("!?")) {
+			throw new CaronaException("Destino inválido");
+		}
+
+		if (!origem.isEmpty() && !destino.isEmpty()) {
+			return origemDestinoCarona(origem, destino); 
+		}
+
+		if (origem.isEmpty() && destino.isEmpty()) {
+			return origemDestinoCarona();
+		}
+
+		if (origem.isEmpty() && !destino.isEmpty()) {
+			return destinoCarona(destino);
+		}
+
+		if (!origem.isEmpty() && destino.isEmpty()) {
+			return origemCarona(origem);
+		}
+		return "";
+	}
+
+	public String localizarCaronaMunicipal(String idSessao, String cidade) throws CaronaException {
+		if (idSessao == null) {
+			throw new CaronaException("Sessão inválida");
+		}
+		if (cidade == null || cidade.trim().isEmpty()) {
+			throw new CaronaException("Cidade inválido");
+		}
+		if (!cidade.isEmpty()) {
+			return destinoCidade(cidade);
+		}
+		return null;
+	}
+
+	private String destinoCidade(String cidade) {
+		String ids = "{";
+		boolean flag = true;// indica se a quantidade de ids é 0
+		for (CaronaDomain carona : caronas) {
+			if (carona.getCidade().equals(cidade)) {
+				if (!flag) {
+					ids += ",";
+				}
+				ids += carona.getIdCarona();
+				flag = false;
+			}
+		}
+
+		return ids + "}";
 	}
 }

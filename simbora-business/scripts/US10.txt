@@ -21,8 +21,8 @@ carona1ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino
 carona2ID=cadastrarCarona idSessao=${sessaoMark} origem="Souza" destino="João Pessoa" data="08/06/2013" hora="14:00" vagas=2
 carona3ID=cadastrarCarona idSessao=${sessaoMark} origem="Campina Grande" destino="Patos" data="25/06/2013" hora="8:00" vagas=1
 carona4ID=cadastrarCaronaMunicipal idSessao=${sessaoMark} origem="Açude Velho" destino="Shopping Boulevard" cidade="Campina Grande" data="da" hora="20:00" vagas=2
-carona5ID=cadastrarCaronaMunicipal idSessao=${sessaoMark} origem="Praía do Cajá" destino="Villa S�o Paulo" cidade="Jo�o Pessoa" data="04/06/2013" hora="22:00" vagas=2
-carona6ID=cadastrarCaronaMunicipal idSessao=${sessaoMark} origem="Manaíra Shopping" destino="Parque Solon de Lucena" cidade="Jo�o Pessoa" data="04/06/2013" hora="14:00" vagas=2
+carona5ID=cadastrarCaronaMunicipal idSessao=${sessaoMark} origem="Praía do Cajá" destino="Villa São Paulo" cidade="João Pessoa" data="04/06/2013" hora="22:00" vagas=2
+carona6ID=cadastrarCaronaMunicipal idSessao=${sessaoMark} origem="Manaíra Shopping" destino="Parque Solon de Lucena" cidade="João Pessoa" data="04/06/2013" hora="14:00" vagas=2
 
 expect false getAtributoCarona idCarona=${carona1ID} atributo="ehMunicipal"
 expect false getAtributoCarona idCarona=${carona2ID} atributo="ehMunicipal"
