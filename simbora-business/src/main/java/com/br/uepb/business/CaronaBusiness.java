@@ -4,9 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-import javax.tools.Diagnostic;
-
 import org.apache.log4j.Logger;
 import org.hibernate.type.TrueFalseType;
 
@@ -699,5 +696,11 @@ public class CaronaBusiness {
 		}
 
 		return ids + "}";
+	}
+
+	public String cadastrarInteresse(String idSessao, String origem,
+			String destino, String data, String horaInicio, String horaFim) throws CaronaException {
+		
+		return "0I";
 	}
 }

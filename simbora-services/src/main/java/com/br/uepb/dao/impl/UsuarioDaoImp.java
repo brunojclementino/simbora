@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
 import com.br.uepb.dao.UsuarioDao;
 import com.br.uepb.domain.UsuarioDomain;
 import com.br.uepb.util.HibernateUtil;
 
-
+@Service
 public class UsuarioDaoImp implements UsuarioDao{
 
 	@Override
