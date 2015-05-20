@@ -6,8 +6,14 @@
   <link href="../styles/bootstrap-datetimepicker.min.css" rel="stylesheet">
  
   <!-- CSS do Site Simbora -->
-  <link href="../styles/bootstrapSimbora.css" rel="stylesheet">
-  <link href="../styles/bootstrapSimboraLogin.css" rel="stylesheet">
+  <link href="../styles/site-core.css" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="site-mobile.css" media="handheld, screen and (max-width:801px)" />
+<!--[if IE]>
+   <link type="text/css" rel="stylesheet" href="site-web.css" media="screen" />
+<![endif]-->
+		<link type="text/css" rel="stylesheet" href="site-core.css" />
+		<link type="text/css" rel="stylesheet" href="site-web.css" media="screen and (min-width:801px)" />
+	 	<link type="text/css" rel="stylesheet" href="site-mobile.css" media="handheld, screen and (max-width:801px)" />
   
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

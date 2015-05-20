@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/views/imports.jsp"%>
 <%@ include file="/WEB-INF/views/includeTags.jsp"%>
 
-<div class="container">
+<nav class="container">
 	<div class="row_principal">
 		<div id="span_name_logo">
 
@@ -11,7 +11,7 @@
 
 			<div id="logomarca">
 				<a href="http://localhost:8080/simbora-presentation/home/home.html">
-					<img src="../images/caronaLogo2.png" width="100" height="100">
+					<img src="../images/caronaLogo2.png">
 				</a>
 			</div>
 		</div>
@@ -33,5 +33,5 @@
 			</div>
 		</div>
 		
-	</div>
+	</nav>
 	
