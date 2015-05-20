@@ -182,5 +182,9 @@ public class SimboraEasyAccept {
 		
 		return solicitacaoEncontroBusiness.getPontosEncontro(idSessao, idCarona);
 	}
-	
+	public void reviewVagaEmCarona(String idSessao, String idCorona,
+			String loginCaroneiro, String review) throws PerfilException {
+		perfilBusiness.reviewVagaEmCarona(idSessao, idCorona, loginCaroneiro, review);
+		
+	}
 }

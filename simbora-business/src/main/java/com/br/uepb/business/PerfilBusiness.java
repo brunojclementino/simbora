@@ -28,7 +28,7 @@ public class PerfilBusiness {
 	public static List<String> faltaramNasVagas = new ArrayList<>();
 	public static List<String> presenteNasVagas = new ArrayList<>();
 	private List<SolicitacaoVagasDomain> solicitacoesVagas = SolicitacaoVagasBusiness.solicitacoesVagas;
-	
+
 	/**
 	 * Retorna o login do usuario.
 	 * 
@@ -169,9 +169,6 @@ public class PerfilBusiness {
 		return new UsuarioBusiness().getAtributoUsuario(login, atributo);
 	}
 
-	/**
-	 * Falta implementar
-	 */
 	public void zerarSistema() {
 		caronasSegurasTranquilas.clear();
 		caronasNaoFuncionaram.clear();
@@ -206,7 +203,6 @@ public class PerfilBusiness {
 		
 	}
 
-	
 	public void reviewCarona(String idSessao, String idCaroneiro, String review)
 			throws PerfilException {
 		

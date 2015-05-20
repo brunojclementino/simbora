@@ -33,7 +33,7 @@ idInteresse3=cadastrarInteresse idSessao=${sessaoMariano} origem="Campina Grande
 idInteresse4=cadastrarInteresse idSessao=${sessaoMarcio} origem="Campina Grande" destino="Jo�o Pessoa" data="" horaInicio="" horaFim="18:00"
 
 #Para os hor�rios o sistema poder� deixar o usu�rio livre, ou seja, ele poder� n�o colocar horaInicio(pegar� todos a partir das 0h do dia especificado
-# ou horaFim(pegar� todos at� �s 11:59 do dia especificado) que a consulta ser� realizada. data="" retornar� todas as caronas que tem marcadas da data atual em diante.
+# ou horaFim(pegará todos at� �s 11:59 do dia especificado) que a consulta ser� realizada. data="" retornar� todas as caronas que tem marcadas da data atual em diante.
 expectError "Origem inv�lida" cadastrarInteresse idSessao=${sessaoZezito} origem="-" destino="Jo�o Pessoa" data="23/06/2013" horaInicio="06:00" horaFim="16:00"
 expectError "Origem inv�lida" cadastrarInteresse idSessao=${sessaoZezito} origem="!" destino="Jo�o Pessoa" data="23/06/2013" horaInicio="06:00" horaFim="16:00"
 expectError "Destino inv�lido" cadastrarInteresse idSessao=${sessaoZezito} origem="Campina Grande" destino="!" data="23/06/2013" horaInicio="06:00" horaFim="16:00"

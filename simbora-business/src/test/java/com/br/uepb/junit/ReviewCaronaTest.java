@@ -658,7 +658,7 @@ public class ReviewCaronaTest {
 		try{
 			perfilCaroneiro.reviewCarona("bill", "1", "bacana");
 		} catch(PerfilException e) {
-			assertEquals("Opção inválida", e.getMessage());
+			assertEquals("Opção inválida.", e.getMessage());
 		}
 		
 		try {
@@ -670,8 +670,9 @@ public class ReviewCaronaTest {
 		
 		try {
 			perfilCaroneiro.reviewCarona("vader", "1", "não funcionou");
+			fail();
 		} catch (PerfilException e) {
-			assertEquals("Usuário não possui vaga na carona", e.getMessage());
+			assertEquals("Usuário não possui vaga na carona.", e.getMessage());
 		}
 		
 		usuario.encerrarSistema();

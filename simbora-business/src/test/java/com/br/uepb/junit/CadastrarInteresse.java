@@ -25,8 +25,6 @@ public class CadastrarInteresse {
 		carona = new CaronaBusiness();
 		
 		carona.encerrarSistema();
-		sessao.getSessoes().clear();
-		sessao.getUsuarios().clear();
 		usuario.encerrarSistema();
 		// Criar os usuarios.
 		try {

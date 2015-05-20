@@ -1,6 +1,7 @@
 #User Story 09 - Review de carona
 
-#Review de caronas: os caroneiros podem, após uma carona, colocar um comentário no sistema referente aquela carona, e dar ou não um voto de "segura e tranquila" para a carona, 
+#Review de caronas: os caroneiros podem, após uma carona, colocar um comentário no sistema 
+#referente aquela carona, e dar ou não um voto de "segura e tranquila" para a carona, 
 #ou marcá-la como "não funcionou", que significa que o motorista fez algo errado ao seu ver.
 #A quantidade de caronas seguras e tranquilas e que não funcionaram devem aparecer no perfil do motorista.
 
