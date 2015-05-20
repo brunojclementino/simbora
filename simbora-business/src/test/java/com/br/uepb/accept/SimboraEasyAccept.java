@@ -38,10 +38,22 @@ public class SimboraEasyAccept {
 		solicitacaoEncontroController.zerarSistema();
 		solicitacaoVagasController.zerarSistema();*/
 		//pontoDeEncontroController.zerarSistema();
-		usuarioBusiness.usuarios.clear();
+		/*SessaoBusiness.getSessoes().clear();
+		SessaoBusiness.getUsuarios().clear();*/
+		usuarioBusiness=new UsuarioBusiness();
+		caronaBusiness=new CaronaBusiness();
+		sessaoBusiness = new SessaoBusiness();
+		solicitacaoEncontroBusiness=new SolicitacaoPontoDeEncontroBusiness();
+		solicitacaoVagasBusiness = new SolicitacaoVagasBusiness();
+		perfilBusiness = new PerfilBusiness();
+		/*usuarioBusiness.usuarios.clear();
 		caronaBusiness.caronas.clear();
 		solicitacaoVagasBusiness.solicitacoesVagas.clear();
 		solicitacaoEncontroBusiness.solicitacoes.clear();
+		perfilBusiness.caronasNaoFuncionaram.clear();
+		perfilBusiness.caronasSegurasTranquilas.clear();
+		perfilBusiness.faltaramNasVagas.clear();
+		perfilBusiness.presenteNasVagas.clear();*/
 		new UsuarioDaoImp().excluirTudo();
 		new CaronaDaoImp().excluirTudo();
 		new SolicitacaoPontoDeEncontroDaoImp().excluirTudo();
@@ -186,5 +198,18 @@ public class SimboraEasyAccept {
 			String loginCaroneiro, String review) throws PerfilException {
 		perfilBusiness.reviewVagaEmCarona(idSessao, idCorona, loginCaroneiro, review);
 		
+	}
+	public void reviewCarona(String idSessao, String idCaroneiro, String review) throws PerfilException{
+		perfilBusiness.reviewCarona(idSessao, idCaroneiro, review);
+	}
+	
+	public String cadastrarCaronaMunicipal(String idSessao, String origem,
+			String destino, String cidade, String data, String hora,
+			String vagas) throws CaronaException {
+		return caronaBusiness.cadastrarCaronaMunicipal(idSessao, origem, destino, cidade, data, hora, vagas);
+	}
+	public String localizarCaronaMunicipal(String idSessao, String cidade, 
+			String origem, String destino) throws CaronaException{
+		return caronaBusiness.localizarCaronaMunicipal(idSessao, cidade, origem, destino);
 	}
 }

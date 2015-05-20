@@ -206,7 +206,7 @@ public class PerfilBusiness {
 	public void reviewCarona(String idSessao, String idCaroneiro, String review)
 			throws PerfilException {
 		
-		if (!ehCaroneiro(idCaroneiro)) {
+		if (!ehCaroneiro(idSessao, idCaroneiro)) {
 			throw new PerfilException("Usuário não possui vaga na carona.");
 		} else {
 			if (review.equals("segura e tranquila")) {
@@ -214,14 +214,14 @@ public class PerfilBusiness {
 			} else if (review.equals("não funcionou")) {
 				caronasNaoFuncionaram.add(idCaroneiro);
 			} else{
-				throw new PerfilException("Opção inválida");
+				throw new PerfilException("Opção inválida.");
 			}
 		}
 	}
 
-	private boolean ehCaroneiro(String caroneiro) {
+	private boolean ehCaroneiro(String login, String caroneiro) {
 		for (SolicitacaoVagasDomain solicitacoes : solicitacoesVagas) {
-			if (caroneiro.equals(solicitacoes.getIdCarona())) {
+			if (caroneiro.equals(solicitacoes.getIdCarona()) && login.equals(solicitacoes.getIdSessao())) {
 				return true;
 			}
 		}

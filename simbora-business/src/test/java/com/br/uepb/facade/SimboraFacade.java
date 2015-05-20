@@ -138,12 +138,25 @@ public class SimboraFacade {
 			String loginCaroneiro, String review) throws PerfilException {
 		simboraEasyAccept.reviewVagaEmCarona(idSessao, idCorona, loginCaroneiro, review);
 	}
+	public void reviewCarona(String idSessao, String idCaroneiro, String review) throws PerfilException{
+		simboraEasyAccept.reviewCarona(idSessao, idCaroneiro, review);
+	}
+	
+	public String cadastrarCaronaMunicipal(String idSessao, String origem,
+			String destino, String cidade, String data, String hora,
+			String vagas) throws CaronaException {
+		return simboraEasyAccept.cadastrarCaronaMunicipal(idSessao, origem, destino, cidade, data, hora, vagas);
+	}
+	public String localizarCaronaMunicipal(String idSessao, String cidade, 
+			String origem, String destino) throws CaronaException{
+		return simboraEasyAccept.localizarCaronaMunicipal(idSessao, cidade, origem, destino);
+	}
 
 	public static void main(String[] args) {
 		args = new String[] {"com.br.uepb.facade.SimboraFacade", "scripts/US01.txt",
 				"scripts/US02.txt", "scripts/US03.txt", "scripts/US04.txt", "scripts/US05.txt"
 				, "scripts/US06.txt", "scripts/US07.txt", "scripts/US08.txt", "scripts/US09.txt"
-				, "scripts/US10.txt"};
+				,  "scripts/US10.txt"};
 		EasyAccept.main(args); 
 	} 
 }
