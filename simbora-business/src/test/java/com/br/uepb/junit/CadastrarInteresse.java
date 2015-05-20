@@ -17,13 +17,13 @@ public class CadastrarInteresse {
 	UsuarioBusiness usuario;
 	SessaoBusiness sessao;
 	CaronaBusiness carona;
-	
+
 	@Before
 	public void iniciarTest() {
 		usuario = new UsuarioBusiness();
 		sessao = new SessaoBusiness();
 		carona = new CaronaBusiness();
-		
+
 		carona.encerrarSistema();
 		usuario.encerrarSistema();
 		// Criar os usuarios.
@@ -119,16 +119,112 @@ public class CadastrarInteresse {
 		} catch (SessaoException e) {
 			fail();
 		}
-		
+
 	}
+
 	// US11
 	@Test
 	public void mostrarInteresse() {
 		try {
-			assertEquals("0I", carona.cadastrarInteresse("zezyt0", "João Pessoa", "Campina Grande", "23/06/2013", "06:00", "16:00"));
-		} catch(CaronaException e){
+			assertEquals("0I", carona.cadastrarInteresse("zezyt0",
+					"João Pessoa", "Campina Grande", "23/06/2013", "06:00",
+					"16:00"));
+		} catch (CaronaException e) {
 			fail();
+		}
+
+		try {
+			assertEquals("1I", carona.cadastrarInteresse("manelito",
+					"Campina Grande", "João Pessoa", "25/06/2013", "11:00",
+					"18:00"));
+		} catch (CaronaException e) {
+			fail();
+		}
+
+		try {
+			assertEquals("2I", carona.cadastrarInteresse("mariano0ab",
+					"Campina Grande", "João Pessoa", "23/06/2013", "", "18:00"));
+		} catch (CaronaException e) {
+			fail();
+		}
+
+		try {
+			assertEquals("3I", carona.cadastrarInteresse("caba",
+					"Campina Grande", "João Pessoa", "23/06/2013", "", "18:00"));
+		} catch (CaronaException e) {
+			fail();
+		}
+		
+		// Linha 45
+		try {
+			assertEquals("0", carona.cadastrarCarona("jucaPeroba", "Campina Grande", "João Pessoa", "23/06/2013", "16:00", "3"));
+		} catch (CaronaException e) {
+			fail();
+		}
+		
+		try {
+			assertEquals("1", carona.cadastrarCarona("jucaPeroba", "João Pessoa", "Campina Grande", "25/06/2013", "14:00", "4"));
+		} catch (CaronaException e) {
+			fail();
+		}
+		
+		try {
+			assertEquals("2", carona.cadastrarCarona("mariano0ab", "João Pessoa", "Campina Grande", "25/06/2013", "15:00", "1"));
+		} catch (CaronaException e) {
+			fail();
+		}
+		
+		// Verificar perfil
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 
+	@Test
+	public void tratamentoErros() {
+		// Tratamento dos erros
+		// Erros na origem
+		try {
+			carona.cadastrarInteresse("zezyt0", "-", "João Pessoa", "23/06/2013", "06:00",
+					"16:00");
+		} catch (CaronaException e) {
+			assertEquals("Origem inválida", e.getMessage());
+		}
+		try {
+			carona.cadastrarInteresse("zezyt0", "!", "João Pessoa", "23/06/2013", "06:00",
+					"16:00");
+		} catch (CaronaException e) {
+			assertEquals("Origem inválida", e.getMessage());
+		}
+		// Erros no destino
+		try {
+			carona.cadastrarInteresse("zezyt0", "Campina Grande", "!", "23/06/2013", "06:00",
+					"16:00");
+		} catch (CaronaException e) {
+			assertEquals("Destino inválido", e.getMessage());
+		}
+		
+		try {
+			carona.cadastrarInteresse("zezyt0", "Campina Grande", "-", "23/06/2013", "06:00",
+					"16:00");
+		} catch (CaronaException e) {
+			assertEquals("Destino inválido", e.getMessage());
+		}
+		
+		// Data inválida
+		try {
+			carona.cadastrarInteresse("zezyt0", "Campina Grande", "João Pessoa", "", "06:00",
+					"16:00");
+		} catch (CaronaException e) {
+			assertEquals("Data inválida", e.getMessage());
+		}
+		try {
+			carona.cadastrarInteresse("zezyt0", "Campina Grande", "João Pessoa", null, "06:00",
+					"16:00");
+		} catch (CaronaException e) {
+			assertEquals("Data inválida", e.getMessage());
+		}
+	}
 }

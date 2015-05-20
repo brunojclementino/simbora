@@ -30,6 +30,7 @@ public class CaronaDomain {
 	private String localDeDestino;
 	private String data;
 	private String horarioDeSaida;
+	private String horarioDeChegada;
 	private String qtdDeVagas;
 	private String cidade = "";
 	private String idSessao;
@@ -134,5 +135,17 @@ public class CaronaDomain {
 	 */
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
+	}
+	/**
+	 * @return the horarioDeChegada
+	 */
+	public String getHorarioDeChegada() {
+		return horarioDeChegada;
+	}
+	/**
+	 * @param horarioDeChegada the horarioDeChegada to set
+	 */
+	public void setHorarioDeChegada(String horarioDeChegada) {
+		this.horarioDeChegada = horarioDeChegada;
 	}
 }

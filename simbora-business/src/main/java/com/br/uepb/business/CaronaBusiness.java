@@ -1,6 +1,7 @@
 package com.br.uepb.business;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,8 @@ public class CaronaBusiness {
 	CaronaDomain carona;
 	List<SessaoDomain> sessao = SessaoBusiness.getSessoes();
 	private boolean ehMunicipal = false;
-
+	private List<CaronaDomain> interesseCaronas = new ArrayList<CaronaDomain>();
+	
 	/**
 	 * Salva todos as caronas e em seguida limpa a List<CaronaDomain>.
 	 */
@@ -701,6 +703,39 @@ public class CaronaBusiness {
 	public String cadastrarInteresse(String idSessao, String origem,
 			String destino, String data, String horaInicio, String horaFim) throws CaronaException {
 		
-		return "0I";
+		if (origem.equals("-") || origem.equals("!")) {
+			throw new CaronaException("Origem inválida");
+		}
+		if (destino.equals("-") || destino.equals("!")) {
+			throw new CaronaException("Destino inválido");
+		}
+		if (data == null || data.trim().isEmpty()) {
+			throw new CaronaException("Data inválida");
+		}
+		
+		CaronaDomain caronaAux = new CaronaDomain();
+			caronaAux.setLocalDeOrigem(origem);
+			caronaAux.setLocalDeDestino(destino);
+			caronaAux.setData(data);
+			caronaAux.setHorarioDeSaida(horaInicio);
+			caronaAux.setHorarioDeChegada(horaFim);
+		
+		interesseCaronas.add(caronaAux);
+		
+		return interesseCaronas.indexOf(caronaAux)+"I";
+	}
+
+	/**
+	 * @return the interesseCaronas
+	 */
+	public List<CaronaDomain> getInteresseCaronas() {
+		return interesseCaronas;
+	}
+
+	/**
+	 * @param interesseCaronas the interesseCaronas to set
+	 */
+	public void setInteresseCaronas(List<CaronaDomain> interesseCaronas) {
+		this.interesseCaronas = interesseCaronas;
 	}
 }
