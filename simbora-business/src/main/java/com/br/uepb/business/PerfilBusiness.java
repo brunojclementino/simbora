@@ -234,8 +234,12 @@ public class PerfilBusiness {
 		
 		CaronaDomain carona = new CaronaDomain();
 		for (CaronaDomain caronaDomain : interessesCaronas) {
-			if (caronaDomain.getIdSessao().equals(idSessao)) {
+			try {
+				if (caronaDomain.getIdCarona().equals(idSessao)) {
 				carona = caronaDomain;
+			}
+			} catch(Exception e) {
+				return "[]";
 			}
 		}
 		
