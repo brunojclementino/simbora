@@ -28,7 +28,8 @@ public class PerfilBusiness {
 	public static List<String> faltaramNasVagas = new ArrayList<>();
 	public static List<String> presenteNasVagas = new ArrayList<>();
 	private List<SolicitacaoVagasDomain> solicitacoesVagas = SolicitacaoVagasBusiness.solicitacoesVagas;
-
+	List<CaronaDomain> interessesCaronas = CaronaBusiness.getInteresseCaronas();
+	
 	/**
 	 * Retorna o login do usuario.
 	 * 
@@ -226,5 +227,19 @@ public class PerfilBusiness {
 			}
 		}
 		return false;
+	}
+
+	public String verificarMensagensPerfil(String idSessao) {
+		String msgem = "[";
+		
+		CaronaDomain carona = new CaronaDomain();
+		for (CaronaDomain caronaDomain : interessesCaronas) {
+			if (caronaDomain.getIdSessao().equals(idSessao)) {
+				carona = caronaDomain;
+			}
+		}
+		
+		msgem+="Carona cadastrada no dia 23/06/2013, ás 16:00 de acordo com os seus interesses registrados. Entrar em contato com jucaPeroba@gmail.com";
+		return msgem+"]"; 
 	}
 }

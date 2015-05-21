@@ -30,7 +30,7 @@ public class CaronaBusiness {
 	CaronaDomain carona;
 	List<SessaoDomain> sessao = SessaoBusiness.getSessoes();
 	private boolean ehMunicipal = false;
-	private List<CaronaDomain> interesseCaronas = new ArrayList<CaronaDomain>();
+	private static List<CaronaDomain> interesseCaronas = new ArrayList<CaronaDomain>();
 	
 	/**
 	 * Salva todos as caronas e em seguida limpa a List<CaronaDomain>.
@@ -728,14 +728,14 @@ public class CaronaBusiness {
 	/**
 	 * @return the interesseCaronas
 	 */
-	public List<CaronaDomain> getInteresseCaronas() {
+	public static List<CaronaDomain> getInteresseCaronas() {
 		return interesseCaronas;
 	}
 
 	/**
 	 * @param interesseCaronas the interesseCaronas to set
 	 */
-	public void setInteresseCaronas(List<CaronaDomain> interesseCaronas) {
-		this.interesseCaronas = interesseCaronas;
+	public static void setInteresseCaronas(List<CaronaDomain> interesseCaronas) {
+		CaronaBusiness.interesseCaronas = interesseCaronas;
 	}
 }
