@@ -11,7 +11,7 @@
 
 			<div id="logomarca">
 				<a href="http://localhost:8080/simbora-presentation/home/home.html">
-					<img src="../images/caronaLogo2.png">
+					<img src="../images/caronaLogo2.png" width="100" height="100">
 				</a>
 			</div>
 		</div>

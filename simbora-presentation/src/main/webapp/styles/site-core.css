@@ -127,14 +127,7 @@ a:HOVER {
 	font-size: 300%;;
 }
 img {
-	width: 20%;
-	height: 30%;
 	
-	max-width: 300px;
-	max-height: 100px;
-	
-	min-width: 90px;
-	min-height: 30px;
 	border: 0px;
 }
 #footer {

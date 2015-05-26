@@ -3,11 +3,15 @@ package com.br.uepb.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.Logger;
 
 import com.br.uepb.constants.PerfilException;
 import com.br.uepb.constants.UsuarioException;
 import com.br.uepb.domain.CaronaDomain;
+import com.br.uepb.domain.CaronaInteresseDomain;
+import com.br.uepb.domain.SessaoDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
 import com.br.uepb.domain.UsuarioDomain;
 
@@ -28,8 +32,8 @@ public class PerfilBusiness {
 	public static List<String> faltaramNasVagas = new ArrayList<>();
 	public static List<String> presenteNasVagas = new ArrayList<>();
 	private List<SolicitacaoVagasDomain> solicitacoesVagas = SolicitacaoVagasBusiness.solicitacoesVagas;
-	List<CaronaDomain> interessesCaronas = CaronaBusiness.getInteresseCaronas();
-	
+	List<CaronaInteresseDomain> interessesCaronas = CaronaInteresesBusiness.getInteresseCaronas();
+
 	/**
 	 * Retorna o login do usuario.
 	 * 
@@ -179,16 +183,16 @@ public class PerfilBusiness {
 
 	public void reviewVagaEmCarona(String idSessao, String idCarona,
 			String loginCaroneiro, String review) throws PerfilException {
-		/*precisa validar os atributos recebidos neste métodos*/
-		if(!SolicitacaoVagasBusiness.ehCaroneiro(loginCaroneiro, idCarona)){
+		/* precisa validar os atributos recebidos neste métodos */
+		if (!SolicitacaoVagasBusiness.ehCaroneiro(loginCaroneiro, idCarona)) {
 			throw new PerfilException("Usuário não possui vaga na carona.");
 		}
-		
+
 		if (review.equals("faltou")) {
 			faltaramNasVagas.add(loginCaroneiro);
 			return;
 		}
-		
+
 		if (review.equals("não faltou")) {
 			presenteNasVagas.add(loginCaroneiro);
 			return;
@@ -199,14 +203,14 @@ public class PerfilBusiness {
 			caronasNaoFuncionaram.add(idCarona);
 			return;
 		}
-		
+
 		throw new PerfilException("Opção inválida.");
-		
+
 	}
 
 	public void reviewCarona(String idSessao, String idCaroneiro, String review)
 			throws PerfilException {
-		
+
 		if (!ehCaroneiro(idSessao, idCaroneiro)) {
 			throw new PerfilException("Usuário não possui vaga na carona.");
 		} else {
@@ -214,7 +218,7 @@ public class PerfilBusiness {
 				caronasSegurasTranquilas.add(idCaroneiro);
 			} else if (review.equals("não funcionou")) {
 				caronasNaoFuncionaram.add(idCaroneiro);
-			} else{
+			} else {
 				throw new PerfilException("Opção inválida.");
 			}
 		}
@@ -222,7 +226,8 @@ public class PerfilBusiness {
 
 	private boolean ehCaroneiro(String login, String caroneiro) {
 		for (SolicitacaoVagasDomain solicitacoes : solicitacoesVagas) {
-			if (caroneiro.equals(solicitacoes.getIdCarona()) && login.equals(solicitacoes.getIdSessao())) {
+			if (caroneiro.equals(solicitacoes.getIdCarona())
+					&& login.equals(solicitacoes.getIdSessao())) {
 				return true;
 			}
 		}
@@ -231,19 +236,34 @@ public class PerfilBusiness {
 
 	public String verificarMensagensPerfil(String idSessao) {
 		String msgem = "[";
+		UsuarioDomain usuario = new UsuarioDomain();
+		String id = null;
 		
-		CaronaDomain carona = new CaronaDomain();
-		for (CaronaDomain caronaDomain : interessesCaronas) {
-			try {
-				if (caronaDomain.getIdCarona().equals(idSessao)) {
-				carona = caronaDomain;
+		CaronaInteresseDomain caronaInteresse = new CaronaInteresseDomain();
+		try {
+		 	for (CaronaInteresseDomain caronaInteresseDomain : interessesCaronas) {
+				if (caronaInteresseDomain.getIdSessao().equals(idSessao)) {
+					caronaInteresse=caronaInteresseDomain;
+				}
 			}
-			} catch(Exception e) {
-				return "[]";
+			for (SessaoDomain sessao : SessaoBusiness.getSessoes()) {
+				if (caronaInteresse.getIdSessao().equals(sessao.getIdSessao())) {
+					id = sessao.getIdUsuario();
+				}
 			}
+			for (UsuarioDomain user : UsuarioBusiness.usuarios) {
+				if (user.getLogin().equals(id)) {
+					usuario = user;
+				}
+			}
+			
+			msgem += "Carona cadastrada no dia "+caronaInteresse.getData()
+					+", ás "+caronaInteresse.getHoraInicio()
+					+" de acordo com os seus interesses registrados. Entrar em contato com "+usuario.getEmail(); 
+			return msgem + "]";	
+		} catch (Exception e) {
+			return "[]";
 		}
 		
-		msgem+="Carona cadastrada no dia 23/06/2013, ás 16:00 de acordo com os seus interesses registrados. Entrar em contato com jucaPeroba@gmail.com";
-		return msgem+"]"; 
 	}
 }

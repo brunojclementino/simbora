@@ -567,7 +567,7 @@ public class CaronaBusiness {
 	 * @return
 	 * @throws CaronaException
 	 */
-	public String cadastrarCaronaMunicipal(String idSessao, String origem,
+	public String cadastrarCaronaMunicipal(String idSessao, String origem, 
 			String destino, String cidade, String data, String hora,
 			String vagas) throws CaronaException {
 		setEhMunicipal(true);
@@ -671,7 +671,7 @@ public class CaronaBusiness {
 		return "";
 	}
 
-	public String localizarCaronaMunicipal(String idSessao, String cidade) throws CaronaException {
+	public String localizarCaronaMunicipal(String idSessao, String cidade) throws CaronaException { 
 		if (idSessao == null) {
 			throw new CaronaException("Sessão inválida");
 		}
@@ -698,31 +698,6 @@ public class CaronaBusiness {
 		}
 
 		return ids + "}";
-	}
-
-	public String cadastrarInteresse(String idSessao, String origem,
-			String destino, String data, String horaInicio, String horaFim) throws CaronaException {
-		
-		if (origem.equals("-") || origem.equals("!")) {
-			throw new CaronaException("Origem inválida");
-		}
-		if (destino.equals("-") || destino.equals("!")) {
-			throw new CaronaException("Destino inválido");
-		}
-		if (data == null || data.trim().isEmpty()) {
-			throw new CaronaException("Data inválida");
-		}
-		
-		CaronaDomain caronaAux = new CaronaDomain();
-			caronaAux.setLocalDeOrigem(origem);
-			caronaAux.setLocalDeDestino(destino);
-			caronaAux.setData(data);
-			caronaAux.setHorarioDeSaida(horaInicio);
-			caronaAux.setHorarioDeChegada(horaFim);
-		
-		interesseCaronas.add(caronaAux);
-		
-		return interesseCaronas.indexOf(caronaAux)+"I";
 	}
 
 	/**

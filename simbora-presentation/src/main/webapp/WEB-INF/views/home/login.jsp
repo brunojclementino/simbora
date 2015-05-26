@@ -1,4 +1,5 @@
 
+<%@page import="javax.swing.Spring"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Login</title>
@@ -23,7 +24,8 @@
 			</tr>
 			<tr>
 				<th><a href="#">Esqueceu a senha?</a></th>
-				<th id="colunas_botao_login"><form:button id="btnlogin">Entrar</form:button></th>
+				<th id="colunas_botao_login"><form:button id="btnlogin" >Entrar</form:button></th>
+			
 			</tr>
 		</table>
 	</form:form>

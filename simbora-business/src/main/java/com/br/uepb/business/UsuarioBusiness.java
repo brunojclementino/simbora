@@ -164,12 +164,12 @@ public class UsuarioBusiness {
 	}
 
 	/**
-	 * Verifica se o login existe.
+	 * Verifica se o login existe. 
 	 * 
 	 * @param login
 	 * @return {@link Boolean}
 	 */
-	private boolean ehLoginExistente(String login) {
+	private boolean ehLoginExistente(String login) { 
 		for (UsuarioDomain usuario : usuarios) {
 			if (usuario.getLogin().equals(login))
 				return true;
