@@ -32,7 +32,8 @@ public class PerfilBusiness {
 	public static List<String> faltaramNasVagas = new ArrayList<>();
 	public static List<String> presenteNasVagas = new ArrayList<>();
 	private List<SolicitacaoVagasDomain> solicitacoesVagas = SolicitacaoVagasBusiness.solicitacoesVagas;
-	List<CaronaInteresseDomain> interessesCaronas = CaronaInteresesBusiness.getInteresseCaronas();
+	List<CaronaInteresseDomain> interessesCaronas = CaronaInteresesBusiness
+			.getInteresseCaronas();
 
 	/**
 	 * Retorna o login do usuario.
@@ -238,32 +239,64 @@ public class PerfilBusiness {
 		String msgem = "[";
 		UsuarioDomain usuario = new UsuarioDomain();
 		String id = null;
-		
+
 		CaronaInteresseDomain caronaInteresse = new CaronaInteresseDomain();
 		try {
-		 	for (CaronaInteresseDomain caronaInteresseDomain : interessesCaronas) {
-				if (caronaInteresseDomain.getIdSessao().equals(idSessao)) {
-					caronaInteresse=caronaInteresseDomain;
+			CaronaDomain car = null;
+			caronaInteresse = pegarInteresseCarona(idSessao, caronaInteresse);
+			id = pegarIdUsuario(id, caronaInteresse);
+			usuario = pegarUsuario(usuario, id);
+
+			for (CaronaDomain carona : CaronaBusiness.caronas) {
+				if (carona.getLocalDeOrigem().equals(
+						caronaInteresse.getOrigem())
+						&& carona.getLocalDeDestino().equals(
+								caronaInteresse.getDestino())) {
+					car = new CaronaDomain();
+					car = carona;
 				}
 			}
-			for (SessaoDomain sessao : SessaoBusiness.getSessoes()) {
-				if (caronaInteresse.getIdSessao().equals(sessao.getIdSessao())) {
-					id = sessao.getIdUsuario();
-				}
-			}
-			for (UsuarioDomain user : UsuarioBusiness.usuarios) {
-				if (user.getLogin().equals(id)) {
-					usuario = user;
-				}
-			}
-			
-			msgem += "Carona cadastrada no dia "+caronaInteresse.getData()
-					+", ás "+caronaInteresse.getHoraInicio()
-					+" de acordo com os seus interesses registrados. Entrar em contato com "+usuario.getEmail(); 
-			return msgem + "]";	
+			try {
+			msgem += "Carona cadastrada no dia "
+					+ car.getData()
+					+ ", ás "
+					+ car.getLocalDeOrigem()
+					+ " de acordo com os seus interesses registrados. Entrar em contato com "
+					+ usuario.getEmail();
+			}catch (Exception e){}
+			return msgem + "]";
 		} catch (Exception e) {
 			return "[]";
 		}
-		
+
+	}
+
+	private UsuarioDomain pegarUsuario(UsuarioDomain usuario, String id) {
+		for (UsuarioDomain user : UsuarioBusiness.usuarios) {
+			if (user.getLogin().equals(id)) {
+				usuario = user;
+			}
+		}
+		return usuario;
+	}
+
+	private String pegarIdUsuario(String id,
+			CaronaInteresseDomain caronaInteresse) {
+		for (SessaoDomain sessao : SessaoBusiness.getSessoes()) {
+			if (caronaInteresse.getIdSessao().equals(sessao.getIdSessao())) {
+				id = sessao.getIdUsuario();
+			}
+		}
+		return id;
+	}
+
+	private CaronaInteresseDomain pegarInteresseCarona(String idSessao,
+			CaronaInteresseDomain caronaInteresse) {
+		for (CaronaInteresseDomain caronaInteresseDomain : interessesCaronas) {
+			if (caronaInteresseDomain.getIdSessao().equals(idSessao)) {
+				caronaInteresse = caronaInteresseDomain;
+			}
+		}
+		return caronaInteresse;
 	}
 }

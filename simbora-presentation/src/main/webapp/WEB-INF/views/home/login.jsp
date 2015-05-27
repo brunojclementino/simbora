@@ -24,7 +24,9 @@
 			</tr>
 			<tr>
 				<th><a href="#">Esqueceu a senha?</a></th>
-				<th id="colunas_botao_login"><form:button id="btnlogin" >Entrar</form:button></th>
+				<th id="colunas_botao_login">
+					<form:button class="btn-success">Entrar</form:button>
+				</th>
 			
 			</tr>
 		</table>
