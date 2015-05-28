@@ -50,7 +50,7 @@ public class CaronaDaoImp implements CaronaDao{
 		t.commit();
 	}
 	
-	@Override
+	@Override 
 	public void excluirTudo() {  
         List<CaronaDomain> list = list();
         for(CaronaDomain carona:list){

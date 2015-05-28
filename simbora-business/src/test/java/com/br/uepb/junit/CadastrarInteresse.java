@@ -21,18 +21,21 @@ public class CadastrarInteresse {
 	CaronaBusiness carona;
 	PerfilBusiness perfil;
 	CaronaInteresesBusiness interesse;
-	
+
 	@Before
-	public void iniciarTest() { 
+	public void iniciarTest() {
 		usuario = new UsuarioBusiness();
 		sessao = new SessaoBusiness();
 		carona = new CaronaBusiness();
 		perfil = new PerfilBusiness();
 		interesse = new CaronaInteresesBusiness();
-		
+
+		perfil.zerarSistema();
+		interesse.encerrarSistema();
 		carona.encerrarSistema();
 		usuario.encerrarSistema();
-		
+		usuario.usuarios.clear();
+
 		// Criar os usuarios.
 		try {
 			usuario.criarUsuario("zezyt0", "z3z1t0", "Jose de zito",
@@ -207,10 +210,20 @@ public class CadastrarInteresse {
 		} catch (Exception e) {
 			fail();
 		}
+		
+		try {
+			assertEquals(
+					"[Carona cadastrada no dia 23/06/2013, ás 16:00 de acordo com os seus interesses registrados. Entrar em contato com jucaPeroba@gmail.com]",
+					perfil.verificarMensagensPerfil("caba"));
+		} catch (Exception e) {
+			fail();
+		}
+		
+		interesse.encerrarSistema();
 	}
 
 	@Test
-	public void tratamentoErros() { 
+	public void tratamentoErros() {
 		// Tratamento dos erros
 		// Erros na origem
 		try {

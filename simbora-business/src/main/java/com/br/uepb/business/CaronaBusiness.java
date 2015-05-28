@@ -20,7 +20,7 @@ import com.br.uepb.domain.SessaoDomain;
  * 
  * 
  * @author Lucas Miranda e Bruno Clementino
- *
+ * 
  */
 public class CaronaBusiness {
 

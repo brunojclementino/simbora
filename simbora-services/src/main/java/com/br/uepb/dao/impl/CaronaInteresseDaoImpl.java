@@ -1,12 +1,11 @@
 package com.br.uepb.dao.impl;
 
-import java.util.List;
+import java.util.List; 
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.br.uepb.dao.CaronaInteresseDao;
-import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.CaronaInteresseDomain;
 import com.br.uepb.util.HibernateUtil;
 
@@ -34,7 +33,7 @@ public class CaronaInteresseDaoImpl implements CaronaInteresseDao {
 		List<CaronaInteresseDomain> lista = session.createQuery("from CaronaInteresseDomain").list();
 		t.commit();
 		return lista;
-	}
+	} 
 
 	@Override
 	public void remove(CaronaInteresseDomain carona) {

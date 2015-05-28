@@ -1,6 +1,7 @@
 package com.br.uepb.accept;
 
 import com.br.uepb.business.CaronaBusiness;
+import com.br.uepb.business.CaronaInteresesBusiness;
 import com.br.uepb.business.PerfilBusiness;
 import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.business.SolicitacaoPontoDeEncontroBusiness;
@@ -11,6 +12,7 @@ import com.br.uepb.constants.PerfilException;
 import com.br.uepb.constants.SessaoException;
 import com.br.uepb.constants.UsuarioException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
+import com.br.uepb.dao.impl.CaronaInteresseDaoImpl;
 import com.br.uepb.dao.impl.PontoDeEncontroDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoPontoDeEncontroDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoVagasDaoImp;
@@ -28,38 +30,27 @@ public class SimboraEasyAccept {
 	CaronaBusiness caronaBusiness = new CaronaBusiness();
 	SessaoBusiness sessaoBusiness = new SessaoBusiness();
 	//PontoDeEncontroController pontoDeEncontroController = new PontoDeEncontroController();
+	
 	SolicitacaoPontoDeEncontroBusiness solicitacaoEncontroBusiness = new SolicitacaoPontoDeEncontroBusiness();
 	SolicitacaoVagasBusiness solicitacaoVagasBusiness = new SolicitacaoVagasBusiness();
+	CaronaInteresesBusiness interesseBusiness = new CaronaInteresesBusiness();
 	PerfilBusiness perfilBusiness = new PerfilBusiness();
 	
 	public void zerarSistema() {
-		/*usuarioController.zerarSistema();
-		caronaController.zerarSistema();
-		solicitacaoEncontroController.zerarSistema();
-		solicitacaoVagasController.zerarSistema();*/
-		//pontoDeEncontroController.zerarSistema();
-		/*SessaoBusiness.getSessoes().clear();
-		SessaoBusiness.getUsuarios().clear();*/
+		
 		usuarioBusiness=new UsuarioBusiness();
 		caronaBusiness=new CaronaBusiness();
 		sessaoBusiness = new SessaoBusiness();
 		solicitacaoEncontroBusiness=new SolicitacaoPontoDeEncontroBusiness();
 		solicitacaoVagasBusiness = new SolicitacaoVagasBusiness();
 		perfilBusiness = new PerfilBusiness();
-		/*usuarioBusiness.usuarios.clear();
-		caronaBusiness.caronas.clear();
-		solicitacaoVagasBusiness.solicitacoesVagas.clear();
-		solicitacaoEncontroBusiness.solicitacoes.clear();
-		perfilBusiness.caronasNaoFuncionaram.clear();
-		perfilBusiness.caronasSegurasTranquilas.clear();
-		perfilBusiness.faltaramNasVagas.clear();
-		perfilBusiness.presenteNasVagas.clear();*/
+		
 		new UsuarioDaoImp().excluirTudo();
 		new CaronaDaoImp().excluirTudo();
 		new SolicitacaoPontoDeEncontroDaoImp().excluirTudo();
 		new SolicitacaoVagasDaoImp().excluirTudo();
 		new PontoDeEncontroDaoImp().excluirTudo();
-		
+		new CaronaInteresseDaoImpl().excluirTudo();
 	}
 
 	public void criarUsuario(String login, String senha, String nome, String endereco, String email) throws UsuarioException{
@@ -83,6 +74,8 @@ public class SimboraEasyAccept {
 		caronaBusiness.encerrarSistema();
 		solicitacaoEncontroBusiness.encerrarSistema();
 		solicitacaoVagasBusiness.encerrarSistema();
+		interesseBusiness.encerrarSistema();
+		
 		HibernateUtil.closedSession();
 	}
 	

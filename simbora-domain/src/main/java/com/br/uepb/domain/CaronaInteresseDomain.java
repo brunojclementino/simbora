@@ -5,10 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.log4j.Logger;
+
 @Entity
 @Table(name="CARONAINTERESSE")
 public class CaronaInteresseDomain {
 
+	final static Logger logger = Logger.getLogger(CaronaInteresseDomain.class);
+	
 	@Id
 	@Column(name = "idInteresse")
 	private String id;
@@ -18,6 +22,10 @@ public class CaronaInteresseDomain {
 	private String data;
 	private String horaInicio;
 	private String horaFim;
+	
+	public CaronaInteresseDomain() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public String getId() {
 		return id;

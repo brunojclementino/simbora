@@ -236,67 +236,46 @@ public class PerfilBusiness {
 	}
 
 	public String verificarMensagensPerfil(String idSessao) {
-		String msgem = "[";
-		UsuarioDomain usuario = new UsuarioDomain();
-		String id = null;
-
+		String msgem = "[", idUsuario ="";
 		CaronaInteresseDomain caronaInteresse = new CaronaInteresseDomain();
-		try {
-			CaronaDomain car = null;
-			caronaInteresse = pegarInteresseCarona(idSessao, caronaInteresse);
-			id = pegarIdUsuario(id, caronaInteresse);
-			usuario = pegarUsuario(usuario, id);
+		CaronaDomain carona = new CaronaDomain(); 
+		UsuarioDomain usuario = new UsuarioDomain();
 
-			for (CaronaDomain carona : CaronaBusiness.caronas) {
-				if (carona.getLocalDeOrigem().equals(
-						caronaInteresse.getOrigem())
-						&& carona.getLocalDeDestino().equals(
-								caronaInteresse.getDestino())) {
-					car = new CaronaDomain();
-					car = carona;
-				}
-			}
-			try {
-			msgem += "Carona cadastrada no dia "
-					+ car.getData()
-					+ ", ás "
-					+ car.getLocalDeOrigem()
-					+ " de acordo com os seus interesses registrados. Entrar em contato com "
-					+ usuario.getEmail();
-			}catch (Exception e){}
-			return msgem + "]";
-		} catch (Exception e) {
-			return "[]";
-		}
-
-	}
-
-	private UsuarioDomain pegarUsuario(UsuarioDomain usuario, String id) {
-		for (UsuarioDomain user : UsuarioBusiness.usuarios) {
-			if (user.getLogin().equals(id)) {
-				usuario = user;
-			}
-		}
-		return usuario;
-	}
-
-	private String pegarIdUsuario(String id,
-			CaronaInteresseDomain caronaInteresse) {
-		for (SessaoDomain sessao : SessaoBusiness.getSessoes()) {
-			if (caronaInteresse.getIdSessao().equals(sessao.getIdSessao())) {
-				id = sessao.getIdUsuario();
-			}
-		}
-		return id;
-	}
-
-	private CaronaInteresseDomain pegarInteresseCarona(String idSessao,
-			CaronaInteresseDomain caronaInteresse) {
+		// Pegar a carona do passageiro 
 		for (CaronaInteresseDomain caronaInteresseDomain : interessesCaronas) {
 			if (caronaInteresseDomain.getIdSessao().equals(idSessao)) {
 				caronaInteresse = caronaInteresseDomain;
 			}
 		}
-		return caronaInteresse;
+		
+		for (SessaoDomain sessao : SessaoBusiness.getSessoes()) {
+			if (sessao.getIdSessao().equals(caronaInteresse.getIdSessao())) {
+				idUsuario = sessao.getIdUsuario();
+			}
+		}
+		
+		for (CaronaDomain car : CaronaBusiness.caronas) {
+			if (caronaInteresse.getOrigem().equals(car.getLocalDeOrigem())
+					&& caronaInteresse.getDestino().equals(
+							car.getLocalDeDestino())
+					&& caronaInteresse.getData().equals(car.getData())) {
+				idSessao = car.getIdSessao();
+				System.out.println("Carona: "+ caronaInteresse.getData() 
+						+", "+ caronaInteresse.getOrigem());
+		
+				for (UsuarioDomain user : UsuarioBusiness.usuarios) {
+					if (user.getLogin().equals(car.getIdSessao())) {
+						usuario = user;
+					}
+				}
+				
+				msgem += "Carona cadastrada no dia "
+						+ car.getData() + ", ás "
+						+ car.getHorarioDeSaida()
+						+ " de acordo com os seus interesses registrados. Entrar em contato com "
+						+ usuario.getEmail();
+			}
+		}
+		return msgem + "]";
 	}
 }
