@@ -114,10 +114,10 @@ public class CaronaBusiness {
 				ids += carona.getIdCarona();
 				flag = false;
 			}
-			if (ids.equals("{0") || ids.equals("{0,")) {
+			/*if (ids.equals("{0") || ids.equals("{0,")) {
 				ids = "{";
 				flag = true;
-			}
+			}*/
 		}
 
 		return ids + "}";

@@ -151,6 +151,9 @@ public class SimboraFacade {
 			String origem, String destino) throws CaronaException{
 		return simboraEasyAccept.localizarCaronaMunicipal(idSessao, cidade, origem, destino);
 	}
+	public String localizarCaronaMunicipal(String idSessao, String cidade) throws CaronaException {
+		return simboraEasyAccept.localizarCaronaMunicipal(idSessao, cidade);
+	}
 
 	public static void main(String[] args) {
 		args = new String[] {"com.br.uepb.facade.SimboraFacade", "scripts/US01.txt",
