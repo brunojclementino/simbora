@@ -44,6 +44,8 @@ public class SimboraEasyAccept {
 		solicitacaoEncontroBusiness=new SolicitacaoPontoDeEncontroBusiness();
 		solicitacaoVagasBusiness = new SolicitacaoVagasBusiness();
 		perfilBusiness = new PerfilBusiness();
+		interesseBusiness = new CaronaInteresesBusiness();
+		interesseBusiness.getInteresseCaronas().clear();
 		usuarioBusiness.usuarios.clear();
 		caronaBusiness.caronas.clear();
 		solicitacaoVagasBusiness.solicitacoesVagas.clear();
@@ -57,6 +59,7 @@ public class SimboraEasyAccept {
 		new SolicitacaoPontoDeEncontroDaoImp().excluirTudo();
 		new SolicitacaoVagasDaoImp().excluirTudo();
 		new PontoDeEncontroDaoImp().excluirTudo();
+		new CaronaInteresseDaoImpl().excluirTudo();
 		new CaronaInteresseDaoImpl().excluirTudo();
 	}
 
@@ -215,4 +218,14 @@ public class SimboraEasyAccept {
 	public String localizarCaronaMunicipal(String idSessao, String cidade) throws CaronaException {
 		return caronaBusiness.localizarCaronaMunicipal(idSessao, cidade);
 	}
+	public String cadastrarInteresse(String idSessao, String origem,
+			String destino, String data, String horaInicio, String horaFim)
+			throws CaronaException {
+		return interesseBusiness.cadastrarInteresse(idSessao, origem, destino, data, horaInicio, horaFim);
+	}
+	public String verificarMensagensPerfil(String idSessao) {
+		return perfilBusiness.verificarMensagensPerfil(idSessao);
+	}
+	
+	
 }

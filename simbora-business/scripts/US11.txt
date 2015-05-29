@@ -30,7 +30,7 @@ sessaoMarcio=abrirSessao login="caba" senha="Marcin"
 idInteresse1=cadastrarInteresse idSessao=${sessaoZezito} origem="João Pessoa" destino="Campina Grande" data="23/06/2013" horaInicio="06:00" horaFim="16:00"
 idInteresse2=cadastrarInteresse idSessao=${sessaoManelito} origem="Campina Grande" destino="João Pessoa" data="25/06/2013" horaInicio="11:00" horaFim="18:00"
 idInteresse3=cadastrarInteresse idSessao=${sessaoMariano} origem="Campina Grande" destino="João Pessoa" data="23/06/2013" horaInicio="" horaFim="18:00"
-idInteresse4=cadastrarInteresse idSessao=${sessaoMarcio} origem="Campina Grande" destino="João Pessoa" data="" horaInicio="" horaFim="18:00"
+idInteresse4=cadastrarInteresse idSessao=${sessaoMarcio} origem="Campina Grande" destino="João Pessoa" data="23/06/2013" horaInicio="" horaFim="18:00"
 
 #Para os horários o sistema poderá deixar o usuário livre, ou seja, ele poderá não colocar horaInicio(pegará todos a partir das 0h do dia especificado
 # ou horaFim(pegará todos até às 11:59 do dia especificado) que a consulta será realizada. data="" retornará todas as caronas que tem marcadas da data atual em diante.

@@ -154,12 +154,20 @@ public class SimboraFacade {
 	public String localizarCaronaMunicipal(String idSessao, String cidade) throws CaronaException {
 		return simboraEasyAccept.localizarCaronaMunicipal(idSessao, cidade);
 	}
+	public String cadastrarInteresse(String idSessao, String origem,
+			String destino, String data, String horaInicio, String horaFim)
+			throws CaronaException {
+		return simboraEasyAccept.cadastrarInteresse(idSessao, origem, destino, data, horaInicio, horaFim);
+	}
+	public String verificarMensagensPerfil(String idSessao) {
+		return simboraEasyAccept.verificarMensagensPerfil(idSessao);
+	}
 
 	public static void main(String[] args) {
 		args = new String[] {"com.br.uepb.facade.SimboraFacade", "scripts/US01.txt",
 				"scripts/US02.txt", "scripts/US03.txt", "scripts/US04.txt", "scripts/US05.txt"
 				, "scripts/US06.txt", "scripts/US07.txt", "scripts/US08.txt", "scripts/US09.txt"
-				,  "scripts/US10.txt"};
+				,  "scripts/US10.txt",  "scripts/US11.txt"};
 		EasyAccept.main(args); 
 	} 
 }
