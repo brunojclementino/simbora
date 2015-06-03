@@ -6,7 +6,7 @@
 		<div id="span_name_logo">
 
 			<div class="title-site">
-				<a href="http://localhost:8080/simbora-presentation/home/home.html" >Simbora</a>
+				<a href="http://localhost:8080/simbora-presentation/home/home.html">Simbora</a>
 			</div>
 
 			<div id="logomarca">
@@ -16,22 +16,19 @@
 			</div>
 		</div>
 
-
 		<div id=dropdown>
 			<div class="btn-group">
 				<button type="button" class="btnUsuario_login"
 					data-toggle="dropdown">
-					<p class="manager_user">USUÁRIO
-						<span class="caret"></span>
-					</p>					
+					<p class="manager_user">
+						USUÁRIO <span class="caret"></span>
+					</p>
 				</button>
 
 				<ul class="dropdown-menu" role="menu">
-					<li><a href="#" >Perfil</a></li>
+					<li><a href="#">Perfil</a></li>
 					<li><a href="#">Sair</a></li>
 				</ul>
 			</div>
 		</div>
-		
-	</nav>
-	
+</nav>

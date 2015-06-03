@@ -146,7 +146,7 @@ public class InterMunicipaisUrbanas {
 		}
 		
 		try {
-			assertEquals("{}", carona.localizarCarona("bill", "Campina Grande", "João Pessoa"));
+			assertEquals("{0}", carona.localizarCarona("bill", "Campina Grande", "João Pessoa"));
 		} catch (CaronaException e) {
 			fail();
 		}

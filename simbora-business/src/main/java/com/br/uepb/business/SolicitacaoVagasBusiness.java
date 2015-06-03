@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.br.uepb.dao.impl.SolicitacaoVagasDaoImp;
 import com.br.uepb.domain.CaronaDomain;
+import com.br.uepb.domain.SolicitacaoPontoDeEncontroDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
+import com.br.uepb.domain.UsuarioDomain;
 
 /**
  * O responsável por gerenciar as solicitações de vagas nas caronas pelos
@@ -16,8 +18,8 @@ import com.br.uepb.domain.SolicitacaoVagasDomain;
 public class SolicitacaoVagasBusiness {
 
 	SolicitacaoVagasDomain solicitacaoVagas;
-	public static List<SolicitacaoVagasDomain> 
-		solicitacoesVagas = new SolicitacaoVagasDaoImp().list();
+	public static List<SolicitacaoVagasDomain> solicitacoesVagas = new SolicitacaoVagasDaoImp()
+			.list();
 
 	/**
 	 * Salva todoas as solicitacaoVagas e depois limpa a lista de
@@ -37,6 +39,7 @@ public class SolicitacaoVagasBusiness {
 
 	/**
 	 * Cria uma solicitação de vaga na carona.
+	 * 
 	 * @param idSessao
 	 * @param idCarona
 	 * @return id da solicitação da vaga.
@@ -58,6 +61,7 @@ public class SolicitacaoVagasBusiness {
 
 	/**
 	 * Define o status da solicitação da carona para 'Aceita'.
+	 * 
 	 * @param idSessao
 	 * @param idSolicitacao
 	 */
@@ -74,8 +78,9 @@ public class SolicitacaoVagasBusiness {
 	}
 
 	/**
-	 * Define o status da carona para 'Recusada' Se a solicitacaoVagas estiver 'Pendente'. Caso não encontre 
-	 * retornará 'Solicitação inexistente'.
+	 * Define o status da carona para 'Recusada' Se a solicitacaoVagas estiver
+	 * 'Pendente'. Caso não encontre retornará 'Solicitação inexistente'.
+	 * 
 	 * @param idSessao
 	 * @param idSolicitacao
 	 * @throws Exception
@@ -100,6 +105,7 @@ public class SolicitacaoVagasBusiness {
 
 	/**
 	 * Retorna o nome do Dono da solicitação ou Dono da Carona.
+	 * 
 	 * @param idSolicitacao
 	 * @param atributo
 	 * @return no do Dono da carona ou da Solicitação da carona.
@@ -134,22 +140,23 @@ public class SolicitacaoVagasBusiness {
 		return "";
 	}
 
-	
-public static boolean ehCaroneiro(String login, String idCarona) {
-		
+	public static boolean ehCaroneiro(String login, String idCarona) {
+
 		for (SolicitacaoVagasDomain solicitacaoVagas : solicitacoesVagas) {
-			
-			if(solicitacaoVagas.getIdCarona().equals(idCarona) && solicitacaoVagas.getIdSessao().equals(login)){
+
+			if (solicitacaoVagas.getIdCarona().equals(idCarona)
+					&& solicitacaoVagas.getIdSessao().equals(login)) {
 				return true;
 			}
-			
+
 		}
-		
+
 		return false;
 	}
 
 	/**
 	 * Retorna todos os ids das solicitações que foram aceitas.
+	 * 
 	 * @param idSessao
 	 * @param idCarona
 	 * @return
@@ -177,11 +184,12 @@ public static boolean ehCaroneiro(String login, String idCarona) {
 
 	/**
 	 * Retorna todos os ids das solicitações que estão pendentes.
+	 * 
 	 * @param idSessao
 	 * @param idCarona
 	 * @return
 	 */
-	public String getSolicitacoesPendentes(String idSessao, String idCarona) { 
+	public String getSolicitacoesPendentes(String idSessao, String idCarona) {
 
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
@@ -200,4 +208,5 @@ public static boolean ehCaroneiro(String login, String idCarona) {
 		}
 		return ids + "}";
 	}
+
 }

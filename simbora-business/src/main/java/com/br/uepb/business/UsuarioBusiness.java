@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.br.uepb.constants.UsuarioException;
 import com.br.uepb.dao.impl.UsuarioDaoImp;
+import com.br.uepb.domain.SolicitacaoPontoDeEncontroDomain;
 import com.br.uepb.domain.UsuarioDomain;
 
 /**
@@ -186,4 +187,35 @@ public class UsuarioBusiness {
 		return usuarios.size();
 	}
 
+	public boolean enviarEmail(String idUsuario, String email, String mensagem) {
+
+		if (!ehUsuario(idUsuario)) {
+			return false;
+		}
+
+		if (mensagem.equals("A solicitação foi recebida")) {
+			
+			return true;
+		}
+		if (mensagem.equals("A carona foi confirmada")) {
+			return true;
+		}
+		if (mensagem.equals("A carona foi rejeitada por falta de vaga")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean ehUsuario(String idUsuario) {
+		List<UsuarioDomain> lstUser = UsuarioBusiness.usuarios;
+
+		for (UsuarioDomain usuarioDomain : lstUser) {
+			if (usuarioDomain.getLogin().equals(idUsuario)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

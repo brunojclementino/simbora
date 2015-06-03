@@ -12,7 +12,7 @@ import com.br.uepb.business.UsuarioBusiness;
 import com.br.uepb.constants.CaronaException;
 import com.br.uepb.constants.SessaoException;
 
-public class ComfirmacaoDePresencaTest {
+public class ConfirmacaoDePresencaTest {
 
 	UsuarioBusiness usuario;
 	CaronaBusiness carona;

@@ -8,6 +8,7 @@ import com.br.uepb.dao.impl.SolicitacaoPontoDeEncontroDaoImp;
 import com.br.uepb.domain.PontoDeEncontroDomain;
 import com.br.uepb.domain.SolicitacaoPontoDeEncontroDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
+import com.br.uepb.domain.UsuarioDomain;
 
 /**
  * O responsável por gerenciar as solicitações de pontos de encontros feitas por
@@ -35,7 +36,8 @@ public class SolicitacaoPontoDeEncontroBusiness {
 	private PontoDeEncontroDomain pontoDeEncontro;
 
 	/**
-	 * Salva os pontos de encontro que foram aceitas e que ainda estão pendentes. Depois a List é limpada.
+	 * Salva os pontos de encontro que foram aceitas e que ainda estão
+	 * pendentes. Depois a List é limpada.
 	 */
 	public void encerrarSistema() {
 		for (SolicitacaoPontoDeEncontroDomain solicitacaoPontoDeEncontro : solicitacoes) {
@@ -51,7 +53,8 @@ public class SolicitacaoPontoDeEncontroBusiness {
 					pontoDeEncontroDaoImp.save(solicitacaoPontoDeEncontro
 							.getPontoDeEncontro(2));
 				SolicitacaoPontoDeEncontroDaoImp solicitacaoPontoDeEncontroDaoImp = new SolicitacaoPontoDeEncontroDaoImp();
-				solicitacaoPontoDeEncontroDaoImp.save(solicitacaoPontoDeEncontro);
+				solicitacaoPontoDeEncontroDaoImp
+						.save(solicitacaoPontoDeEncontro);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -60,7 +63,9 @@ public class SolicitacaoPontoDeEncontroBusiness {
 	}
 
 	/**
-	 * Faz uma sugestão do ponto de encontro. Trata os possiveis erros de parametro <code>null</code>.
+	 * Faz uma sugestão do ponto de encontro. Trata os possiveis erros de
+	 * parametro <code>null</code>.
+	 * 
 	 * @param idSessao
 	 * @param idCarona
 	 * @param pontos
@@ -278,5 +283,4 @@ public class SolicitacaoPontoDeEncontroBusiness {
 		System.out.println(solicitacoes.size());
 		return ids + "]";
 	}
-
 }
