@@ -276,12 +276,4 @@ public class PerfilBusiness {
 		}
 		return msgem + "]";
 	}
-
-	public String cadastrarCaronaRelampago(String idSessao, String origem,
-			String destino, String dataIda, String dataVolta, String hora,
-			String minimoCaroneiros) {		
-		
-		
-		return null;
-	}
 }
