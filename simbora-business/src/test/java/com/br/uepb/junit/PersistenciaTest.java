@@ -30,7 +30,7 @@ public class PersistenciaTest {
 		carona = new CaronaBusiness();
 		solicitarPontoVaga = new SolicitacaoPontoDeEncontroBusiness();
 		solicitarVaga = new SolicitacaoVagasBusiness();
-		usuario.usuarios.clear();
+		usuario.getUsuarios().clear();
 		sessao.getSessoes().clear();
 		sessao.getUsuarios().clear();
 		carona.getCaronas().clear();

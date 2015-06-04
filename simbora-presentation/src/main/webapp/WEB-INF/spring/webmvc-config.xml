@@ -43,7 +43,8 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 			</list>
 		</property>
 	</bean>
-	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer" p:definitions="/WEB-INF/tiles-definitions.xml"/>
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer" 
+						p:definitions="/WEB-INF/tiles-definitions.xml"/>
 	
 	<!-- ==============CONFIGURATION SERVICE ==============	 -->
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">

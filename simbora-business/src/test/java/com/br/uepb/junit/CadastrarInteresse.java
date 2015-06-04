@@ -34,7 +34,7 @@ public class CadastrarInteresse {
 		interesse.encerrarSistema();
 		carona.encerrarSistema();
 		usuario.encerrarSistema();
-		usuario.usuarios.clear();
+		usuario.getUsuarios().clear();
 
 		// Criar os usuarios.
 		try {

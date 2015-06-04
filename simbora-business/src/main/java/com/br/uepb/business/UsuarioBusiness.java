@@ -5,6 +5,7 @@ import java.util.List;
 import com.br.uepb.constants.UsuarioException;
 import com.br.uepb.dao.impl.UsuarioDaoImp;
 import com.br.uepb.domain.SolicitacaoPontoDeEncontroDomain;
+import com.br.uepb.domain.SolicitacaoVagasDomain;
 import com.br.uepb.domain.UsuarioDomain;
 
 /**
@@ -21,21 +22,21 @@ public class UsuarioBusiness {
 	UsuarioDomain usuario;
 	String mensagemErro = "";
 
-	public static List<UsuarioDomain> usuarios = SessaoBusiness.getUsuarios();
+	private static List<UsuarioDomain> usuarios = SessaoBusiness.getUsuarios();
 	
 	/**
 	 * Esse método faz duas ações: salva os dados dos usuários e limpa a lista
 	 * dos usuário. Para isso ele preserva as informações dos usuários.
 	 */
 	public void encerrarSistema() {
-		for (UsuarioDomain usuario : usuarios) {
+		for (UsuarioDomain usuario : getUsuarios()) {
 			try {
 				UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
 				usuarioDaoImp.save(usuario);
 			} catch (Exception e) {
 			}
 		}
-		usuarios.clear();
+		getUsuarios().clear();
 	}
 
 	/**
@@ -51,8 +52,9 @@ public class UsuarioBusiness {
 	 */
 	public void criarUsuario(String login, String senha, String nome,
 			String endereco, String email) throws UsuarioException {
+		
 		usuario = new UsuarioDomain();
-
+		
 		usuario.setLogin(login);
 		usuario.setSenha(senha);
 		usuario.setNome(nome);
@@ -60,7 +62,7 @@ public class UsuarioBusiness {
 		usuario.setEmail(email);
 
 		if (ehUsuarioValido(usuario) && ehUsuarioNovo(usuario)) {
-			usuarios.add(usuario);
+			getUsuarios().add(usuario);
 		} else {
 			throw new UsuarioException(mensagemErro);
 		}
@@ -74,7 +76,7 @@ public class UsuarioBusiness {
 	 * @return {@link Boolean}
 	 */
 	private boolean ehUsuarioNovo(UsuarioDomain user) {
-		for (UsuarioDomain usuario : usuarios) {
+		for (UsuarioDomain usuario : getUsuarios()) {
 			if (usuario.getLogin().equals(user.getLogin())) {
 				mensagemErro = "Já existe um usuário com este login";
 				return false;
@@ -134,7 +136,7 @@ public class UsuarioBusiness {
 			throw new UsuarioException("Atributo inexistente");
 		}
 
-		for (UsuarioDomain usuario : usuarios) {
+		for (UsuarioDomain usuario : getUsuarios()) {
 			if (usuario.getLogin().equals(login)) {
 				switch (atributo) {
 					case "endereco":
@@ -171,7 +173,7 @@ public class UsuarioBusiness {
 	 * @return {@link Boolean}
 	 */
 	private boolean ehLoginExistente(String login) { 
-		for (UsuarioDomain usuario : usuarios) {
+		for (UsuarioDomain usuario : getUsuarios()) {
 			if (usuario.getLogin().equals(login))
 				return true;
 		}
@@ -184,7 +186,7 @@ public class UsuarioBusiness {
 	 * @return int
 	 */
 	public int getSize() {
-		return usuarios.size();
+		return getUsuarios().size();
 	}
 
 	public boolean enviarEmail(String idUsuario, String email, String mensagem) {
@@ -193,8 +195,15 @@ public class UsuarioBusiness {
 			return false;
 		}
 
-		if (mensagem.equals("A solicitação foi recebida")) {
+		for (UsuarioDomain usuarioDomain : usuarios) {
 			
+		}
+	
+		
+		if (mensagem.equals("A solicitação foi recebida")) {
+			for (SolicitacaoVagasDomain solicitacao : SolicitacaoVagasBusiness.solicitacoesVagas) {
+				
+			}
 			return true;
 		}
 		if (mensagem.equals("A carona foi confirmada")) {
@@ -208,7 +217,7 @@ public class UsuarioBusiness {
 	}
 
 	private boolean ehUsuario(String idUsuario) {
-		List<UsuarioDomain> lstUser = UsuarioBusiness.usuarios;
+		List<UsuarioDomain> lstUser = UsuarioBusiness.getUsuarios();
 
 		for (UsuarioDomain usuarioDomain : lstUser) {
 			if (usuarioDomain.getLogin().equals(idUsuario)) {
@@ -216,6 +225,14 @@ public class UsuarioBusiness {
 			}
 		}
 		return false;
+	}
+
+	public static List<UsuarioDomain> getUsuarios() {
+		return usuarios;
+	}
+
+	public static void setUsuarios(List<UsuarioDomain> usuarios) {
+		UsuarioBusiness.usuarios = usuarios;
 	}
 	
 }

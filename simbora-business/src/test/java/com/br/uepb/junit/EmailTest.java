@@ -140,6 +140,7 @@ public class EmailTest {
 		assertTrue(usuarioBusiness.enviarEmail("mark",
 				"bill@gmail.com", "A carona foi confirmada"));
 
+		// Requisitar Vaga na carona
 		try {
 			assertEquals("1V", solicitacaoVagasBusiness.solicitarVaga("bill", "1"));
 		} catch (Exception e) {
@@ -194,6 +195,5 @@ public class EmailTest {
 		} catch (Exception e) {
 			fail();
 		}		
-				
 	}
 }

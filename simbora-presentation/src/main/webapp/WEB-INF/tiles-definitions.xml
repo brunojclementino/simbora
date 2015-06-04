@@ -13,10 +13,9 @@
 	<definition name="home" extends="base.layout">
 		<put-attribute name="body" value="/WEB-INF/views/home/home.jsp" />
 	</definition>
-<!-- 
-	<definition name="groselha" extends="base.layout">
-		<put-attribute name="body" value="/WEB-INF/views/home/home.jsp" />
+
+	<definition name="paginaprincipal" extends="base.layout">
+		<put-attribute name="body" value="/WEB-INF/views/home/paginaprincipal.jsp" />
 	</definition>
- -->
 
 </tiles-definitions>

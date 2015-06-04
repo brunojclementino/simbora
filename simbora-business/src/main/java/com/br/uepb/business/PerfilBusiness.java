@@ -1,9 +1,7 @@
 package com.br.uepb.business;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
 
@@ -54,7 +52,7 @@ public class PerfilBusiness {
 			throw new PerfilException("Sessão inválida");
 		}
 
-		for (UsuarioDomain usuario : new UsuarioBusiness().usuarios) {
+		for (UsuarioDomain usuario : new UsuarioBusiness().getUsuarios()) {
 			if (usuario.getLogin().equals(login)) {
 				return usuario.getLogin();
 			}
@@ -84,7 +82,7 @@ public class PerfilBusiness {
 			throw new PerfilException("Login inválido");
 		}
 
-		for (UsuarioDomain usuario : new UsuarioBusiness().usuarios) {
+		for (UsuarioDomain usuario : new UsuarioBusiness().getUsuarios()) {
 			if (usuario.getLogin().equals(login)) {
 				return getAtributo(login, atributo);
 			}
@@ -263,7 +261,7 @@ public class PerfilBusiness {
 				System.out.println("Carona: "+ caronaInteresse.getData() 
 						+", "+ caronaInteresse.getOrigem());
 		
-				for (UsuarioDomain user : UsuarioBusiness.usuarios) {
+				for (UsuarioDomain user : UsuarioBusiness.getUsuarios()) {
 					if (user.getLogin().equals(car.getIdSessao())) {
 						usuario = user;
 					}
@@ -277,5 +275,13 @@ public class PerfilBusiness {
 			}
 		}
 		return msgem + "]";
+	}
+
+	public String cadastrarCaronaRelampago(String idSessao, String origem,
+			String destino, String dataIda, String dataVolta, String hora,
+			String minimoCaroneiros) {		
+		
+		
+		return null;
 	}
 }

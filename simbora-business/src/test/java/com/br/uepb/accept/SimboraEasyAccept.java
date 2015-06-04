@@ -46,7 +46,7 @@ public class SimboraEasyAccept {
 		perfilBusiness = new PerfilBusiness();
 		interesseBusiness = new CaronaInteresesBusiness();
 		interesseBusiness.getInteresseCaronas().clear();
-		usuarioBusiness.usuarios.clear();
+		usuarioBusiness.getUsuarios().clear();
 		caronaBusiness.caronas.clear();
 		solicitacaoVagasBusiness.solicitacoesVagas.clear();
 		solicitacaoEncontroBusiness.solicitacoes.clear();
@@ -166,7 +166,7 @@ public class SimboraEasyAccept {
 
 	public void reiniciarSistema() {
 		SessaoBusiness.setUsuarios(new UsuarioDaoImp().list());
-		UsuarioBusiness.usuarios = SessaoBusiness.getUsuarios();
+		UsuarioBusiness.setUsuarios(SessaoBusiness.getUsuarios());
 		CaronaBusiness.caronas = new CaronaDaoImp().list();
 		SolicitacaoVagasBusiness.solicitacoesVagas = new SolicitacaoVagasDaoImp().list();
 		SolicitacaoPontoDeEncontroBusiness.solicitacoes = new SolicitacaoPontoDeEncontroDaoImp().list();

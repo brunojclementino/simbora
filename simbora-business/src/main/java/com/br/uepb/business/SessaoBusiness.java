@@ -9,7 +9,7 @@ import com.br.uepb.domain.SessaoDomain;
 import com.br.uepb.domain.UsuarioDomain;
 
 /**
- * Controla a {@link Sessao}. M�todos: <li>abrirSessao</li> <li>encerrarSessao</li>
+ * Controla a {@link Sessao}. Métodos: <li>abrirSessao</li> <li>encerrarSessao</li>
  * <li>getSessao</li> <li>setUsuarios</li>
  * 
  * @author Lucas Miranda e Bruno Clementino

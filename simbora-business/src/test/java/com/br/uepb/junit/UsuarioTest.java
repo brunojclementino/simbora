@@ -68,7 +68,7 @@ public class UsuarioTest {
 		assertEquals("Palo Alto, California",
 				usuario.getAtributoUsuario("steve", "endereco"));
 
-		usuario.usuarios.clear();
+		usuario.getUsuarios().clear();
 	}
 
 	@Test
@@ -167,7 +167,7 @@ public class UsuarioTest {
 		} catch (SessaoException e) {
 			assertEquals("Usuário inexistente", e.getMessage());
 		}
-		usuario.usuarios.clear();
+		usuario.getUsuarios().clear();
 	}
 
 	@Test

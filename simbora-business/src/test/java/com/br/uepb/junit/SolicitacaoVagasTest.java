@@ -41,7 +41,7 @@ public class SolicitacaoVagasTest {
 
 	@Test
 	public void criarUsuario() {
-		usuario.usuarios.clear();
+		usuario.getUsuarios().clear();
 		carona.getCaronas().clear();
 		sessao.getSessoes().clear();
 		solicitarVagas.solicitacoes.clear();
@@ -276,7 +276,7 @@ public class SolicitacaoVagasTest {
 
 	@Test
 	public void todosErros() {
-		usuario.usuarios.clear();
+		usuario.getUsuarios().clear();
 		carona.getCaronas().clear();
 		sessao.getSessoes().clear();
 		solicitarVagas.solicitacoes.clear();
