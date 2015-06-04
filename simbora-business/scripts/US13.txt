@@ -54,24 +54,24 @@ expectError "Data inválida" cadastrarCaronaRelampago idSessao=${sessaoMark} ori
 
 
 expectError "Hora inválida" cadastrarCaronaRelampago idSessao=${sessaoMark} origem="Campina Grande" destino="João Pessoa" dataIda="23/06/2013" dataVolta="26/06/2013" hora= minimoCaroneiros=3
-expectError "Hora inválida" cadastrarCaronaRelampago idSessao=${sessaoMark} origem="Patos" destino="Jo�o Pessoa" dataIda="31/05/2013" dataVolta="02/06/2013" hora="" minimoCaroneiros=2
-expectError "Hora inválida" cadastrarCaronaRelampago idSessao=${sessaoMark} origem="Patos" destino="Jo�o Pessoa" dataIda="31/05/2013" dataVolta="02/06/2013" hora="seis" minimoCaroneiros=2
+expectError "Hora inválida" cadastrarCaronaRelampago idSessao=${sessaoMark} origem="Patos" destino="João Pessoa" dataIda="31/05/2013" dataVolta="02/06/2013" hora="" minimoCaroneiros=2
+expectError "Hora inválida" cadastrarCaronaRelampago idSessao=${sessaoMark} origem="Patos" destino="João Pessoa" dataIda="31/05/2013" dataVolta="02/06/2013" hora="seis" minimoCaroneiros=2
 
-expectError "Minimo Caroneiros inv�lido" cadastrarCaronaRelampago idSessao=${sessaoMark} origem="Campina Grande" destino="Jo�o Pessoa" dataIda="23/06/2013" dataVolta="26/06/2013" hora="16:00" minimoCaroneiros=
-expectError "Minimo Caroneiros inv�lido" cadastrarCaronaRelampago idSessao=${sessaoMark} origem="Patos" destino="Jo�o Pessoa" dataIda="31/05/2013" dataVolta="02/06/2013" hora="08:00" minimoCaroneiros="dois"
-expectError "Minimo Caroneiros inv�lido" cadastrarCaronaRelampago idSessao=${sessaoMark} origem="Patos" destino="Jo�o Pessoa" dataIda="31/05/2013" dataVolta="02/06/2013" hora="08:00" minimoCaroneiros=0
+expectError "Minimo Caroneiros inválido" cadastrarCaronaRelampago idSessao=${sessaoMark} origem="Campina Grande" destino="João Pessoa" dataIda="23/06/2013" dataVolta="26/06/2013" hora="16:00" minimoCaroneiros=
+expectError "Minimo Caroneiros inválido" cadastrarCaronaRelampago idSessao=${sessaoMark} origem="Patos" destino="João Pessoa" dataIda="31/05/2013" dataVolta="02/06/2013" hora="08:00" minimoCaroneiros="dois"
+expectError "Minimo Caroneiros inválido" cadastrarCaronaRelampago idSessao=${sessaoMark} origem="Patos" destino="João Pessoa" dataIda="31/05/2013" dataVolta="02/06/2013" hora="08:00" minimoCaroneiros=0
 
-expectError "Identificador do carona � inv�lido" getAtributoCaronaRelampago idCarona= atributo="origem"
-expectError "Identificador do carona � inv�lido" getAtributoCaronaRelampago idCarona="" atributo="origem"
+expectError "Identificador do carona é inválido" getAtributoCaronaRelampago idCarona= atributo="origem"
+expectError "Identificador do carona é inválido" getAtributoCaronaRelampago idCarona="" atributo="origem"
 expectError "Item inexistente" getAtributoCaronaRelampago idCarona="xpto" atributo="destino"
-expectError "Atributo inv�lido" getAtributoCaronaRelampago idCarona=${carona3ID} atributo=
-expectError "Atributo inv�lido" getAtributoCaronaRelampago idCarona=${carona2ID} atributo=""
+expectError "Atributo inválido" getAtributoCaronaRelampago idCarona=${carona3ID} atributo=
+expectError "Atributo inválido" getAtributoCaronaRelampago idCarona=${carona2ID} atributo=""
 expectError "Atributo inexistente" getAtributoCaronaRelampago idCarona=${carona1ID} atributo="xpto"
 expectError "Carona Inexistente" getCaronaRelampago idCarona=""
-expectError "Carona Inv�lida" getCaronaRelampago idCarona=
+expectError "Carona Inválida" getCaronaRelampago idCarona=
 expectError "Carona Inexistente" getCaronaRelampago idCarona="xpto"
 expectError "Trajeto Inexistente" getTrajeto idCarona=""
-expectError "Trajeto Inv�lida" getTrajeto idCarona=
+expectError "Trajeto Inválida" getTrajeto idCarona=
 expectError "Trajeto Inexistente" getTrajeto idCarona="xpto"
 
 encerrarSessao login="mark"
@@ -82,10 +82,10 @@ criarUsuario login="bill" senha="bilz@o" nome="William Henry Gates III" endereco
 sessaoBill=abrirSessao login="bill" senha="bilz@o"
 solicitacao1ID=solicitarVaga idSessao=${sessaoBill} idCarona=${carona1ID}
 
-#Iniciar sess�o.
+#Iniciar sessão.
 sessaoMark=abrirSessao login="mark" senha="m@rk"
 
-#Aceitar requisi��o
+#Aceitar requisição
 aceitarSolicitacao idSessao=${sessaoMark} idSolicitacao=${solicitacao1ID}
 
 #Solicitacao de vaga
