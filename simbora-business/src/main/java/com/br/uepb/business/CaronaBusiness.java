@@ -1,12 +1,12 @@
 package com.br.uepb.business;
 
-import java.text.SimpleDateFormat; 
+import java.text.SimpleDateFormat;
+ 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.type.TrueFalseType;
 
 import com.br.uepb.constants.CaronaException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
@@ -29,7 +29,6 @@ public class CaronaBusiness {
 	public static List<CaronaDomain> caronas = new CaronaDaoImp().list();
 	CaronaDomain carona;
 	List<SessaoDomain> sessao = SessaoBusiness.getSessoes();
-	private boolean ehMunicipal = false;
 	private static List<CaronaDomain> interesseCaronas = new ArrayList<CaronaDomain>();
 	
 	/**
@@ -106,12 +105,12 @@ public class CaronaBusiness {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
 		for (CaronaDomain carona : caronas) {
-			if (carona.getLocalDeOrigem().equals(origem)
-					&& carona.getLocalDeDestino().equals(destino)) {
+			if (carona.getOrigem().equals(origem)
+					&& carona.getDestino().equals(destino)) {
 				if (!flag) {
 					ids += ",";
 				}
-				ids += carona.getIdCarona();
+				ids += carona.getId();
 				flag = false;
 			}
 			/*if (ids.equals("{0") || ids.equals("{0,")) {
@@ -137,11 +136,11 @@ public class CaronaBusiness {
 			if (!flag) {
 				ids += ",";
 			}
-			ids += carona.getIdCarona();
+			ids += carona.getId();
 			flag = false;
 		}
 
-		return ids + "}";
+		return ids + "}"; 
 	}
 
 	/**
@@ -156,11 +155,11 @@ public class CaronaBusiness {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
 		for (CaronaDomain carona : caronas) {
-			if (carona.getLocalDeOrigem().equals(origem)) {
+			if (carona.getOrigem().equals(origem)) {
 				if (!flag) {
 					ids += ",";
 				}
-				ids += carona.getIdCarona();
+				ids += carona.getId();
 				flag = false;
 			}
 		}
@@ -180,11 +179,11 @@ public class CaronaBusiness {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
 		for (CaronaDomain carona : caronas) {
-			if (carona.getLocalDeDestino().equals(destino)) {
+			if (carona.getDestino().equals(destino)) {
 				if (!flag) {
 					ids += ",";
 				}
-				ids += carona.getIdCarona();
+				ids += carona.getIdUsuario();
 				flag = false;
 			}
 		}
@@ -242,20 +241,38 @@ public class CaronaBusiness {
 		}
 
 		carona = new CaronaDomain();
-
-		carona.setIdCarona((caronas.size()) + "");
-		String id = carona.getIdCarona() + "";
-		
-		carona.setLocalDeOrigem(origem);
-		carona.setLocalDeDestino(destino);
+		carona.setOrigem(origem);
+		carona.setDestino(destino);
 		carona.setData(data);
-		carona.setHorarioDeSaida(hora);
-		carona.setQtdDeVagas(qtdDeVagas);
-		carona.setIdSessao(idSessao);
+		carona.setHora(hora);
+		carona.setVagas(qtdDeVagas);
+		carona.setIdUsuario(getUsuario(idSessao));;
+		
+		CaronaDaoImp dao = new CaronaDaoImp();
+		dao.save(carona);
+		caronas = dao.list();
+		return getIdCaroneiro(carona);
 
-		caronas.add(carona);
-		return id;
+	}
 
+	private String getIdCaroneiro(CaronaDomain carona2) {
+		for (CaronaDomain caronaDomain : caronas) {
+			if (caronaDomain.getIdUsuario().equals(carona2.getIdUsuario()) 
+					&& caronaDomain.getData().equals(carona2.getData()) &&
+					caronaDomain.getOrigem().equals(carona2.getOrigem())) {
+				return caronaDomain.getId()+"";
+			}
+		}
+		return null;
+	}
+
+	private String getUsuario(String idSessao) {
+		for (SessaoDomain sessao : SessaoBusiness.getSessoes()) {
+			if (sessao.getIdSessao().equals(idSessao)) {
+				return sessao.getIdUsuario();
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -332,16 +349,16 @@ public class CaronaBusiness {
 		}
 
 		if (atributo.equals("origem")) {
-			return caronas.get(Integer.valueOf(idCarona)).getLocalDeOrigem();
+			return caronas.get(Integer.valueOf(idCarona)).getOrigem();
 		}
 		if (atributo.equals("destino")) {
-			return caronas.get(Integer.valueOf(idCarona)).getLocalDeDestino();
+			return caronas.get(Integer.valueOf(idCarona)).getDestino();
 		}
 		if (atributo.equals("data")) {
 			return caronas.get(Integer.valueOf(idCarona)).getData();
 		}
 		if (atributo.equals("vagas")) {
-			return caronas.get(Integer.valueOf(idCarona)).getQtdDeVagas() + "";
+			return caronas.get(Integer.valueOf(idCarona)).getVagas() + "";
 		}
 
 		throw new CaronaException("Atributo inexistente");
@@ -355,7 +372,7 @@ public class CaronaBusiness {
 	 */
 	private boolean idCaronaExistir(String idCarona) {
 		for (CaronaDomain carona : caronas) {
-			if ((carona.getIdCarona().equals(idCarona))) {
+			if ((carona.getId() == Integer.parseInt(idCarona))) {
 				return true;
 			}
 		}
@@ -382,10 +399,10 @@ public class CaronaBusiness {
 			throw new CaronaException("Trajeto Inexistente");
 		}
 		try {
-			return caronas.get(Integer.valueOf(idCarona)).getLocalDeOrigem()
+			return caronas.get(Integer.valueOf(idCarona)).getOrigem()
 					+ " - "
 					+ caronas.get(Integer.valueOf(idCarona))
-							.getLocalDeDestino();
+							.getDestino();
 		} catch (Exception e) {
 			throw new CaronaException("");
 		}
@@ -418,9 +435,9 @@ public class CaronaBusiness {
 		}
 
 		CaronaDomain carona = caronas.get(Integer.valueOf(idCarona));
-		return carona.getLocalDeOrigem() + " para "
-				+ carona.getLocalDeDestino() + ", no dia " + carona.getData()
-				+ ", as " + carona.getHorarioDeSaida();
+		return carona.getOrigem() + " para "
+				+ carona.getDestino() + ", no dia " + carona.getData()
+				+ ", as " + carona.getHora();
 	}
 
 	/**
@@ -463,9 +480,9 @@ public class CaronaBusiness {
 	public void reduzQtdVagas(String idcarona) {
 
 		for (CaronaDomain carona : caronas) {
-			if (carona.getIdCarona().equals(idcarona)) {
-				int qtdVagasAtual = Integer.parseInt(carona.getQtdDeVagas()) - 1;
-				carona.setQtdDeVagas(qtdVagasAtual + "");
+			if (carona.getId() == Integer.parseInt(idcarona)) {
+				int qtdVagasAtual = Integer.parseInt(carona.getVagas()) - 1;
+				carona.setVagas(qtdVagasAtual + "");
 			}
 		}
 	}
@@ -478,30 +495,11 @@ public class CaronaBusiness {
 	public void aumentaQtdVagas(String idcarona) {
 
 		for (CaronaDomain carona : caronas) {
-			if (carona.getIdCarona().equals(idcarona)) {
-				int qtdVagasAtual = Integer.parseInt(carona.getQtdDeVagas()) + 1;
-				carona.setQtdDeVagas(qtdVagasAtual + "");
+			if (carona.getId() == Integer.parseInt(idcarona)) {
+				int qtdVagasAtual = Integer.parseInt(carona.getVagas()) + 1;
+				carona.setVagas(qtdVagasAtual + "");
 			}
 		}
-	}
-
-	/**
-	 * Verifica se é motorista.
-	 * 
-	 * @param login
-	 * @param idCarona
-	 * @return Se for motorista {@link TrueFalseType}, caso contrario
-	 *         <code>false</code>
-	 */
-	public static boolean ehMotorista(String login, String idCarona) {
-		for (CaronaDomain carona : caronas) {
-			if (idCarona.equals(carona.getIdCarona())
-					&& login.equals(carona.getIdSessao())) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	/**
@@ -518,9 +516,9 @@ public class CaronaBusiness {
 			int cont = 0;
 			// percorre as caronas para verificar qual a carona x do usuario
 			for (CaronaDomain carona : caronas) {
-				if (carona.getIdSessao().equals(idSessao)) {
+				if ((carona.getId()+"").equals(indexCarona)) {
 					if (cont == indice) {
-						return carona.getIdCarona();
+						return carona.getId()+"";
 					}
 					cont++;
 				}
@@ -539,160 +537,35 @@ public class CaronaBusiness {
 	 */
 	public String getTodasCaronasUsuario(String idSessao) {
 		String ids = "{";
+		String idUsuario = "";
+		for (SessaoDomain sessao : SessaoBusiness.getSessoes()) {
+			if (sessao.getIdSessao().equals(idSessao)) {
+				idUsuario = sessao.getIdUsuario();
+			}
+			
+		}
 		boolean flag = true;// indica se a quantidade de ids é 0
 		for (CaronaDomain carona : caronas) {
-			if (carona.getIdSessao().equals(idSessao)) {
+			if (carona.getIdUsuario().equals(idUsuario)) {
 				if (!flag) {
 					ids += ",";
 				}
-				ids += carona.getIdCarona();
+				ids += carona.getId();
 				flag = false;
 			}
 		}
 		return ids + "}";
 	}
 
-	/**
-	 * Carona feitas na zona urbana serão identificadas como uma carona
-	 * qualquer, mas para identificar que é dentro na cidade terá o
-	 * identificador da carona um 'm' no final do codigo.
-	 * 
-	 * @param idSessao
-	 * @param origem
-	 * @param destino
-	 * @param cidade
-	 * @param data
-	 * @param hora
-	 * @param vagas
-	 * @return
-	 * @throws CaronaException
-	 */
-	public String cadastrarCaronaMunicipal(String idSessao, String origem, 
-			String destino, String cidade, String data, String hora,
-			String vagas) throws CaronaException {
-		setEhMunicipal(true);
-		if (idSessao == null || idSessao.trim().isEmpty()) {
-			throw new CaronaException("Sessão inválida");
-		}
-		if (!SessaoBusiness.hasSessao(idSessao)) {
-			throw new CaronaException("Sessão inexistente");
-		}
-		if (origem == null || origem.trim().isEmpty()) {
-			throw new CaronaException("Origem inválida");
-		}
-		if (destino == null || destino.trim().isEmpty()) {
-			throw new CaronaException("Destino inválido");
-		}
-		if (data == null || data.trim().isEmpty()) {
-			throw new CaronaException("Data inválida");
-		}
-		if (!isData(data)) {
-			throw new CaronaException("Data inválida");
-		}
-		if (hora == null || hora.trim().isEmpty()) {
-			throw new CaronaException("Hora inválida");
-		}
-		if (!isHora(hora)) {
-			throw new CaronaException("Hora inválida");
-		}
-		if (vagas == null || vagas.trim().isEmpty()) {
-			throw new CaronaException("Vaga inválida");
-		}
-		try {
-			Integer.parseInt(vagas);
-		} catch (Exception e) {
-			throw new CaronaException("Vaga inválida");
-		}
-
-		carona = new CaronaDomain();
-
-		carona.setIdCarona((caronas.size()) + "");
-		String id = carona.getIdCarona() + "";
-		if (isEhMunicipal()) {
-			id = carona.getIdCarona() + "m";
-			carona.setIdCarona(id);
-		}
-		
-		carona.setLocalDeOrigem(origem);
-		carona.setLocalDeDestino(destino);
-		carona.setCidade(cidade);
-		carona.setData(data);
-		carona.setHorarioDeSaida(hora);
-		carona.setQtdDeVagas(vagas);
-		carona.setIdSessao(idSessao);
-
-		caronas.add(carona);
-		return id;
-	}
-
-	public boolean isEhMunicipal() {
-		return ehMunicipal;
-	}
-
-	public void setEhMunicipal(boolean ehMunicipal) {
-		this.ehMunicipal = ehMunicipal;
-	}
-
-	public String localizarCaronaMunicipal(String idSessao, String cidade, 
-			String origem, String destino) throws CaronaException{
-		
-		if (idSessao == null) {
-			throw new CaronaException("Sessão inválida");
-		}
-
-		if (cidade == null || cidade.isEmpty()) {
-			throw new CaronaException("Cidade inexistente");
-		}
-				
-		if (origem.equals("-") || origem.equals("()") || origem.equals("!")
-				|| origem.equals("!?")) {
-			throw new CaronaException("Origem inválida");
-		}
-
-		if (destino.equals(".") || destino.equals("()") || destino.equals("!?")) {
-			throw new CaronaException("Destino inválido");
-		}
-
-		if (!origem.isEmpty() && !destino.isEmpty()) {
-			return origemDestinoCarona(origem, destino); 
-		}
-
-		if (origem.isEmpty() && destino.isEmpty()) {
-			return origemDestinoCarona();
-		}
-
-		if (origem.isEmpty() && !destino.isEmpty()) {
-			return destinoCarona(destino);
-		}
-
-		if (!origem.isEmpty() && destino.isEmpty()) {
-			return origemCarona(origem);
-		}
-		return "";
-	}
-
-	public String localizarCaronaMunicipal(String idSessao, String cidade) throws CaronaException { 
-		if (idSessao == null) {
-			throw new CaronaException("Sessão inválida");
-		}
-		if (cidade == null || cidade.trim().isEmpty()) {
-			throw new CaronaException("Cidade inválido");
-		}
-		if (!cidade.isEmpty()) {
-			return destinoCidade(cidade);
-		}
-		return null;
-	}
-
 	private String destinoCidade(String cidade) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
 		for (CaronaDomain carona : caronas) {
-			if (carona.getCidade().equals(cidade)) {
+			if (carona.getOrigem().equals(cidade)) {
 				if (!flag) {
 					ids += ",";
 				}
-				ids += carona.getIdCarona();
+				ids += carona.getId();
 				flag = false;
 			}
 		}

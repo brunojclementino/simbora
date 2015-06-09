@@ -1,11 +1,10 @@
 package com.br.uepb.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.log4j.Logger;
 
 /**
  * Classe que define o local de origem, local de destino, data da carona,
@@ -20,19 +19,15 @@ import org.apache.log4j.Logger;
 @Table(name="CARONA")
 public class CaronaDomain {
 	
-	final static Logger logger = Logger.getLogger(CaronaDomain.class);
-	
 	@Id
-	@Column(name = "idCarona")
-	private String idCarona;
-	private String localDeOrigem;
-	private String localDeDestino;
+	@GeneratedValue
+	private int id;
+	private String origem;
+	private String destino;
 	private String data;
-	private String horarioDeSaida;
-	private String horarioDeChegada;
-	private String qtdDeVagas;
-	private String cidade = "";
-	private String idSessao;
+	private String hora;
+	private String vagas;
+	private String idUsuario;
 	/**
 	 * Método construtor default.
 	 */
@@ -40,40 +35,40 @@ public class CaronaDomain {
 		// TODO Auto-generated constructor stub
 	}
 	/**
-	 * @return the idCarona
+	 * @return the id
 	 */
-	public String getIdCarona() {
-		return idCarona;
+	public int getId() {
+		return id;
 	}
 	/**
-	 * @param idCarona the idCarona to set
+	 * @param id the id to set
 	 */
-	public void setIdCarona(String idCarona) {
-		this.idCarona = idCarona;
+	public void setId(int id) {
+		this.id = id;
 	}
 	/**
-	 * @return the localDeOrigem
+	 * @return the origem
 	 */
-	public String getLocalDeOrigem() {
-		return localDeOrigem;
+	public String getOrigem() {
+		return origem;
 	}
 	/**
-	 * @param localDeOrigem the localDeOrigem to set
+	 * @param origem the origem to set
 	 */
-	public void setLocalDeOrigem(String localDeOrigem) {
-		this.localDeOrigem = localDeOrigem;
+	public void setOrigem(String origem) {
+		this.origem = origem;
 	}
 	/**
-	 * @return the localDeDestino
+	 * @return the destino
 	 */
-	public String getLocalDeDestino() {
-		return localDeDestino;
+	public String getDestino() {
+		return destino;
 	}
 	/**
-	 * @param localDeDestino the localDeDestino to set
+	 * @param destino the destino to set
 	 */
-	public void setLocalDeDestino(String localDeDestino) {
-		this.localDeDestino = localDeDestino;
+	public void setDestino(String destino) {
+		this.destino = destino;
 	}
 	/**
 	 * @return the data
@@ -88,63 +83,40 @@ public class CaronaDomain {
 		this.data = data;
 	}
 	/**
-	 * @return the horarioDeSaida
+	 * @return the hora
 	 */
-	public String getHorarioDeSaida() {
-		return horarioDeSaida;
+	public String getHora() {
+		return hora;
 	}
 	/**
-	 * @param horarioDeSaida the horarioDeSaida to set
+	 * @param hora the hora to set
 	 */
-	public void setHorarioDeSaida(String horarioDeSaida) {
-		this.horarioDeSaida = horarioDeSaida;
+	public void setHora(String hora) {
+		this.hora = hora;
 	}
 	/**
-	 * @return the qtdDeVagas
+	 * @return the vagas
 	 */
-	public String getQtdDeVagas() {
-		return qtdDeVagas;
+	public String getVagas() {
+		return vagas;
 	}
 	/**
-	 * @param qtdDeVagas the qtdDeVagas to set
+	 * @param vagas the vagas to set
 	 */
-	public void setQtdDeVagas(String qtdDeVagas) {
-		this.qtdDeVagas = qtdDeVagas;
+	public void setVagas(String vagas) {
+		this.vagas = vagas;
 	}
 	/**
-	 * @return the idSessao
+	 * @return the idUsuario
 	 */
-	public String getIdSessao() {
-		return idSessao;
+	public String getIdUsuario() {
+		return idUsuario;
 	}
 	/**
-	 * @param idSessao the idSessao to set
+	 * @param idUsuario the idUsuario to set
 	 */
-	public void setIdSessao(String idSessao) {
-		this.idSessao = idSessao;
+	public void setIdUsuario(String idUsuario) {
+		this.idUsuario = idUsuario;
 	}
-	/**
-	 * @return the cidade
-	 */
-	public String getCidade() {
-		return cidade;
-	}
-	/**
-	 * @param cidade the cidade to set
-	 */
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-	/**
-	 * @return the horarioDeChegada
-	 */
-	public String getHorarioDeChegada() {
-		return horarioDeChegada;
-	}
-	/**
-	 * @param horarioDeChegada the horarioDeChegada to set
-	 */
-	public void setHorarioDeChegada(String horarioDeChegada) {
-		this.horarioDeChegada = horarioDeChegada;
-	}
+	
 }

@@ -20,7 +20,6 @@ public class UsuarioTest {
 	public void iniciarTest() {
 		usuario = new UsuarioBusiness();
 		sessao = new SessaoBusiness();
-
 		usuario.encerrarSistema();
 	}
 

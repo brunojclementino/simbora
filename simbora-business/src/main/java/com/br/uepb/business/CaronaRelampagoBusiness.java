@@ -1,31 +1,27 @@
 package com.br.uepb.business;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
 import org.joda.time.Hours;
 
 import com.br.uepb.constants.CaronaException;
 import com.br.uepb.dao.impl.CaronaRelampagoDaoImpl;
-import com.br.uepb.domain.CaronaRelampago;
+import com.br.uepb.domain.CaronaRelampagoDomain;
 import com.br.uepb.domain.SessaoDomain;
 
 public class CaronaRelampagoBusiness {
 
-	private static List<CaronaRelampago> interesseCaronasRelamlago = new CaronaRelampagoDaoImpl()
+	private static List<CaronaRelampagoDomain> interesseCaronasRelamlago = new CaronaRelampagoDaoImpl()
 			.list();
 
 	public void encerrarSistema() {
-		for (CaronaRelampago caronaRelampago : interesseCaronasRelamlago) {
+		for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
 			try {
 				CaronaRelampagoDaoImpl relampago = new CaronaRelampagoDaoImpl();
-				relampago.save(caronaRelampago);
+				relampago.save(caronaRelampagoDomain);
 			} catch (Exception e) {
 				e.getMessage();
 			}
@@ -75,18 +71,13 @@ public class CaronaRelampagoBusiness {
 			throw new CaronaException("Minimo Caroneiros inválido");
 		}
 
-		if (minimoCaroneiros == null || !isMaiorZero(minimoCaroneiros)) {
+ 		if (minimoCaroneiros == null || !isMaiorZero(minimoCaroneiros)) {
 			throw new CaronaException("Minimo Caroneiros inválido");
 		}
 
-		CaronaRelampago carona = new CaronaRelampago();
-		carona.setOrigem(origem);
-		carona.setDestino(destino);
-		carona.setDataIda(dataIda);
+		CaronaRelampagoDomain carona = new CaronaRelampagoDomain();
 		carona.setDataVolta(dataVolta);
-		carona.setHora(hora);
-		carona.setMinimoCaroneiros(minimoCaroneiros);
-		carona.setIdCarona(interesseCaronasRelamlago.size() + "R");
+		carona.setDataVolta(dataVolta);
 		interesseCaronasRelamlago.add(carona);
 		return carona.getIdCarona();
 	}
@@ -152,37 +143,37 @@ public class CaronaRelampagoBusiness {
 		}
 		
 		if (atributo.equals("origem")) {
-			for (CaronaRelampago caronaRelampago : interesseCaronasRelamlago) {
-				if (caronaRelampago.getIdCarona().equals(idCarona)) {
-					return caronaRelampago.getOrigem() + "";
+			for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
+				if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
+					return caronaRelampagoDomain.getCarona().getLocalDeOrigem() + "";
 				}
 			}
 		}
 		if (atributo.equals("destino")) {
-			for (CaronaRelampago caronaRelampago : interesseCaronasRelamlago) {
-				if (caronaRelampago.getIdCarona().equals(idCarona)) {
-					return caronaRelampago.getDestino() + "";
+			for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
+				if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
+					return caronaRelampagoDomain.getCarona().getLocalDeDestino() + "";
 				}
 			}
 		}
 		if (atributo.equals("minimoCaroneiros")) {
-			for (CaronaRelampago caronaRelampago : interesseCaronasRelamlago) {
-				if (caronaRelampago.getIdCarona().equals(idCarona)) {
-					return caronaRelampago.getMinimoCaroneiros() + "";
+			for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
+				if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
+					return caronaRelampagoDomain.getCarona().getQtdDeVagas() + "";
 				}
 			}
 		}
 		if (atributo.equals("dataIda")) {
-			for (CaronaRelampago caronaRelampago : interesseCaronasRelamlago) {
-				if (caronaRelampago.getIdCarona().equals(idCarona)) {
-					return caronaRelampago.getDataIda() + "";
+			for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
+				if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
+					return caronaRelampagoDomain.getCarona().getData() + "";
 				}
 			}
 		}
 		if (atributo.equals("dataVolta")) {
-			for (CaronaRelampago caronaRelampago : interesseCaronasRelamlago) {
-				if (caronaRelampago.getIdCarona().equals(idCarona)) {
-					return caronaRelampago.getDataVolta() + "";
+			for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
+				if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
+					return caronaRelampagoDomain.getDataVolta() + "";
 				}
 			}
 		}
@@ -191,8 +182,8 @@ public class CaronaRelampagoBusiness {
 	}
 
 	private boolean existeCarona(String idCarona) {
-		for (CaronaRelampago caronaRelampago : interesseCaronasRelamlago) {
-			if (caronaRelampago.getIdCarona().equals(idCarona)) {
+		for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
+			if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
 				return true;
 			}
 		}
@@ -200,9 +191,9 @@ public class CaronaRelampagoBusiness {
 	}
 
 	public String getMinimoCaroneiros(String idCarona) throws CaronaException {
-		for (CaronaRelampago caronaRelampago : interesseCaronasRelamlago) {
-			if (caronaRelampago.getIdCarona().equals(idCarona)) {
-				return caronaRelampago.getMinimoCaroneiros();
+		for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
+			if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
+				return caronaRelampagoDomain.getCarona().getQtdDeVagas();
 			}
 		}
 		throw new CaronaException("IdCarona não existe");
@@ -218,10 +209,10 @@ public class CaronaRelampagoBusiness {
 		if (!existeCarona(idCarona)) {
 			throw new CaronaException("Trajeto Inexistente");
 		}
-		for (CaronaRelampago caronaRelampago : interesseCaronasRelamlago) {
-			if (caronaRelampago.getIdCarona().equals(idCarona)) {
-				return caronaRelampago.getOrigem() + " - "
-						+ caronaRelampago.getDestino();
+		for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
+			if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
+				return caronaRelampagoDomain.getCarona().getLocalDeOrigem() + " - "
+						+ caronaRelampagoDomain.getCarona().getLocalDeDestino();
 			}
 		}
 		return null;
@@ -240,12 +231,12 @@ public class CaronaRelampagoBusiness {
 			throw new CaronaException("Carona Inexistente");
 		}
 		
-		for (CaronaRelampago caronaRelampago : interesseCaronasRelamlago) {
-			if (caronaRelampago.getIdCarona().equals(idCarona)) {
-				return caronaRelampago.getOrigem() + " para "
-						+ caronaRelampago.getDestino() + ", no dia "
-						+ caronaRelampago.getDataIda() + ", as "
-						+ caronaRelampago.getHora();
+		for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
+			if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
+				return caronaRelampagoDomain.getCarona().getLocalDeOrigem() + " para "
+						+ caronaRelampagoDomain.getCarona().getLocalDeDestino() + ", no dia "
+						+ caronaRelampagoDomain.getCarona().getData() + ", as "
+						+ caronaRelampagoDomain.getCarona().getHorarioDeSaida();
 			}
 
 		}

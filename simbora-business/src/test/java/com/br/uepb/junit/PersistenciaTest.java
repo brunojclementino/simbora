@@ -125,16 +125,14 @@ public class PersistenciaTest {
 		try {
 			sessao.abrirSessao("steve", "5t3v3");
 		} catch (SessaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 		try {
 			solicitarPontoVaga.sugerirPontoEncontro("steve", "1",
 					"Acude Velho;Hiper Bompreco");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 		// Requisitar vaga

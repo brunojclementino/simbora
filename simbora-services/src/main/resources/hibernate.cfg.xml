@@ -19,6 +19,7 @@
 		<mapping class="com.br.uepb.domain.PontoDeEncontroDomain" />
 		<mapping class="com.br.uepb.domain.SolicitacaoVagasDomain" />
 		<mapping class="com.br.uepb.domain.CaronaInteresseDomain" />
-		<mapping class="com.br.uepb.domain.CaronaRelampago" />
+		<mapping class="com.br.uepb.domain.CaronaRelampagoDomain" />
+		<mapping class="com.br.uepb.domain.CaronaMunicipalDomain" />
     </session-factory>
 </hibernate-configuration>

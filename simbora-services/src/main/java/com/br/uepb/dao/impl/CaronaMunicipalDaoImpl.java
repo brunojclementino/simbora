@@ -1,41 +1,43 @@
 package com.br.uepb.dao.impl;
 
-import java.util.List;  
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.br.uepb.dao.CaronaRelampagoDao;
-import com.br.uepb.domain.CaronaRelampagoDomain;
+import com.br.uepb.dao.CaronaMunicipalDao;
+import com.br.uepb.domain.CaronaMunicipalDomain;
 import com.br.uepb.util.HibernateUtil;
 
-public class CaronaRelampagoDaoImpl implements CaronaRelampagoDao {
+public class CaronaMunicipalDaoImpl implements CaronaMunicipalDao {
 
 	@Override
-	public void save(CaronaRelampagoDomain carona) {
+	public void save(CaronaMunicipalDomain carona) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		session.save(carona);
-		t.commit();		
+		t.commit();
 	}
 
 	@Override
-	public CaronaRelampagoDomain getCarona(String idCarona) {
+	public CaronaMunicipalDomain getCarona(String idLogin) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		return (CaronaRelampagoDomain) session.load(CaronaRelampagoDomain.class, idCarona);
+		return (CaronaMunicipalDomain) session.load(
+				CaronaMunicipalDomain.class, idLogin);
 	}
 
 	@Override
-	public List<CaronaRelampagoDomain> list() {
+	public List<CaronaMunicipalDomain> list() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		List<CaronaRelampagoDomain> lista = session.createQuery("from CaronaRelampagoDomain").list();
+		List<CaronaMunicipalDomain> lista = session.createQuery(
+				"from CaronaMunicipalDomain").list();
 		t.commit();
 		return lista;
 	}
 
 	@Override
-	public void remove(CaronaRelampagoDomain carona) {
+	public void remove(CaronaMunicipalDomain carona) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		session.delete(carona);
@@ -43,7 +45,7 @@ public class CaronaRelampagoDaoImpl implements CaronaRelampagoDao {
 	}
 
 	@Override
-	public void update(CaronaRelampagoDomain carona) {
+	public void update(CaronaMunicipalDomain carona) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		session.update(carona);
@@ -52,9 +54,10 @@ public class CaronaRelampagoDaoImpl implements CaronaRelampagoDao {
 
 	@Override
 	public void excluirTudo() {
-		List<CaronaRelampagoDomain> list = list();
-        for(CaronaRelampagoDomain carona:list){
-        	remove(carona);
-        }
+		List<CaronaMunicipalDomain> list = list();
+		for (CaronaMunicipalDomain carona : list) {
+			remove(carona);
+		}
 	}
+
 }
