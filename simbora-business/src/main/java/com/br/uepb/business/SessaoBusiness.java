@@ -40,7 +40,16 @@ public class SessaoBusiness {
 	 */
 	public String abrirSessao(String login, String senha)
 			throws SessaoException {
-		for (UsuarioDomain usuario : usuarios) {
+			
+			if (login == null || login.trim().isEmpty()) {
+				throw new SessaoException("Login inválido");
+			}
+			
+			UsuarioDomain usuario = new UsuarioDaoImp().getUsuario(login);
+			if(usuario==null){
+				throw new SessaoException("Usuário inexistente");
+			}
+			
 			if (usuario.getLogin().equals(login)
 					&& usuario.getSenha().equals(senha)) {
 				
@@ -49,13 +58,10 @@ public class SessaoBusiness {
 					ss.setIdUsuario(login);
 				sessoes.add(ss);
 				return ss.getIdSessao();
-			} else if (login == null || login.trim().isEmpty()
-					|| usuario.getLogin().equals(login)
-					|| usuario.getSenha().equals(senha)) {
-				throw new SessaoException("Login inválido");
 			}
-		}
-		throw new SessaoException("Usuário inexistente");
+			throw new SessaoException("Login inválido");
+		
+			
 	}
 
 	/**

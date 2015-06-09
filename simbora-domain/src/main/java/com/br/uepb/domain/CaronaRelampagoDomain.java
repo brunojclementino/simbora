@@ -1,7 +1,6 @@
 package com.br.uepb.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -11,7 +10,6 @@ import javax.persistence.Table;
 public class CaronaRelampagoDomain {
 
 	@Id
-	@GeneratedValue
 	private String id;
 	private String dataVolta;
 

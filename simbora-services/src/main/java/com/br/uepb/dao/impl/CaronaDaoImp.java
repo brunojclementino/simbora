@@ -22,7 +22,7 @@ public class CaronaDaoImp implements CaronaDao{
 	@Override
 	public CaronaDomain getCarona(String idLogin) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		return (CaronaDomain) session.load(CaronaDomain.class, idLogin);
+		return (CaronaDomain) session.get(CaronaDomain.class, idLogin);
 	}
 
 	@Override

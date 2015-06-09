@@ -2,9 +2,10 @@ package com.br.uepb.business;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.br.uepb.constants.UsuarioException;
 import com.br.uepb.dao.impl.UsuarioDaoImp;
-import com.br.uepb.domain.SolicitacaoPontoDeEncontroDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
 import com.br.uepb.domain.UsuarioDomain;
 
@@ -19,24 +20,28 @@ import com.br.uepb.domain.UsuarioDomain;
  */
 public class UsuarioBusiness {
 
+	public static Logger logger = Logger.getLogger(UsuarioBusiness.class);
+	
 	UsuarioDomain usuario;
 	String mensagemErro = "";
+	
+	UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
 
-	private static List<UsuarioDomain> usuarios = SessaoBusiness.getUsuarios();
+	//private static List<UsuarioDomain> usuarios = SessaoBusiness.getUsuarios();
 	
 	/**
 	 * Esse método faz duas ações: salva os dados dos usuários e limpa a lista
 	 * dos usuário. Para isso ele preserva as informações dos usuários.
 	 */
 	public void encerrarSistema() {
-		for (UsuarioDomain usuario : getUsuarios()) {
+		/*for (UsuarioDomain usuario : getUsuarios()) {
 			try {
 				UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
 				usuarioDaoImp.save(usuario);
 			} catch (Exception e) {
 			}
 		}
-		getUsuarios().clear();
+		getUsuarios().clear();*/
 	}
 
 	/**
@@ -62,7 +67,7 @@ public class UsuarioBusiness {
 		usuario.setEmail(email);
 
 		if (ehUsuarioValido(usuario) && ehUsuarioNovo(usuario)) {
-			getUsuarios().add(usuario);
+			usuarioDaoImp.save(usuario);
 		} else {
 			throw new UsuarioException(mensagemErro);
 		}
@@ -195,9 +200,9 @@ public class UsuarioBusiness {
 			return false;
 		}
 
-		for (UsuarioDomain usuarioDomain : usuarios) {
+		/*for (UsuarioDomain usuarioDomain : usuarios) {
 			
-		}
+		}*/
 	
 		
 		if (mensagem.equals("A solicitação foi recebida")) {
@@ -217,9 +222,8 @@ public class UsuarioBusiness {
 	}
 
 	private boolean ehUsuario(String idUsuario) {
-		List<UsuarioDomain> lstUser = UsuarioBusiness.getUsuarios();
 
-		for (UsuarioDomain usuarioDomain : lstUser) {
+		for (UsuarioDomain usuarioDomain : getUsuarios()) {
 			if (usuarioDomain.getLogin().equals(idUsuario)) {
 				return true;
 			}
@@ -227,12 +231,8 @@ public class UsuarioBusiness {
 		return false;
 	}
 
-	public static List<UsuarioDomain> getUsuarios() {
-		return usuarios;
-	}
-
-	public static void setUsuarios(List<UsuarioDomain> usuarios) {
-		UsuarioBusiness.usuarios = usuarios;
+	public List<UsuarioDomain> getUsuarios() {
+		return usuarioDaoImp.list();
 	}
 	
 }

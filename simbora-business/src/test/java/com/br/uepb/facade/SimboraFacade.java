@@ -164,10 +164,10 @@ public class SimboraFacade {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] {"com.br.uepb.facade.SimboraFacade", "scripts/US01.txt",
-				"scripts/US02.txt", "scripts/US03.txt", "scripts/US04.txt", "scripts/US05.txt"
+		args = new String[] {"com.br.uepb.facade.SimboraFacade", "scripts/US03.txt",
+				/*"scripts/US02.txt", "scripts/US03.txt", "scripts/US04.txt", "scripts/US05.txt"
 				, "scripts/US06.txt", "scripts/US07.txt", "scripts/US08.txt", "scripts/US09.txt"
-				,  "scripts/US10.txt",  "scripts/US11.txt"};
+				,  "scripts/US10.txt",  "scripts/US11.txt"*/};
 		EasyAccept.main(args); 
 	} 
 }

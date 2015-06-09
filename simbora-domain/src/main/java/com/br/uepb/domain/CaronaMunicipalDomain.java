@@ -4,7 +4,6 @@
 package com.br.uepb.domain;
 
 import javax.persistence.Entity;  
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -18,8 +17,7 @@ import javax.persistence.Table;
 public class CaronaMunicipalDomain {
 	
 	@Id
-	@GeneratedValue
-	private int id;
+	private String id;
 	private String cidade;
 	
 	@OneToOne
@@ -28,7 +26,7 @@ public class CaronaMunicipalDomain {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -36,7 +34,7 @@ public class CaronaMunicipalDomain {
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

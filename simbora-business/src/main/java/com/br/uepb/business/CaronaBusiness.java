@@ -12,6 +12,7 @@ import com.br.uepb.constants.CaronaException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
 import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.SessaoDomain;
+import com.br.uepb.domain.UsuarioDomain;
 
 /**
  * Classe responsável por gerenciar a carona. Define as funcionalidades de
@@ -26,16 +27,14 @@ public class CaronaBusiness {
 
 	public static Logger logger = Logger.getLogger(CaronaBusiness.class);
 
-	public static List<CaronaDomain> caronas = new CaronaDaoImp().list();
 	CaronaDomain carona;
-	List<SessaoDomain> sessao = SessaoBusiness.getSessoes();
-	private static List<CaronaDomain> interesseCaronas = new ArrayList<CaronaDomain>();
+	CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
 	
 	/**
 	 * Salva todos as caronas e em seguida limpa a List<CaronaDomain>.
 	 */
 	public void encerrarSistema() {
-		for (CaronaDomain carona : caronas) {
+		/*for (CaronaDomain carona : caronas) {
 			try {
 				CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
 				caronaDaoImp.save(carona);
@@ -43,7 +42,7 @@ public class CaronaBusiness {
 				e.getMessage();
 			}
 		}
-		caronas.clear();
+		caronas.clear();*/
 	}
 
 	/**
@@ -104,7 +103,7 @@ public class CaronaBusiness {
 	private String origemDestinoCarona(String origem, String destino) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
-		for (CaronaDomain carona : caronas) {
+		for (CaronaDomain carona : getCaronas()) {
 			if (carona.getOrigem().equals(origem)
 					&& carona.getDestino().equals(destino)) {
 				if (!flag) {
@@ -132,7 +131,7 @@ public class CaronaBusiness {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids � 0 (Serve para
 							// auxiliar na formata��o da string de retorno
-		for (CaronaDomain carona : caronas) {
+		for (CaronaDomain carona : getCaronas()) {
 			if (!flag) {
 				ids += ",";
 			}
@@ -154,7 +153,7 @@ public class CaronaBusiness {
 	private String origemCarona(String origem) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
-		for (CaronaDomain carona : caronas) {
+		for (CaronaDomain carona : getCaronas()) {
 			if (carona.getOrigem().equals(origem)) {
 				if (!flag) {
 					ids += ",";
@@ -178,12 +177,12 @@ public class CaronaBusiness {
 	private String destinoCarona(String destino) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
-		for (CaronaDomain carona : caronas) {
+		for (CaronaDomain carona : getCaronas()) {
 			if (carona.getDestino().equals(destino)) {
 				if (!flag) {
 					ids += ",";
 				}
-				ids += carona.getIdUsuario();
+				ids += carona.getId();
 				flag = false;
 			}
 		}
@@ -248,14 +247,17 @@ public class CaronaBusiness {
 		carona.setVagas(qtdDeVagas);
 		carona.setIdUsuario(getUsuario(idSessao));;
 		
-		CaronaDaoImp dao = new CaronaDaoImp();
+		carona.setId(getCaronas().size()+"");
+		caronaDaoImp.save(carona);
+		return carona.getId()+"";
+		/*CaronaDaoImp dao = new CaronaDaoImp();
 		dao.save(carona);
 		caronas = dao.list();
-		return getIdCaroneiro(carona);
+		return getIdCaroneiro(carona);*/
 
 	}
 
-	private String getIdCaroneiro(CaronaDomain carona2) {
+	/*private String getIdCaroneiro(CaronaDomain carona2) {
 		for (CaronaDomain caronaDomain : caronas) {
 			if (caronaDomain.getIdUsuario().equals(carona2.getIdUsuario()) 
 					&& caronaDomain.getData().equals(carona2.getData()) &&
@@ -264,7 +266,7 @@ public class CaronaBusiness {
 			}
 		}
 		return null;
-	}
+	}*/
 
 	private String getUsuario(String idSessao) {
 		for (SessaoDomain sessao : SessaoBusiness.getSessoes()) {
@@ -341,24 +343,17 @@ public class CaronaBusiness {
 			throw new CaronaException("Item inexistente");
 		}
 
-		if (atributo.equals("ehMunicipal")) {
-			if (idCarona.contains("m")) {
-				return "true";
-			}
-			return "false";
-		}
-
 		if (atributo.equals("origem")) {
-			return caronas.get(Integer.valueOf(idCarona)).getOrigem();
+			return caronaDaoImp.getCarona(idCarona).getOrigem();
 		}
 		if (atributo.equals("destino")) {
-			return caronas.get(Integer.valueOf(idCarona)).getDestino();
+			return caronaDaoImp.getCarona(idCarona).getDestino();
 		}
 		if (atributo.equals("data")) {
-			return caronas.get(Integer.valueOf(idCarona)).getData();
+			return caronaDaoImp.getCarona(idCarona).getData();
 		}
 		if (atributo.equals("vagas")) {
-			return caronas.get(Integer.valueOf(idCarona)).getVagas() + "";
+			return caronaDaoImp.getCarona(idCarona).getVagas() + "";
 		}
 
 		throw new CaronaException("Atributo inexistente");
@@ -371,12 +366,12 @@ public class CaronaBusiness {
 	 * @return {@link Boolean}
 	 */
 	private boolean idCaronaExistir(String idCarona) {
-		for (CaronaDomain carona : caronas) {
-			if ((carona.getId() == Integer.parseInt(idCarona))) {
-				return true;
-			}
+		if(caronaDaoImp.getCarona(idCarona) == null){
+			return false;
+		}else{
+			return true;
 		}
-		return false;
+		
 	}
 
 	/**
@@ -399,9 +394,9 @@ public class CaronaBusiness {
 			throw new CaronaException("Trajeto Inexistente");
 		}
 		try {
-			return caronas.get(Integer.valueOf(idCarona)).getOrigem()
+			return caronaDaoImp.getCarona(idCarona).getOrigem()
 					+ " - "
-					+ caronas.get(Integer.valueOf(idCarona))
+					+ caronaDaoImp.getCarona(idCarona)
 							.getDestino();
 		} catch (Exception e) {
 			throw new CaronaException("");
@@ -424,17 +419,11 @@ public class CaronaBusiness {
 		if (idCarona.trim().isEmpty()) {
 			throw new CaronaException("Carona Inexistente");
 		}
-		int valor;
-		try {
-			valor = Integer.valueOf(idCarona);
-			if (valor > caronas.size()) {
-				throw new CaronaException("Carona Inexistente");
-			}
-		} catch (Exception e) {
+		if(caronaDaoImp.getCarona(idCarona)==null){
 			throw new CaronaException("Carona Inexistente");
 		}
 
-		CaronaDomain carona = caronas.get(Integer.valueOf(idCarona));
+		CaronaDomain carona = caronaDaoImp.getCarona(idCarona);
 		return carona.getOrigem() + " para "
 				+ carona.getDestino() + ", no dia " + carona.getData()
 				+ ", as " + carona.getHora();
@@ -443,8 +432,8 @@ public class CaronaBusiness {
 	/**
 	 * @return lista de carona.
 	 */
-	public static List<CaronaDomain> getCaronas() {
-		return caronas;
+	public List<CaronaDomain> getCaronas() {
+		return caronaDaoImp.list();
 	}
 
 	/**
@@ -452,9 +441,6 @@ public class CaronaBusiness {
 	 * 
 	 * @param caronas
 	 */
-	public static void setCaronas(List<CaronaDomain> caronas) {
-		CaronaBusiness.caronas = caronas;
-	}
 
 	public CaronaDomain getCarona() {
 		return carona;
@@ -465,41 +451,57 @@ public class CaronaBusiness {
 	}
 
 	public List<SessaoDomain> getSessao() {
-		return sessao;
-	}
-
-	public void setSessao(List<SessaoDomain> sessao) {
-		this.sessao = sessao;
+		return SessaoBusiness.getSessoes();
 	}
 
 	/**
 	 * Diminui a quantidade de vagas da carona.
 	 * 
 	 * @param idcarona
+	 * @throws CaronaException 
 	 */
-	public void reduzQtdVagas(String idcarona) {
+	public void reduzQtdVagas(String idcarona) throws CaronaException {
 
-		for (CaronaDomain carona : caronas) {
+		try {
+			CaronaDomain carona = caronaDaoImp.getCarona(idcarona);
+			int qtdVagasAtual = Integer.parseInt(carona.getVagas()) - 1;
+			carona.setVagas(qtdVagasAtual + "");
+			caronaDaoImp.update(carona);
+			
+		} catch (Exception e) {
+			throw new CaronaException("Carona não encontrada");
+		}
+		/*for (CaronaDomain carona : caronas) {
 			if (carona.getId() == Integer.parseInt(idcarona)) {
 				int qtdVagasAtual = Integer.parseInt(carona.getVagas()) - 1;
 				carona.setVagas(qtdVagasAtual + "");
 			}
-		}
+		}*/
 	}
 
 	/**
 	 * Aumenta a quantidade de vagas.
 	 * 
 	 * @param idcarona
+	 * @throws CaronaException 
 	 */
-	public void aumentaQtdVagas(String idcarona) {
+	public void aumentaQtdVagas(String idcarona) throws CaronaException {
 
-		for (CaronaDomain carona : caronas) {
+		try {
+			CaronaDomain carona = caronaDaoImp.getCarona(idcarona);
+			int qtdVagasAtual = Integer.parseInt(carona.getVagas()) + 1;
+			carona.setVagas(qtdVagasAtual + "");
+			caronaDaoImp.update(carona);
+			
+		} catch (Exception e) {
+			throw new CaronaException("Carona não encontrada");
+		}
+		/*for (CaronaDomain carona : caronas) {
 			if (carona.getId() == Integer.parseInt(idcarona)) {
 				int qtdVagasAtual = Integer.parseInt(carona.getVagas()) + 1;
 				carona.setVagas(qtdVagasAtual + "");
 			}
-		}
+		}*/
 	}
 
 	/**
@@ -515,7 +517,7 @@ public class CaronaBusiness {
 			int indice = Integer.parseInt(indexCarona) - 1;
 			int cont = 0;
 			// percorre as caronas para verificar qual a carona x do usuario
-			for (CaronaDomain carona : caronas) {
+			for (CaronaDomain carona : getCaronas()) {
 				if ((carona.getId()+"").equals(indexCarona)) {
 					if (cont == indice) {
 						return carona.getId()+"";
@@ -545,7 +547,7 @@ public class CaronaBusiness {
 			
 		}
 		boolean flag = true;// indica se a quantidade de ids é 0
-		for (CaronaDomain carona : caronas) {
+		for (CaronaDomain carona : getCaronas()) {
 			if (carona.getIdUsuario().equals(idUsuario)) {
 				if (!flag) {
 					ids += ",";
@@ -560,7 +562,7 @@ public class CaronaBusiness {
 	private String destinoCidade(String cidade) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
-		for (CaronaDomain carona : caronas) {
+		for (CaronaDomain carona : getCaronas()) {
 			if (carona.getOrigem().equals(cidade)) {
 				if (!flag) {
 					ids += ",";
@@ -575,15 +577,16 @@ public class CaronaBusiness {
 
 	/**
 	 * @return the interesseCaronas
+	 * 
 	 */
-	public static List<CaronaDomain> getInteresseCaronas() {
+	/*public static List<CaronaDomain> getInteresseCaronas() {
 		return interesseCaronas;
-	}
-
+	}*/
+	
 	/**
 	 * @param interesseCaronas the interesseCaronas to set
 	 */
-	public static void setInteresseCaronas(List<CaronaDomain> interesseCaronas) {
+	/*public static void setInteresseCaronas(List<CaronaDomain> interesseCaronas) {
 		CaronaBusiness.interesseCaronas = interesseCaronas;
-	}
+	}*/
 }
