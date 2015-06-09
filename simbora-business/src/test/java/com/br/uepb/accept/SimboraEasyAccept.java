@@ -2,6 +2,7 @@ package com.br.uepb.accept;
 
 import com.br.uepb.business.CaronaBusiness;
 import com.br.uepb.business.CaronaInteresesBusiness;
+import com.br.uepb.business.CaronaMunicipalBusiness;
 import com.br.uepb.business.PerfilBusiness;
 import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.business.SolicitacaoPontoDeEncontroBusiness;
@@ -28,6 +29,7 @@ public class SimboraEasyAccept {
 
 	UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
 	CaronaBusiness caronaBusiness = new CaronaBusiness();
+	CaronaMunicipalBusiness municipalBusiness = new CaronaMunicipalBusiness();
 	SessaoBusiness sessaoBusiness = new SessaoBusiness();
 	//PontoDeEncontroController pontoDeEncontroController = new PontoDeEncontroController();
 	
@@ -209,14 +211,14 @@ public class SimboraEasyAccept {
 	public String cadastrarCaronaMunicipal(String idSessao, String origem,
 			String destino, String cidade, String data, String hora,
 			String vagas) throws CaronaException {
-		return caronaBusiness.cadastrarCaronaMunicipal(idSessao, origem, destino, cidade, data, hora, vagas);
+		return municipalBusiness.cadastrarCaronaMunicipal(idSessao, origem, destino, cidade, data, hora, vagas);
 	}
 	public String localizarCaronaMunicipal(String idSessao, String cidade, 
 			String origem, String destino) throws CaronaException{
-		return caronaBusiness.localizarCaronaMunicipal(idSessao, cidade, origem, destino);
+		return municipalBusiness.localizarCaronaMunicipal(idSessao, cidade, origem, destino);
 	}
 	public String localizarCaronaMunicipal(String idSessao, String cidade) throws CaronaException {
-		return caronaBusiness.localizarCaronaMunicipal(idSessao, cidade);
+		return municipalBusiness.localizarCaronaMunicipal(idSessao, cidade);
 	}
 	public String cadastrarInteresse(String idSessao, String origem,
 			String destino, String data, String horaInicio, String horaFim)
