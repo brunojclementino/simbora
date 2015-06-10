@@ -24,7 +24,7 @@ public class SolicitacaoPontoDeEncontroDaoImp implements SolicitacaoPontoDeEncon
 	@Override
 	public SolicitacaoPontoDeEncontroDomain getSolicitacaoPontoDeEncontro(String idLogin) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		return (SolicitacaoPontoDeEncontroDomain) session.load(SolicitacaoPontoDeEncontroDomain.class, idLogin);
+		return (SolicitacaoPontoDeEncontroDomain) session.get(SolicitacaoPontoDeEncontroDomain.class, idLogin);
 	}
 
 	@Override

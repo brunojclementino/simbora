@@ -233,7 +233,7 @@ public class SolicitacaoPontoDeEncontroBusiness {
 	public String getPontosSugeridos(String idSessao, String idCarona) {
 
 		String ids = "[";
-		boolean flag = true;// indica se a quantidade de ids � 0
+		boolean flag = true;// indica se a quantidade de ids é 0
 		PontoDeEncontroDomain pontoEncontro;
 		for (SolicitacaoPontoDeEncontroDomain solicitacao : solicitacoes) {
 			pontoEncontro = solicitacao.getPontoDeEncontro(0);
@@ -248,7 +248,6 @@ public class SolicitacaoPontoDeEncontroBusiness {
 
 			}
 		}
-		System.out.println(solicitacoes.size());
 		return ids + "]";
 	}
 

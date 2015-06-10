@@ -247,26 +247,14 @@ public class CaronaBusiness {
 		carona.setVagas(qtdDeVagas);
 		carona.setIdUsuario(getUsuario(idSessao));;
 		
-		carona.setId(getCaronas().size()+"");
+		
+		
 		caronaDaoImp.save(carona);
-		return carona.getId()+"";
-		/*CaronaDaoImp dao = new CaronaDaoImp();
-		dao.save(carona);
-		caronas = dao.list();
-		return getIdCaroneiro(carona);*/
+		
+		
+		return caronaDaoImp.getId()+"";
 
 	}
-
-	/*private String getIdCaroneiro(CaronaDomain carona2) {
-		for (CaronaDomain caronaDomain : caronas) {
-			if (caronaDomain.getIdUsuario().equals(carona2.getIdUsuario()) 
-					&& caronaDomain.getData().equals(carona2.getData()) &&
-					caronaDomain.getOrigem().equals(carona2.getOrigem())) {
-				return caronaDomain.getId()+"";
-			}
-		}
-		return null;
-	}*/
 
 	private String getUsuario(String idSessao) {
 		for (SessaoDomain sessao : SessaoBusiness.getSessoes()) {
@@ -573,6 +561,11 @@ public class CaronaBusiness {
 		}
 
 		return ids + "}";
+	}
+
+	public static boolean ehMotorista(String idSessao, String idCarona) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/**

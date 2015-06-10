@@ -2,6 +2,7 @@ package com.br.uepb.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -22,7 +23,7 @@ public class CaronaDaoImp implements CaronaDao{
 	@Override
 	public CaronaDomain getCarona(String idLogin) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		return (CaronaDomain) session.get(CaronaDomain.class, idLogin);
+		return (CaronaDomain) session.get(CaronaDomain.class, Integer.parseInt(idLogin));
 	}
 
 	@Override
@@ -57,5 +58,14 @@ public class CaronaDaoImp implements CaronaDao{
         	remove(carona);
         }
     } 
+	
+	public int getId(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		List<Integer> id = session.createQuery("SELECT MAX(id) FROM CaronaDomain").list();
+		t.commit();
+		
+		return id.get(0);
+	}
 	
 }

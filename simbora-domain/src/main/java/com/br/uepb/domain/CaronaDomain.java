@@ -20,7 +20,8 @@ import javax.persistence.Table;
 public class CaronaDomain {
 	
 	@Id
-	private String id;
+	@GeneratedValue
+	private int id;
 	private String origem;
 	private String destino;
 	private String data;
@@ -36,13 +37,13 @@ public class CaronaDomain {
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	/**
