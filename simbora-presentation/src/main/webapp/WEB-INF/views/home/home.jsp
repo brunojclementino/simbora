@@ -3,6 +3,7 @@
 
 <html>
 <body>
-	<%@ include file="../home/login.jsp"%>
+	
+	<%@ include file="../home/perfil.jsp" %>
 </body>
 </html>

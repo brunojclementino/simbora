@@ -77,8 +77,14 @@ a:HOVER {
 	margin-top: 20px; 
 }
 
-#span_name_logo {
-	width: 70%;
+.span_logo {
+	width: 30%;
+	margin: 0px;
+	float: left;
+}
+
+.span_name_logo {
+	width: 60%;
 	margin: 0px;
 	float: left;
 }
@@ -121,10 +127,12 @@ a:HOVER {
 }
 
 .title-site {
+	height: 100px;
 	color: #3011c4;
 	text-align: left;
-	padding: 5px;
-	font-size: 300%;;
+	padding-top: 20px;
+	padding-left: 20%;
+	font-size: 50px;
 }
 img {
 	
@@ -143,6 +151,8 @@ img {
 	font-size: 16px;
 	text-align: left;
 	color: black;
-	
-	
+}
+.left {
+	background-color: red;
+	float: left;
 }

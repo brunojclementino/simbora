@@ -14,20 +14,22 @@
 			<h1 id="login_title">Login</h1>
 			<tr>
 				<th class="colunas_loginNome">Nome:</th>
-				<th class="colunas_login"><form:input class="formLogin"
-						path="nome" placeholder="Nome" /></th>
+				<th class="colunas_login">
+					<form:input class="formLogin" path="nome" placeholder="Nome" />
+				</th>
 			</tr>
 			<tr>
 				<th class="colunas_loginNome">Senha:</th>
-				<th class="colunas_login"><form:password class="formLogin"
-						path="nome" placeholder="senha" /></th>
+				<th class="colunas_login">
+					<form:password class="formLogin" path="nome" placeholder="senha"></form:password> 
+				</th>
 			</tr>
 			<tr>
 				<th><a href="#">Esqueceu a senha?</a></th>
+				
 				<th id="colunas_botao_login">
 					<form:button class="btn-success" >Entrar</form:button>
 				</th>
-			
 			</tr>
 		</table>
 	</form:form>

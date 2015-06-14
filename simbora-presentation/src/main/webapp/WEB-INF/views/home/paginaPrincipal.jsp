@@ -6,41 +6,143 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Home</a>
-    </div>
+	<!-- Content -->
+	<div class="content-wrapper">
+		<div class="container">
+			<div class="row"></div>
+			<div class="row">
+				<div class="col-md-3 col-sm-3 col-xs-6">
+					<a href="#">
+						<div class="dashboard-div-wrapper bk-clr-one">
+							<i class="fa"></i>
+							<h5>Cadastrar carona</h5>
+						</div>
+					</a>
+				</div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="#">Perfil</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Caronas<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" >
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-     
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+				<div class="col-md-3 col-sm-3 col-xs-6">
+					<a href="#">
+						<div class="dashboard-div-wrapper bk-clr-two">
+							<i class="fa"></i>
+
+							<h5>Buscar carona</h5>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-md-3 col-sm-3 col-xs-6">
+					<a href="#">
+						<div class="dashboard-div-wrapper bk-clr-three">
+							<i class="fa"></i>
+
+							<h5>Caronas solicitadas</h5>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-md-3 col-sm-3 col-xs-6">
+					<a href="#">
+						<div class="dashboard-div-wrapper bk-clr-four">
+							<i class="fa"></i>
+							<h5>Perfil</h5>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Caronas cadastradas -->
+		<!--main-->
+		<div class="container" id="main">
+			<div class="row">
+				<div class="col-md-4 col-sm-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<a href="#" class="pull-right">Veja mais!</a>
+							<h4>Histórico das suas caronas</h4>
+						</div>
+						<div class="panel-body">
+							<div class="list-group">
+								<a href="http://bootply.com/tagged/modal"
+									class="list-group-item">Caronas cadastradas</a> <a
+									href="http://bootply.com/tagged/datetime"
+									class="list-group-item">Cancelamentos</a> <a
+									href="http://bootply.com/tagged/datatable"
+									class="list-group-item">Caronas que funcionaram</a>
+							</div>
+						</div>
+					</div>
+					<div class="well"></div>
+
+				</div>
+
+				<div class="col-md-4 col-sm-6">
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<a href="#" class="pull-right">Veja mais</a>
+							<h4>Carona 01</h4>
+						</div>
+
+						<div class="panel-body">
+							<p>
+								<img src="//placehold.it/150x150" class="img-circle pull-right">
+								<a href="#">Carona 02</a>
+							</p>
+							<div class="clearfix"></div>
+							<hr>
+							Origem: Campina Grande, destino: João Pessoa. Saída as 14hrs no
+							dia 20/10/2015.
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<a href="#" class="pull-right">Veja mais</a>
+							<h4>Carona 03</h4>
+						</div>
+						<div class="panel-body">
+							<img src="//placehold.it/150x150" class="img-circle pull-right">
+							<a href="#">Steve Jobs</a>
+							<div class="clearfix"></div>
+							<hr>
+							<p>Saida de João Pessoa para Campina Grande as 20 hrs.</p>
+							<hr>
+						</div>
+					</div>
+
+
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<a href="#" class="pull-right">Veja mais</a>
+							<h4>Carona 02</h4>
+						</div>
+						<div class="panel-body">
+							<img src="//placehold.it/150x150" class="img-circle pull-right">
+							<a href="#">Zuckerberg</a>
+							<div class="clearfix"></div>
+							<hr>
+							<p>Saída de California para New York as 20 hrs.</p>
+							<hr>
+						</div>
+					</div>
+
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<a href="#" class="pull-right">Veja mais</a>
+							<h4>Carona 04</h4>
+						</div>
+						<div class="panel-body">
+							<img src="//placehold.it/150x150" class="img-circle pull-right">
+							<a href="#">Bill</a>
+							<div class="clearfix"></div>
+							<hr>
+							<p>Saida de João Pessoa para Campina Grande as 20 hrs.</p>
+							<hr>
+						</div>
+					</div>
+
+				</div>
