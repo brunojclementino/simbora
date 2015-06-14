@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import com.br.uepb.constants.PerfilException;
 import com.br.uepb.constants.UsuarioException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
+import com.br.uepb.dao.impl.CaronaInteresseDaoImpl;
 import com.br.uepb.dao.impl.ReviewCaronaDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoVagasDaoImp;
 import com.br.uepb.dao.impl.UsuarioDaoImp;
@@ -29,9 +30,6 @@ import com.br.uepb.domain.UsuarioDomain;
 public class PerfilBusiness {
 
 	public final static Logger logger = Logger.getLogger(PerfilBusiness.class);
-
-	List<CaronaInteresseDomain> interessesCaronas = CaronaInteresesBusiness
-			.getInteresseCaronas();
 	
 	UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
 	CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
@@ -294,7 +292,7 @@ public class PerfilBusiness {
 		UsuarioDomain usuario = new UsuarioDomain();
 
 		// Pegar a carona do passageiro 
-		for (CaronaInteresseDomain caronaInteresseDomain : interessesCaronas) {
+		for (CaronaInteresseDomain caronaInteresseDomain : new CaronaInteresseDaoImpl().list()) {
 			if (caronaInteresseDomain.getIdSessao().equals(idSessao)) {
 				caronaInteresse = caronaInteresseDomain;
 			}
@@ -306,24 +304,24 @@ public class PerfilBusiness {
 			}
 		}
 		
-		for (CaronaDomain car : CaronaBusiness.caronas) {
-			if (caronaInteresse.getOrigem().equals(car.getLocalDeOrigem())
+		for (CaronaDomain car : new CaronaDaoImp().list()) {
+			if (caronaInteresse.getOrigem().equals(car.getOrigem())
 					&& caronaInteresse.getDestino().equals(
-							car.getLocalDeDestino())
+							car.getDestino())
 					&& caronaInteresse.getData().equals(car.getData())) {
-				idSessao = car.getIdSessao();
-				System.out.println("Carona: "+ caronaInteresse.getData() 
-						+", "+ caronaInteresse.getOrigem());
+				idSessao = car.getIdUsuario();
+				/*System.out.println("Carona: "+ caronaInteresse.getData() 
+						+", "+ caronaInteresse.getOrigem());*/
 		
-				for (UsuarioDomain user : UsuarioBusiness.getUsuarios()) {
-					if (user.getLogin().equals(car.getIdSessao())) {
+				for (UsuarioDomain user : new UsuarioDaoImp().list()) {
+					if (user.getLogin().equals(car.getIdUsuario())) {
 						usuario = user;
 					}
 				}
 				
 				msgem += "Carona cadastrada no dia "
 						+ car.getData() + ", ás "
-						+ car.getHorarioDeSaida()
+						+ car.getHora()
 						+ " de acordo com os seus interesses registrados. Entrar em contato com "
 						+ usuario.getEmail();
 			}

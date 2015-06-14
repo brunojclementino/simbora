@@ -50,8 +50,8 @@ public class SimboraEasyAccept {
 		perfilBusiness = new PerfilBusiness();
 		usuarioBusiness.getUsuarios().clear();*/
 		new UsuarioDaoImp().excluirTudo();
-		new CaronaMunicipalDaoImp().excluirTudo();
 		new CaronaDaoImp().excluirTudo();
+		new CaronaMunicipalDaoImp().excluirTudo();
 		new SolicitacaoPontoDeEncontroDaoImp().excluirTudo();
 		new SolicitacaoVagasDaoImp().excluirTudo();
 		new PontoDeEncontroDaoImp().excluirTudo();
@@ -76,11 +76,11 @@ public class SimboraEasyAccept {
 	}
 	
 	public void encerrarSistema(){
-		usuarioBusiness.encerrarSistema();
+		/*usuarioBusiness.encerrarSistema();
 		caronaBusiness.encerrarSistema();
 		solicitacaoEncontroBusiness.encerrarSistema();
 		solicitacaoVagasBusiness.encerrarSistema();
-		interesseBusiness.encerrarSistema();
+		interesseBusiness.encerrarSistema();*/
 		
 		HibernateUtil.closedSession();
 	}

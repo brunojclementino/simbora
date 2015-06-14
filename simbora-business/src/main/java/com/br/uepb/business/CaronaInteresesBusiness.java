@@ -10,11 +10,12 @@ import com.br.uepb.domain.CaronaInteresseDomain;
 
 public class CaronaInteresesBusiness {
 
-	CaronaInteresseDomain caronaAux;
-	public static Logger logger = Logger
-			.getLogger(CaronaInteresesBusiness.class);
 	
-	private static List<CaronaInteresseDomain> interesseCaronas = new CaronaInteresseDaoImpl().list();
+	public static Logger logger = Logger.getLogger(CaronaInteresesBusiness.class);
+	
+	CaronaInteresseDomain caronaInteresse;
+	CaronaInteresseDaoImpl caronaInteresseDaoImpl = new CaronaInteresseDaoImpl();
+	
 
 	public String cadastrarInteresse(String idSessao, String origem,
 			String destino, String data, String horaInicio, String horaFim)
@@ -30,30 +31,21 @@ public class CaronaInteresesBusiness {
 			throw new CaronaException("Data inválida");
 		}
 
-		caronaAux = new CaronaInteresseDomain();		
-			caronaAux.setOrigem(origem);
-			caronaAux.setDestino(destino);
-			caronaAux.setData(data);
-			caronaAux.setHoraInicio(horaInicio);
-			caronaAux.setHoraFim(horaFim);
-			caronaAux.setIdSessao(idSessao);
-			caronaAux.setId((Integer.valueOf(interesseCaronas.size()))+"I");
-		interesseCaronas.add(caronaAux);
-
-		return caronaAux.getId();
-	}
-
-	public static List<CaronaInteresseDomain> getInteresseCaronas() {
-		return interesseCaronas;
-	}
-
-	public static void setInteresseCaronas(
-			List<CaronaInteresseDomain> interesseCaronas) {
-		CaronaInteresesBusiness.interesseCaronas = interesseCaronas;
+		caronaInteresse = new CaronaInteresseDomain();		
+			caronaInteresse.setOrigem(origem);
+			caronaInteresse.setDestino(destino);
+			caronaInteresse.setData(data);
+			caronaInteresse.setHoraInicio(horaInicio);
+			caronaInteresse.setHoraFim(horaFim);
+			caronaInteresse.setIdSessao(idSessao);
+		
+		caronaInteresseDaoImpl.save(caronaInteresse);
+		
+		return caronaInteresseDaoImpl.getId()+"";
 	}
 
 	public void encerrarSistema() {
-		for (CaronaInteresseDomain carona : interesseCaronas) {
+		/*for (CaronaInteresseDomain carona : interesseCaronas) {
 			try {
 				CaronaInteresseDaoImpl caronaInteresseDaoImp = new CaronaInteresseDaoImpl();
 				caronaInteresseDaoImp.save(carona);
@@ -61,6 +53,6 @@ public class CaronaInteresesBusiness {
 				e.getMessage();
 			}
 		}
-		interesseCaronas.clear();
+		interesseCaronas.clear();*/
 	}
 }

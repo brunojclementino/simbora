@@ -2,6 +2,7 @@ package com.br.uepb.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -14,8 +15,9 @@ public class CaronaInteresseDomain {
 	final static Logger logger = Logger.getLogger(CaronaInteresseDomain.class);
 	
 	@Id
-	@Column(name = "idInteresse")
-	private String id;
+	@GeneratedValue
+	@Column(name = "id")
+	private int id;
 	private String idSessao;
 	private String origem;
 	private String destino;
@@ -23,14 +25,10 @@ public class CaronaInteresseDomain {
 	private String horaInicio;
 	private String horaFim;
 	
-	public CaronaInteresseDomain() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getIdSessao() {
