@@ -1,8 +1,11 @@
 package com.br.uepb.domain;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -21,6 +24,7 @@ public class CaronaDomain {
 	
 	@Id
 	@GeneratedValue
+	@Column(name = "id")
 	private int id;
 	private String origem;
 	private String destino;
@@ -28,6 +32,9 @@ public class CaronaDomain {
 	private String hora;
 	private String vagas;
 	private String idUsuario;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private CaronaMunicipalDomain caronaMunicipal;
 	/**
 	 * Método construtor default.
 	 */
@@ -117,6 +124,12 @@ public class CaronaDomain {
 	 */
 	public void setIdUsuario(String idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+	public CaronaMunicipalDomain getCaronaMunicipal() {
+		return caronaMunicipal;
+	}
+	public void setCaronaMunicipal(CaronaMunicipalDomain caronaMunicipal) {
+		this.caronaMunicipal = caronaMunicipal;
 	}
 	
 }

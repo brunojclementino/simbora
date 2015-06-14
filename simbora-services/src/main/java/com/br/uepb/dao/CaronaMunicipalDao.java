@@ -2,7 +2,7 @@ package com.br.uepb.dao;
 
 import java.util.List; 
 
-import com.br.uepb.domain.CaronaMunicipalDomain;
+import com.br.uepb.domain.CaronaDomain;
 
 
 /**
@@ -12,15 +12,15 @@ import com.br.uepb.domain.CaronaMunicipalDomain;
  */
 public interface CaronaMunicipalDao {
 
-	public void save(CaronaMunicipalDomain carona);
+	public void save(CaronaDomain carona);
 
-	public CaronaMunicipalDomain getCarona(String idCarona);
+	public CaronaDomain getCarona(String idCarona);
 
-	public List<CaronaMunicipalDomain> list();
+	public List<CaronaDomain> list();
 
-	public void remove(CaronaMunicipalDomain carona);
+	public void remove(CaronaDomain carona);
 
-	public void update(CaronaMunicipalDomain carona);
+	public void update(CaronaDomain carona);
 
 	public void excluirTudo();
 

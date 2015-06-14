@@ -14,6 +14,7 @@ import com.br.uepb.constants.SessaoException;
 import com.br.uepb.constants.UsuarioException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
 import com.br.uepb.dao.impl.CaronaInteresseDaoImpl;
+import com.br.uepb.dao.impl.CaronaMunicipalDaoImp;
 import com.br.uepb.dao.impl.PontoDeEncontroDaoImp;
 import com.br.uepb.dao.impl.ReviewCaronaDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoPontoDeEncontroDaoImp;
@@ -49,6 +50,7 @@ public class SimboraEasyAccept {
 		perfilBusiness = new PerfilBusiness();
 		usuarioBusiness.getUsuarios().clear();*/
 		new UsuarioDaoImp().excluirTudo();
+		new CaronaMunicipalDaoImp().excluirTudo();
 		new CaronaDaoImp().excluirTudo();
 		new SolicitacaoPontoDeEncontroDaoImp().excluirTudo();
 		new SolicitacaoVagasDaoImp().excluirTudo();

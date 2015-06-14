@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 
 import com.br.uepb.constants.CaronaException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
+import com.br.uepb.dao.impl.CaronaMunicipalDaoImp;
+import com.br.uepb.dao.impl.CaronaRelampagoDaoImpl;
 import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.SessaoDomain;
 import com.br.uepb.domain.UsuarioDomain;
@@ -335,13 +337,21 @@ public class CaronaBusiness {
 			return caronaDaoImp.getCarona(idCarona).getOrigem();
 		}
 		if (atributo.equals("destino")) {
-			return caronaDaoImp.getCarona(idCarona).getDestino();
+			try {
+				return caronaDaoImp.getCarona(idCarona).getDestino();
+			} catch (Exception e) {
+				throw new CaronaException("Item inexistente");
+			}
+			
 		}
 		if (atributo.equals("data")) {
 			return caronaDaoImp.getCarona(idCarona).getData();
 		}
 		if (atributo.equals("vagas")) {
 			return caronaDaoImp.getCarona(idCarona).getVagas() + "";
+		}
+		if (atributo.equals("ehMunicipal")) {
+			return new CaronaMunicipalBusiness().getAtributo(idCarona, atributo)+ "";
 		}
 
 		throw new CaronaException("Atributo inexistente");
@@ -355,10 +365,13 @@ public class CaronaBusiness {
 	 */
 	private boolean idCaronaExistir(String idCarona) {
 		if(caronaDaoImp.getCarona(idCarona) == null){
-			return false;
-		}else{
-			return true;
+			if(new CaronaMunicipalDaoImp().getCarona(idCarona)==null){
+				if(new CaronaRelampagoDaoImpl().getCarona(idCarona)==null){
+					return false;
+				}
+			}
 		}
+		return true;
 		
 	}
 

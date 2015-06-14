@@ -10,7 +10,7 @@ import org.hibernate.type.TrueFalseType;
 
 import com.br.uepb.constants.CaronaException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
-import com.br.uepb.dao.impl.CaronaMunicipalDaoImpl;
+import com.br.uepb.dao.impl.CaronaMunicipalDaoImp;
 import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.CaronaMunicipalDomain;
 import com.br.uepb.domain.SessaoDomain;
@@ -20,11 +20,8 @@ public class CaronaMunicipalBusiness {
 
 
 	public static Logger logger = Logger.getLogger(CaronaMunicipalBusiness.class);
-
-	public static List<CaronaMunicipalDomain> caronas = new CaronaMunicipalDaoImpl().list();
-	CaronaDomain carona;
-	List<SessaoDomain> sessao = SessaoBusiness.getSessoes();
-	private static List<CaronaDomain> interesseCaronas = new ArrayList<CaronaDomain>();
+	CaronaMunicipalDomain caronaMunicipal;
+	CaronaMunicipalDaoImp caronaMunicipalDaoImpl = new CaronaMunicipalDaoImp();
 
 	/**
 	 * Carona feitas na zona urbana serão identificadas como uma carona
@@ -78,20 +75,18 @@ public class CaronaMunicipalBusiness {
 			throw new CaronaException("Vaga inválida");
 		}
 
+		CaronaDomain carona = new CaronaDomain();
 		carona.setData(data);
-		carona.setHorarioDeChegada(hora);
-		carona.setHorarioDeSaida(null);
-		carona.setIdSessao(idSessao);
-		carona.setLocalDeDestino(destino);
-		carona.setLocalDeOrigem(origem);
-		carona.setQtdDeVagas(vagas);
-		CaronaMunicipalDomain caronamuni = new CaronaMunicipalDomain();
-			caronamuni.setCarona(carona);
-			caronamuni.setCidade(origem);
-		CaronaMunicipalDaoImpl dao = new CaronaMunicipalDaoImpl();
-		dao.save(caronamuni);
-		caronas = dao.list();
-		return getCaronaUsuario(caronamuni);
+		carona.setHora(hora);
+		carona.setIdUsuario(idSessao);
+		carona.setDestino(destino);
+		carona.setOrigem(origem);
+		carona.setVagas(vagas);
+		caronaMunicipal = new CaronaMunicipalDomain();
+		caronaMunicipal.setCidade(cidade);
+		carona.setCaronaMunicipal(caronaMunicipal);
+		caronaMunicipalDaoImpl.save(carona);
+		return caronaMunicipalDaoImpl.getId()+"";
 	}
 
 	
@@ -100,7 +95,7 @@ public class CaronaMunicipalBusiness {
 	 * @param carona2
 	 * @return
 	 */
-	private String getCaronaUsuario(CaronaMunicipalDomain carona2) {
+	/*private String getCaronaUsuario(CaronaMunicipalDomain carona2) {
 		for (CaronaMunicipalDomain caronaMunicipalDomain : caronas) {
 			if (caronaMunicipalDomain.getId() == carona2.getId()) {
 				return carona2.getId()+"";
@@ -108,8 +103,14 @@ public class CaronaMunicipalBusiness {
 			
 		}
 		return null;
-	}
+	}*/
 
+	public boolean getAtributo(String idCarona, String atributo) {
+		if(atributo.equals("ehMunicipal")){
+			return caronaMunicipalDaoImpl.ehMunicipal(idCarona);
+		}
+		return false;
+	}
 
 	public String localizarCaronaMunicipal(String idSessao, String cidade, 
 			String origem, String destino) throws CaronaException{
@@ -170,10 +171,10 @@ public class CaronaMunicipalBusiness {
 	 * @return Se for motorista {@link TrueFalseType}, caso contrario
 	 *         <code>false</code>
 	 */
-	public static boolean ehMotorista(String login, String idCarona) {
-		for (CaronaMunicipalDomain carona : caronas) {
-			if (idCarona.equals(carona.getCarona().getIdCarona())
-					&& login.equals(carona.getCarona().getIdSessao())) {
+	public boolean ehMotorista(String login, String idCarona) {
+		for (CaronaDomain carona : getCaronasMunicipais()) {
+			if (idCarona.equals(carona.getId())
+					&& login.equals(carona.getIdUsuario())) {
 				return true;
 			}
 		}
@@ -188,7 +189,7 @@ public class CaronaMunicipalBusiness {
 	 * @param indexCarona
 	 * @return
 	 */
-	public String getCaronaUsuario(String idSessao, String indexCarona) {
+	/*public String getCaronaUsuario(String idSessao, String indexCarona) {
 		try {
 
 			int indice = Integer.parseInt(indexCarona) - 1;
@@ -206,7 +207,7 @@ public class CaronaMunicipalBusiness {
 			e.printStackTrace();
 		}
 		return "";
-	}
+	}*/
 
 	/**
 	 * Retorna todas as caronas dos usuarios.
@@ -214,7 +215,7 @@ public class CaronaMunicipalBusiness {
 	 * @param idSessao
 	 * @return
 	 */
-	public String getTodasCaronasUsuario(String idSessao) {
+	/*public String getTodasCaronasUsuario(String idSessao) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
 		for (CaronaMunicipalDomain carona : caronas) {
@@ -227,17 +228,17 @@ public class CaronaMunicipalBusiness {
 			}
 		}
 		return ids + "}";
-	}
+	}*/
 
 	private String destinoCidade(String cidade) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
-		for (CaronaMunicipalDomain carona : caronas) {
-			if (carona.getCarona().getLocalDeOrigem().equals(cidade)) {
+		for (CaronaDomain carona : getCaronasMunicipais()) {
+			if (carona.getCaronaMunicipal().getCidade().equals(cidade)) {
 				if (!flag) {
 					ids += ",";
 				}
-				ids += carona.getCarona().getIdCarona();
+				ids += carona.getId();
 				flag = false;
 			}
 		}
@@ -296,11 +297,11 @@ public class CaronaMunicipalBusiness {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids � 0 (Serve para
 							// auxiliar na formata��o da string de retorno
-		for (CaronaMunicipalDomain carona : caronas) {
+		for (CaronaDomain carona : getCaronasMunicipais()) {
 			if (!flag) {
 				ids += ",";
 			}
-			ids += carona.getCarona().getIdCarona();
+			ids += carona.getId();
 			flag = false;
 		}
 
@@ -318,12 +319,12 @@ public class CaronaMunicipalBusiness {
 	private String origemCarona(String origem) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
-		for (CaronaMunicipalDomain carona : caronas) {
-			if (carona.getCarona().getLocalDeOrigem().equals(origem)) {
+		for (CaronaDomain carona : getCaronasMunicipais()) {
+			if (carona.getOrigem().equals(origem)) {
 				if (!flag) {
 					ids += ",";
 				}
-				ids += carona.getCarona().getIdCarona();
+				ids += carona.getId();
 				flag = false;
 			}
 		}
@@ -342,12 +343,12 @@ public class CaronaMunicipalBusiness {
 	private String destinoCarona(String destino) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
-		for (CaronaMunicipalDomain carona : caronas) {
-			if (carona.getCarona().getLocalDeDestino().equals(destino)) {
+		for (CaronaDomain carona : getCaronasMunicipais()) {
+			if (carona.getDestino().equals(destino)) {
 				if (!flag) {
 					ids += ",";
 				}
-				ids += carona.getCarona().getIdCarona();
+				ids += carona.getId();
 				flag = false;
 			}
 		}
@@ -364,9 +365,9 @@ public class CaronaMunicipalBusiness {
 	private String origemDestinoCarona(String origem, String destino) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
-		for (CaronaMunicipalDomain carona : caronas) {
-			if (carona.getCarona().getHorarioDeChegada().equals(origem)
-					&& carona.getCarona().getLocalDeDestino().equals(destino)) {
+		for (CaronaDomain carona : getCaronasMunicipais()) {
+			if (carona.getOrigem().equals(origem)
+					&& carona.getDestino().equals(destino)) {
 				if (!flag) {
 					ids += ",";
 				}
@@ -380,6 +381,11 @@ public class CaronaMunicipalBusiness {
 		}
 
 		return ids + "}";
+	}
+
+
+	private List<CaronaDomain> getCaronasMunicipais() {
+		return caronaMunicipalDaoImpl.list();
 	}
 
 }

@@ -3,9 +3,14 @@
  */
 package com.br.uepb.domain;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;  
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 /**
@@ -17,16 +22,15 @@ import javax.persistence.Table;
 public class CaronaMunicipalDomain {
 	
 	@Id
-	private String id;
+	@GeneratedValue
+	@Column(name = "id")
+	private int id;
 	private String cidade;
-	
-	@OneToOne
-	private CaronaDomain carona;
 	
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -34,7 +38,7 @@ public class CaronaMunicipalDomain {
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -52,22 +56,6 @@ public class CaronaMunicipalDomain {
 	 */
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
-	}
-
-
-	/**
-	 * @return the carona
-	 */
-	public CaronaDomain getCarona() {
-		return carona;
-	}
-
-
-	/**
-	 * @param carona the carona to set
-	 */
-	public void setCarona(CaronaDomain carona) {
-		this.carona = carona;
 	}
 
 
