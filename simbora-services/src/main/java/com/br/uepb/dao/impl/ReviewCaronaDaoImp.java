@@ -107,7 +107,7 @@ public class ReviewCaronaDaoImp implements ReviewCaronaDao{
 	public ReviewCaronasDomain getIdCampoVazio(String nomeDaColunaDaTabela) {  
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		List<ReviewCaronasDomain> id = session.createQuery("SELECT * FROM ReviewCaronasDomain where "+nomeDaColunaDaTabela+" is null").list();
+		List<ReviewCaronasDomain> id = session.createQuery("FROM ReviewCaronasDomain where "+nomeDaColunaDaTabela+" is null").list();
 		t.commit();
 		HibernateUtil.closedSession();
 		try {

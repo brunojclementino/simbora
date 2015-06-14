@@ -159,7 +159,7 @@ public class PerfilBusiness {
 		if (atributo.equals("faltas em vagas de caronas")) {
 			int caron = 0;
 			for (String idUsuario : reviewCaronaDaoImp.getFaltaramNasVagas()) {
-				if (idUsuario.equals(login)) {
+				if (login.equals(idUsuario)) {
 					caron++;
 				}
 			}
@@ -169,7 +169,7 @@ public class PerfilBusiness {
 		if (atributo.equals("presenças em vagas de caronas")) {
 			int caron = 0;
 			for (String idUsuario : reviewCaronaDaoImp.getPresentesNasVagas()) {
-				if (idUsuario.equals(login)) {
+				if (login.equals(idUsuario)) {
 					caron++;
 				}
 			}
