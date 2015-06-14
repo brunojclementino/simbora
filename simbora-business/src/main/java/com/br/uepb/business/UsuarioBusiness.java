@@ -41,7 +41,8 @@ public class UsuarioBusiness {
 			} catch (Exception e) {
 			}
 		}
-		getUsuarios().clear();*/
+		getUsuarios().clear();
+		usuarioDaoImp.excluirTudo();*/
 	}
 
 	/**
@@ -206,9 +207,9 @@ public class UsuarioBusiness {
 	
 		
 		if (mensagem.equals("A solicitação foi recebida")) {
-			for (SolicitacaoVagasDomain solicitacao : SolicitacaoVagasBusiness.solicitacoesVagas) {
+			/*for (SolicitacaoVagasDomain solicitacao : SolicitacaoVagasBusiness.solicitacoesVagas) {
 				
-			}
+			}*/
 			return true;
 		}
 		if (mensagem.equals("A carona foi confirmada")) {
@@ -233,6 +234,10 @@ public class UsuarioBusiness {
 
 	public List<UsuarioDomain> getUsuarios() {
 		return usuarioDaoImp.list();
+	}
+	
+	public void zerarSistema() {
+		
 	}
 	
 }

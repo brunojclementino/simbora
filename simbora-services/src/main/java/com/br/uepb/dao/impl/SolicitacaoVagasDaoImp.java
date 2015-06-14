@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.br.uepb.dao.SolicitacaoVagasDao;
+import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
 import com.br.uepb.util.HibernateUtil;
 
@@ -18,12 +19,19 @@ public class SolicitacaoVagasDaoImp implements SolicitacaoVagasDao{
 		Transaction t = session.beginTransaction();
 		session.save(solicitacaoVagas);
 		t.commit();
+		HibernateUtil.closedSession();
 	}
 
 	@Override
-	public SolicitacaoVagasDomain getSolicitacaoVagas(String idLogin) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		return (SolicitacaoVagasDomain) session.load(SolicitacaoVagasDomain.class, idLogin);
+	public SolicitacaoVagasDomain getSolicitacaoVagas(String id) {
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			SolicitacaoVagasDomain solicitacao = (SolicitacaoVagasDomain) session.get(SolicitacaoVagasDomain.class, Integer.parseInt(id));
+			HibernateUtil.closedSession();
+			return solicitacao;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -32,6 +40,7 @@ public class SolicitacaoVagasDaoImp implements SolicitacaoVagasDao{
 		Transaction t = session.beginTransaction();
 		List<SolicitacaoVagasDomain> lista = session.createQuery("from SolicitacaoVagasDomain").list();
 		t.commit();
+		HibernateUtil.closedSession();
 		return lista;
 	}
 
@@ -41,6 +50,7 @@ public class SolicitacaoVagasDaoImp implements SolicitacaoVagasDao{
 		Transaction t = session.beginTransaction();
 		session.delete(solicitacaoVagas);
 		t.commit();
+		HibernateUtil.closedSession();
 	}
 
 	@Override
@@ -49,14 +59,25 @@ public class SolicitacaoVagasDaoImp implements SolicitacaoVagasDao{
 		Transaction t = session.beginTransaction();
 		session.update(solicitacaoVagas);
 		t.commit();
+		HibernateUtil.closedSession();
 	}
 	
 	@Override
 	public void excluirTudo() {  
-        List<SolicitacaoVagasDomain> list = list();
-        for(SolicitacaoVagasDomain solicitacaoVagas:list){
-        	remove(solicitacaoVagas);
-        }
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		session.createQuery("delete from SolicitacaoVagasDomain where id <> null").executeUpdate();
+		t.commit();
+		HibernateUtil.closedSession();
     } 
+	
+	public int getId(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		List<Integer> id = session.createQuery("SELECT MAX(id) FROM SolicitacaoVagasDomain").list();
+		t.commit();
+		HibernateUtil.closedSession();
+		return id.get(0);
+	}
 	
 }

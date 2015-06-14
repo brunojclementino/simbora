@@ -7,8 +7,13 @@ import org.apache.log4j.Logger;
 
 import com.br.uepb.constants.PerfilException;
 import com.br.uepb.constants.UsuarioException;
+import com.br.uepb.dao.impl.CaronaDaoImp;
+import com.br.uepb.dao.impl.ReviewCaronaDaoImp;
+import com.br.uepb.dao.impl.SolicitacaoVagasDaoImp;
+import com.br.uepb.dao.impl.UsuarioDaoImp;
 import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.CaronaInteresseDomain;
+import com.br.uepb.domain.ReviewCaronasDomain;
 import com.br.uepb.domain.SessaoDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
 import com.br.uepb.domain.UsuarioDomain;
@@ -25,14 +30,14 @@ public class PerfilBusiness {
 
 	public final static Logger logger = Logger.getLogger(PerfilBusiness.class);
 
-	public static List<String> caronasSegurasTranquilas = new ArrayList<>();
-	public static List<String> caronasNaoFuncionaram = new ArrayList<>();
-	public static List<String> faltaramNasVagas = new ArrayList<>();
-	public static List<String> presenteNasVagas = new ArrayList<>();
-	private List<SolicitacaoVagasDomain> solicitacoesVagas = SolicitacaoVagasBusiness.solicitacoesVagas;
 	List<CaronaInteresseDomain> interessesCaronas = CaronaInteresesBusiness
 			.getInteresseCaronas();
-
+	
+	UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
+	CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
+	SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
+	ReviewCaronaDaoImp reviewCaronaDaoImp = new ReviewCaronaDaoImp();
+	
 	/**
 	 * Retorna o login do usuario.
 	 * 
@@ -52,12 +57,13 @@ public class PerfilBusiness {
 			throw new PerfilException("Sessão inválida");
 		}
 
-		for (UsuarioDomain usuario : new UsuarioBusiness().getUsuarios()) {
-			if (usuario.getLogin().equals(login)) {
-				return usuario.getLogin();
-			}
+		try {
+			UsuarioDomain usuario = usuarioDaoImp.getUsuario(login);
+			return usuario.getLogin();
+		} catch (Exception e) {
+			throw new PerfilException("Login inválido");
 		}
-		throw new PerfilException("Login inválido");
+		
 	}
 
 	/**
@@ -82,12 +88,12 @@ public class PerfilBusiness {
 			throw new PerfilException("Login inválido");
 		}
 
-		for (UsuarioDomain usuario : new UsuarioBusiness().getUsuarios()) {
-			if (usuario.getLogin().equals(login)) {
-				return getAtributo(login, atributo);
-			}
+		try {
+			usuarioDaoImp.getUsuario(login);
+			return getAtributo(login, atributo);
+		} catch (Exception e) {
+			throw new PerfilException("Login inválido");
 		}
-		throw new UsuarioException("Login inválido");
 
 	}
 
@@ -106,9 +112,9 @@ public class PerfilBusiness {
 
 		if (atributo.equals("historico de caronas")) {
 			String caron = "[";
-			for (CaronaDomain carona : CaronaBusiness.getCaronas()) {
-				if (carona.getIdSessao().equals(login)) {
-					caron += carona.getIdCarona();
+			for (CaronaDomain carona : getCaronas()) {
+				if (carona.getIdUsuario().equals(login)) {
+					caron += carona.getId();
 				}
 			}
 			return caron + "]";
@@ -117,7 +123,7 @@ public class PerfilBusiness {
 		if (atributo.equals("historico de vagas em caronas")) {
 			boolean flag = true;// indica se a quantidade de ids é 0
 			String caron = "[";
-			for (SolicitacaoVagasDomain solicitacaoVagas : SolicitacaoVagasBusiness.solicitacoesVagas) {
+			for (SolicitacaoVagasDomain solicitacaoVagas : getSolicitacoesVagas()) {
 				if (solicitacaoVagas.getIdSessao().equals(login)) {
 					if (!flag) {
 						caron += ",";
@@ -131,7 +137,7 @@ public class PerfilBusiness {
 
 		if (atributo.equals("caronas seguras e tranquilas")) {
 			int caron = 0;
-			for (String idCarona : caronasSegurasTranquilas) {
+			for (String idCarona : reviewCaronaDaoImp.getCaronasSegurasTranquilas()) {
 				if (CaronaBusiness.ehMotorista(login, idCarona)) {
 					caron++;
 				}
@@ -142,7 +148,7 @@ public class PerfilBusiness {
 		if (atributo.equals("caronas que não funcionaram")) {
 			int caron = 0;
 			String caronas = "";
-			for (String idCarona : caronasNaoFuncionaram) {
+			for (String idCarona : reviewCaronaDaoImp.getCaronasNaoFuncionaram()) {
 				if (CaronaBusiness.ehMotorista(login, idCarona)) {
 					caron++;
 				}
@@ -152,7 +158,7 @@ public class PerfilBusiness {
 
 		if (atributo.equals("faltas em vagas de caronas")) {
 			int caron = 0;
-			for (String idUsuario : faltaramNasVagas) {
+			for (String idUsuario : reviewCaronaDaoImp.getFaltaramNasVagas()) {
 				if (idUsuario.equals(login)) {
 					caron++;
 				}
@@ -162,7 +168,7 @@ public class PerfilBusiness {
 
 		if (atributo.equals("presenças em vagas de caronas")) {
 			int caron = 0;
-			for (String idUsuario : presenteNasVagas) {
+			for (String idUsuario : reviewCaronaDaoImp.getPresentesNasVagas()) {
 				if (idUsuario.equals(login)) {
 					caron++;
 				}
@@ -173,33 +179,65 @@ public class PerfilBusiness {
 		return new UsuarioBusiness().getAtributoUsuario(login, atributo);
 	}
 
-	public void zerarSistema() {
-		caronasSegurasTranquilas.clear();
-		caronasNaoFuncionaram.clear();
-		faltaramNasVagas.clear();
-		presenteNasVagas.clear();
+	private List<SolicitacaoVagasDomain> getSolicitacoesVagas() {
+		return solicitacaoVagasDaoImp.list();
+	}
+
+	private List<CaronaDomain> getCaronas() {
+		return caronaDaoImp.list();
 	}
 
 	public void reviewVagaEmCarona(String idSessao, String idCarona,
 			String loginCaroneiro, String review) throws PerfilException {
 		/* precisa validar os atributos recebidos neste métodos */
-		if (!SolicitacaoVagasBusiness.ehCaroneiro(loginCaroneiro, idCarona)) {
+		if (!ehCaroneiro(loginCaroneiro, idCarona)) {
 			throw new PerfilException("Usuário não possui vaga na carona.");
 		}
-
 		if (review.equals("faltou")) {
-			faltaramNasVagas.add(loginCaroneiro);
+			ReviewCaronasDomain linha= reviewCaronaDaoImp.getIdCampoVazio("faltouNaVaga");
+			if(linha!=null){
+				linha.setFaltouNaVaga(loginCaroneiro);
+				reviewCaronaDaoImp.update(linha);
+			}else{
+				linha = new ReviewCaronasDomain();
+				linha.setFaltouNaVaga(loginCaroneiro);
+				reviewCaronaDaoImp.save(linha);
+			}
 			return;
 		}
 
 		if (review.equals("não faltou")) {
-			presenteNasVagas.add(loginCaroneiro);
+			ReviewCaronasDomain linha= reviewCaronaDaoImp.getIdCampoVazio("presenteNaVaga");
+			if(linha!=null){
+				linha.setPresenteNaVaga(loginCaroneiro);
+				reviewCaronaDaoImp.update(linha);
+			}else{
+				linha = new ReviewCaronasDomain();
+				linha.setPresenteNaVaga(loginCaroneiro);
+				reviewCaronaDaoImp.save(linha);
+			}
 			return;
 		} else if (review.equals("não funcionou")) {
-			caronasNaoFuncionaram.add(idCarona);
+			ReviewCaronasDomain linha= reviewCaronaDaoImp.getIdCampoVazio("caronaNaoFuncionou");
+			if(linha!=null){
+				linha.setCaronaNaoFuncionou(loginCaroneiro);
+				reviewCaronaDaoImp.update(linha);
+			}else{
+				linha = new ReviewCaronasDomain();
+				linha.setCaronaNaoFuncionou(loginCaroneiro);
+				reviewCaronaDaoImp.save(linha);
+			}
 			return;
 		} else if (review.equals("funcionou")) {
-			caronasNaoFuncionaram.add(idCarona);
+			ReviewCaronasDomain linha= reviewCaronaDaoImp.getIdCampoVazio("caronaSeguraTranquila");
+			if(linha!=null){
+				linha.setCaronaSeguraTranquila(loginCaroneiro);
+				reviewCaronaDaoImp.update(linha);
+			}else{
+				linha = new ReviewCaronasDomain();
+				linha.setCaronaSeguraTranquila(loginCaroneiro);
+				reviewCaronaDaoImp.save(linha);
+			}
 			return;
 		}
 
@@ -214,9 +252,25 @@ public class PerfilBusiness {
 			throw new PerfilException("Usuário não possui vaga na carona.");
 		} else {
 			if (review.equals("segura e tranquila")) {
-				caronasSegurasTranquilas.add(idCaroneiro);
+				ReviewCaronasDomain linha= reviewCaronaDaoImp.getIdCampoVazio("caronaSeguraTranquila");
+				if(linha!=null){
+					linha.setCaronaSeguraTranquila(idCaroneiro);
+					reviewCaronaDaoImp.update(linha);
+				}else{
+					linha = new ReviewCaronasDomain();
+					linha.setCaronaSeguraTranquila(idCaroneiro);
+					reviewCaronaDaoImp.save(linha);
+				}
 			} else if (review.equals("não funcionou")) {
-				caronasNaoFuncionaram.add(idCaroneiro);
+				ReviewCaronasDomain linha= reviewCaronaDaoImp.getIdCampoVazio("caronaNaoFuncionou");
+				if(linha!=null){
+					linha.setCaronaNaoFuncionou(idCaroneiro);
+					reviewCaronaDaoImp.update(linha);
+				}else{
+					linha = new ReviewCaronasDomain();
+					linha.setCaronaNaoFuncionou(idCaroneiro);
+					reviewCaronaDaoImp.save(linha);
+				}
 			} else {
 				throw new PerfilException("Opção inválida.");
 			}
@@ -224,7 +278,7 @@ public class PerfilBusiness {
 	}
 
 	private boolean ehCaroneiro(String login, String caroneiro) {
-		for (SolicitacaoVagasDomain solicitacoes : solicitacoesVagas) {
+		for (SolicitacaoVagasDomain solicitacoes : getSolicitacoesVagas()) {
 			if (caroneiro.equals(solicitacoes.getIdCarona())
 					&& login.equals(solicitacoes.getIdSessao())) {
 				return true;

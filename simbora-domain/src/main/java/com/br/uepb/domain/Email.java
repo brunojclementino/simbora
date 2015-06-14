@@ -20,7 +20,7 @@ public class Email {
 	private String titulo;
 	private String mensagem;
 
-	private String emailRementente;
+	private String emailRemetente;
 	private ArrayList<String> listaEmail = new ArrayList<String>();
 
 	String destinatarios = "";
@@ -102,12 +102,12 @@ System.out.println(destinatarios);
 		this.password = password;
 	}
 
-	public String getEmailRementente() {
-		return emailRementente;
+	public String getEmailRemetente() {
+		return emailRemetente;
 	}
 
-	public void setEmailRementente(String emailRementente) {
-		this.listaEmail.add(emailRementente);
+	public void setEmailRemetente(String emailRemetente) {
+		this.listaEmail.add(emailRemetente);
 	}
 
 	public ArrayList<String> getListaEmail() {

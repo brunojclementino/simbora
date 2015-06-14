@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.br.uepb.dao.PontoDeEncontroDao;
+import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.PontoDeEncontroDomain;
 import com.br.uepb.util.HibernateUtil;
 
@@ -19,12 +20,20 @@ public class PontoDeEncontroDaoImp implements PontoDeEncontroDao{
 		Transaction t = session.beginTransaction();
 		session.save(pontoDeEncontro);
 		t.commit();
+		HibernateUtil.closedSession();
 	}
 
 	@Override
-	public PontoDeEncontroDomain getPontoDeEncontro(String idLogin) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		return (PontoDeEncontroDomain) session.load(PontoDeEncontroDomain.class, idLogin);
+	public PontoDeEncontroDomain getPontoDeEncontro(String id) {
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			PontoDeEncontroDomain ponto = (PontoDeEncontroDomain) session.get(PontoDeEncontroDomain.class, Integer.parseInt(id));
+			HibernateUtil.closedSession();
+			return ponto;
+		} catch (Exception e) {
+			return null;
+		}
+		
 	}
 
 	@Override
@@ -33,6 +42,7 @@ public class PontoDeEncontroDaoImp implements PontoDeEncontroDao{
 		Transaction t = session.beginTransaction();
 		List<PontoDeEncontroDomain> lista = session.createQuery("from PontoDeEncontroDomain").list();
 		t.commit();
+		HibernateUtil.closedSession();
 		return lista;
 	}
 
@@ -42,6 +52,7 @@ public class PontoDeEncontroDaoImp implements PontoDeEncontroDao{
 		Transaction t = session.beginTransaction();
 		session.delete(pontoDeEncontro);
 		t.commit();
+		HibernateUtil.closedSession();
 	}
 
 	@Override
@@ -50,14 +61,16 @@ public class PontoDeEncontroDaoImp implements PontoDeEncontroDao{
 		Transaction t = session.beginTransaction();
 		session.update(pontoDeEncontro);
 		t.commit();
+		HibernateUtil.closedSession();
 	}
 	
 	@Override
 	public void excluirTudo() {  
-        List<PontoDeEncontroDomain> list = list();
-        for(PontoDeEncontroDomain pontoDeEncontro:list){
-        	remove(pontoDeEncontro);
-        }
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		session.createQuery("delete from PontoDeEncontroDomain where id <> null").executeUpdate();
+		t.commit();
+		HibernateUtil.closedSession();
     } 
 	
 }

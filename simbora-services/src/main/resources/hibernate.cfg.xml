@@ -21,5 +21,6 @@
 		<mapping class="com.br.uepb.domain.CaronaInteresseDomain" />
 		<mapping class="com.br.uepb.domain.CaronaRelampagoDomain" />
 		<mapping class="com.br.uepb.domain.CaronaMunicipalDomain" />
+		<mapping class="com.br.uepb.domain.ReviewCaronasDomain" />
     </session-factory>
 </hibernate-configuration>

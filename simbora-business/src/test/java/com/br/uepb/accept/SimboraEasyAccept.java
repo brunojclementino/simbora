@@ -15,6 +15,7 @@ import com.br.uepb.constants.UsuarioException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
 import com.br.uepb.dao.impl.CaronaInteresseDaoImpl;
 import com.br.uepb.dao.impl.PontoDeEncontroDaoImp;
+import com.br.uepb.dao.impl.ReviewCaronaDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoPontoDeEncontroDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoVagasDaoImp;
 import com.br.uepb.dao.impl.UsuarioDaoImp;
@@ -40,19 +41,19 @@ public class SimboraEasyAccept {
 	
 	public void zerarSistema() {
 		
-		usuarioBusiness=new UsuarioBusiness();
+		/*usuarioBusiness=new UsuarioBusiness();
 		caronaBusiness=new CaronaBusiness();
 		sessaoBusiness = new SessaoBusiness();
 		solicitacaoEncontroBusiness=new SolicitacaoPontoDeEncontroBusiness();
 		solicitacaoVagasBusiness = new SolicitacaoVagasBusiness();
 		perfilBusiness = new PerfilBusiness();
-		usuarioBusiness.getUsuarios().clear();
+		usuarioBusiness.getUsuarios().clear();*/
 		new UsuarioDaoImp().excluirTudo();
 		new CaronaDaoImp().excluirTudo();
 		new SolicitacaoPontoDeEncontroDaoImp().excluirTudo();
 		new SolicitacaoVagasDaoImp().excluirTudo();
 		new PontoDeEncontroDaoImp().excluirTudo();
-		new CaronaInteresseDaoImpl().excluirTudo();
+		new ReviewCaronaDaoImp().excluirTudo();
 		new CaronaInteresseDaoImpl().excluirTudo();
 	}
 
@@ -137,7 +138,7 @@ public class SimboraEasyAccept {
 	public String solicitarVaga(String idSessao, String idCarona) throws Exception{
 		return solicitacaoVagasBusiness.solicitarVaga(idSessao, idCarona);
 	}
-	public void aceitarSolicitacao(String idSessao, String idSolicitacao){
+	public void aceitarSolicitacao(String idSessao, String idSolicitacao) throws Exception{
 		solicitacaoVagasBusiness.aceitarSolicitacao(idSessao, idSolicitacao);
 	}
 	public void rejeitarSolicitacao(String idSessao, String idSolicitacao) throws Exception{
@@ -158,10 +159,6 @@ public class SimboraEasyAccept {
 	}
 
 	public void reiniciarSistema() {
-		SessaoBusiness.setUsuarios(new UsuarioDaoImp().list());
-		SolicitacaoVagasBusiness.solicitacoesVagas = new SolicitacaoVagasDaoImp().list();
-		SolicitacaoPontoDeEncontroBusiness.solicitacoes = new SolicitacaoPontoDeEncontroDaoImp().list();
-		
 	}
 
 	public String getTodasCaronasUsuario(String idSessao) {

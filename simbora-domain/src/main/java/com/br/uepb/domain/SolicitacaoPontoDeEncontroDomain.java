@@ -1,7 +1,9 @@
 package com.br.uepb.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
@@ -21,13 +23,14 @@ public class SolicitacaoPontoDeEncontroDomain {
 	 * confirmação (2).
 	 * 
 	 */
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
     @OrderColumn(name="idPonto")
 	private PontoDeEncontroDomain[] pontoDeEncontro = new PontoDeEncontroDomain[3];
 	
 	@Id
+	@GeneratedValue
 	@Column(name = "idSugestao")
-	private String idSugestao; 
+	private int idSugestao; 
 	private boolean emAndamento = true;
 		// Se a solicitação ainda não foi concluída
 
@@ -53,7 +56,7 @@ public class SolicitacaoPontoDeEncontroDomain {
 	/**
 	 * @return id da sugestão.
 	 */
-	public String getIdSugestao() { 
+	public int getIdSugestao() { 
 		return idSugestao;
 	}
 
@@ -61,7 +64,7 @@ public class SolicitacaoPontoDeEncontroDomain {
 	 * Atribui o id da sugestão da carona.
 	 * @param idSugestao
 	 */
-	public void setIdSugestao(String idSugestao) { 
+	public void setIdSugestao(int idSugestao) { 
 		this.idSugestao = idSugestao;
 	}
 	

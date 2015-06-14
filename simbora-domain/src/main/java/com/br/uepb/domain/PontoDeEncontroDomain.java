@@ -2,6 +2,7 @@ package com.br.uepb.domain;
 
 import javax.persistence.Column; 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,8 +17,8 @@ import javax.persistence.Table;
 public class PontoDeEncontroDomain {
 	
 	@Id
-	@Column(name = "idPonto")
-	private String idPonto;
+	@GeneratedValue
+	private int idPonto;
 	private String idCarona;
 	private String pontos;
 	private String idSessao;
@@ -25,14 +26,14 @@ public class PontoDeEncontroDomain {
 	/**
 	 * @return the idPonto
 	 */
-	public String getIdPonto() {
+	public int getIdPonto() {
 		return idPonto;
 	}
 	
 	/**
 	 * @param idPonto the idPonto to set
 	 */
-	public void setIdPonto(String idPonto) {
+	public void setIdPonto(int idPonto) {
 		this.idPonto = idPonto;
 	}
 	/**

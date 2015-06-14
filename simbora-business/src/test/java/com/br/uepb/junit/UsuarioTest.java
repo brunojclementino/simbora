@@ -29,8 +29,6 @@ public class UsuarioTest {
 	@Test
 	public void criarUsuarios_EV() {
 		usuario.encerrarSistema();
-		sessao.getSessoes().clear();
-		sessao.getUsuarios().clear();
 
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");

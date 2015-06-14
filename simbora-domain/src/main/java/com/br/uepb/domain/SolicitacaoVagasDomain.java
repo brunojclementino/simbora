@@ -2,6 +2,7 @@ package com.br.uepb.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,24 +17,32 @@ import javax.persistence.Table;
 public class SolicitacaoVagasDomain {
 	
 	@Id
+	@GeneratedValue
 	@Column(name = "idSolicitacao")
-	private String idSolicitacao;
+	private int idSolicitacao;
 	private String idSessao;
 	//identificação de quem solicitou a vaga
 	private String idCarona;
 	private String status = "Pendente";
+	private int idPonto;
 	//Se a solicitação foi Aceita, está Pendente, ou foi Recusada.
 	
+	public int getIdPonto() {
+		return idPonto;
+	}
+	public void setIdPonto(int idPonto) {
+		this.idPonto = idPonto;
+	}
 	/**
 	 * @return the idSolicitacao
 	 */
-	public String getIdSolicitacao() {
+	public int getIdSolicitacao() {
 		return idSolicitacao;
 	}
 	/**
 	 * @param idSolicitacao the idSolicitacao to set
 	 */
-	public void setIdSolicitacao(String idSolicitacao) {
+	public void setIdSolicitacao(int idSolicitacao) {
 		this.idSolicitacao = idSolicitacao;
 	}
 	/**

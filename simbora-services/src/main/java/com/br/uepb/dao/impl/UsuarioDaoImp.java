@@ -19,12 +19,15 @@ public class UsuarioDaoImp implements UsuarioDao{
 		Transaction t = session.beginTransaction();
 		session.save(usuario);
 		t.commit();
+		HibernateUtil.closedSession();
 	}
 
 	@Override
 	public UsuarioDomain getUsuario(String login) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		return (UsuarioDomain) session.get(UsuarioDomain.class, login);
+		UsuarioDomain usuario = (UsuarioDomain) session.get(UsuarioDomain.class, login);
+		HibernateUtil.closedSession();
+		return usuario;
 	}
 
 	@Override
@@ -33,6 +36,7 @@ public class UsuarioDaoImp implements UsuarioDao{
 		Transaction t = session.beginTransaction();
 		List<UsuarioDomain> lista = session.createQuery("from UsuarioDomain").list();
 		t.commit();
+		HibernateUtil.closedSession();
 		return lista;
 	}
 
@@ -42,6 +46,7 @@ public class UsuarioDaoImp implements UsuarioDao{
 		Transaction t = session.beginTransaction();
 		session.delete(usuario);
 		t.commit();
+		HibernateUtil.closedSession();
 	}
 
 	@Override
@@ -50,14 +55,16 @@ public class UsuarioDaoImp implements UsuarioDao{
 		Transaction t = session.beginTransaction();
 		session.update(usuario);
 		t.commit();
+		HibernateUtil.closedSession();
 	}
 	
 	@Override
 	public void excluirTudo() {  
-        List<UsuarioDomain> list = list();
-        for(UsuarioDomain usuario:list){
-        	remove(usuario);
-        }
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		session.createQuery("delete from UsuarioDomain where login <> null").executeUpdate();
+		t.commit();
+		HibernateUtil.closedSession();
     } 
 	
 }

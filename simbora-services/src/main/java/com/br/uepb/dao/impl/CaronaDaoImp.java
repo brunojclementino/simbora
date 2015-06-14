@@ -19,11 +19,19 @@ public class CaronaDaoImp implements CaronaDao{
 		Transaction t = session.beginTransaction();
 		session.save(carona);
 		t.commit();
+		HibernateUtil.closedSession();
 	}
 	@Override
-	public CaronaDomain getCarona(String idLogin) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		return (CaronaDomain) session.get(CaronaDomain.class, Integer.parseInt(idLogin));
+	public CaronaDomain getCarona(String idCarona) {
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			CaronaDomain carona = (CaronaDomain) session.get(CaronaDomain.class, Integer.parseInt(idCarona));
+			HibernateUtil.closedSession();
+			return carona;
+		} catch (Exception e) {
+			return null;
+		}
+		
 	}
 
 	@Override
@@ -32,6 +40,7 @@ public class CaronaDaoImp implements CaronaDao{
 		Transaction t = session.beginTransaction();
 		List<CaronaDomain> lista = session.createQuery("from CaronaDomain").list();
 		t.commit();
+		HibernateUtil.closedSession();
 		return lista;
 	}
 
@@ -41,6 +50,7 @@ public class CaronaDaoImp implements CaronaDao{
 		Transaction t = session.beginTransaction();
 		session.delete(carona);
 		t.commit();
+		HibernateUtil.closedSession();
 	}
 
 	@Override
@@ -49,14 +59,16 @@ public class CaronaDaoImp implements CaronaDao{
 		Transaction t = session.beginTransaction();
 		session.update(carona);
 		t.commit();
+		session.close();
 	}
 	
 	@Override 
 	public void excluirTudo() {  
-        List<CaronaDomain> list = list();
-        for(CaronaDomain carona:list){
-        	remove(carona);
-        }
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		session.createQuery("delete from CaronaDomain where id <> null").executeUpdate();
+		t.commit();
+		HibernateUtil.closedSession();
     } 
 	
 	public int getId(){
@@ -64,6 +76,7 @@ public class CaronaDaoImp implements CaronaDao{
 		Transaction t = session.beginTransaction();
 		List<Integer> id = session.createQuery("SELECT MAX(id) FROM CaronaDomain").list();
 		t.commit();
+		HibernateUtil.closedSession();
 		
 		return id.get(0);
 	}

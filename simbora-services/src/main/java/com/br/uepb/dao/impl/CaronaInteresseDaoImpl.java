@@ -53,9 +53,9 @@ public class CaronaInteresseDaoImpl implements CaronaInteresseDao {
 	
 	@Override
 	public void excluirTudo() {  
-        List<CaronaInteresseDomain> list = list();
-        for(CaronaInteresseDomain carona:list){
-        	remove(carona);
-        }
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		session.createQuery("delete from CaronaInteresseDomain where id <> null").executeUpdate();
+		t.commit();
     } 
 }

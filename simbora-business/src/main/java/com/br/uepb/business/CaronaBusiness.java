@@ -448,23 +448,13 @@ public class CaronaBusiness {
 	 * @param idcarona
 	 * @throws CaronaException 
 	 */
-	public void reduzQtdVagas(String idcarona) throws CaronaException {
+	public void reduzQtdVagas(String idcarona) {
 
-		try {
-			CaronaDomain carona = caronaDaoImp.getCarona(idcarona);
-			int qtdVagasAtual = Integer.parseInt(carona.getVagas()) - 1;
-			carona.setVagas(qtdVagasAtual + "");
-			caronaDaoImp.update(carona);
-			
-		} catch (Exception e) {
-			throw new CaronaException("Carona não encontrada");
-		}
-		/*for (CaronaDomain carona : caronas) {
-			if (carona.getId() == Integer.parseInt(idcarona)) {
-				int qtdVagasAtual = Integer.parseInt(carona.getVagas()) - 1;
-				carona.setVagas(qtdVagasAtual + "");
-			}
-		}*/
+		CaronaDomain carona = caronaDaoImp.getCarona(idcarona);
+		int qtdVagasAtual = Integer.parseInt(carona.getVagas()) - 1;
+		carona.setVagas(qtdVagasAtual + "");
+		caronaDaoImp.update(carona);
+	
 	}
 
 	/**
@@ -502,11 +492,11 @@ public class CaronaBusiness {
 	public String getCaronaUsuario(String idSessao, String indexCarona) {
 		try {
 
-			int indice = Integer.parseInt(indexCarona) - 1;
-			int cont = 0;
+			int indice = Integer.parseInt(indexCarona);
+			int cont = 1;
 			// percorre as caronas para verificar qual a carona x do usuario
 			for (CaronaDomain carona : getCaronas()) {
-				if ((carona.getId()+"").equals(indexCarona)) {
+				if ((carona.getIdUsuario()+"").equals(idSessao)) {
 					if (cont == indice) {
 						return carona.getId()+"";
 					}
@@ -564,8 +554,17 @@ public class CaronaBusiness {
 	}
 
 	public static boolean ehMotorista(String idSessao, String idCarona) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			CaronaDomain carona = new CaronaDaoImp().getCarona(idCarona);
+			if(carona.getIdUsuario().equals(idSessao)){
+				return true;
+			}
+			else{
+				return false;
+			}
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**

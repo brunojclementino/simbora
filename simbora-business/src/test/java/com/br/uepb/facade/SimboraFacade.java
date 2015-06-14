@@ -5,6 +5,10 @@ import com.br.uepb.constants.CaronaException;
 import com.br.uepb.constants.PerfilException;
 import com.br.uepb.constants.SessaoException;
 import com.br.uepb.constants.UsuarioException;
+import com.br.uepb.dao.impl.PontoDeEncontroDaoImp;
+import com.br.uepb.dao.impl.SolicitacaoPontoDeEncontroDaoImp;
+import com.br.uepb.domain.PontoDeEncontroDomain;
+import com.br.uepb.domain.SolicitacaoPontoDeEncontroDomain;
 
 import easyaccept.EasyAccept;
 
@@ -86,7 +90,7 @@ public class SimboraFacade {
 		return simboraEasyAccept.solicitarVaga(idSessao, idCarona);
 	}
 	
-	public void aceitarSolicitacao(String idSessao, String idSolicitacao){
+	public void aceitarSolicitacao(String idSessao, String idSolicitacao) throws Exception{
 		simboraEasyAccept.aceitarSolicitacao(idSessao, idSolicitacao);
 	}
 	
@@ -164,9 +168,29 @@ public class SimboraFacade {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] {"com.br.uepb.facade.SimboraFacade", "scripts/US02.txt",
-				/*"scripts/US02.txt", "scripts/US03.txt", "scripts/US04.txt", "scripts/US05.txt"
-				, "scripts/US06.txt", "scripts/US07.txt", "scripts/US08.txt", "scripts/US09.txt"
+		/*SolicitacaoPontoDeEncontroDomain soli = new SolicitacaoPontoDeEncontroDomain();
+		PontoDeEncontroDomain pontoDeEncontro = new PontoDeEncontroDomain();
+		pontoDeEncontro.setIdSessao("bruno");
+		pontoDeEncontro.setPontos("A - B");
+		pontoDeEncontro.setIdCarona("1");
+		soli.setPontoDeEncontro(pontoDeEncontro, 0);
+		pontoDeEncontro = new PontoDeEncontroDomain();
+		pontoDeEncontro.setIdSessao("bruno");
+		pontoDeEncontro.setPontos("A - B");
+		pontoDeEncontro.setIdCarona("2");
+		soli.setPontoDeEncontro(pontoDeEncontro, 1);
+		
+		pontoDeEncontro = new PontoDeEncontroDomain();
+		pontoDeEncontro.setIdSessao("bruno");
+		pontoDeEncontro.setPontos("A - B");
+		pontoDeEncontro.setIdCarona("3");
+		soli.setPontoDeEncontro(pontoDeEncontro, 2);
+		soli.setEmAndamento(true);*/
+	//	new PontoDeEncontroDaoImp().save(pontoDeEncontro);
+		//new SolicitacaoPontoDeEncontroDaoImp().save(soli);
+		args = new String[] {"com.br.uepb.facade.SimboraFacade", "scripts/US01.txt",
+				"scripts/US02.txt", "scripts/US03.txt", "scripts/US04.txt", "scripts/US05.txt"
+				, "scripts/US06.txt", "scripts/US07.txt"/*, "scripts/US08.txt", "scripts/US09.txt"
 				,  "scripts/US10.txt",  "scripts/US11.txt"*/};
 		EasyAccept.main(args); 
 	} 

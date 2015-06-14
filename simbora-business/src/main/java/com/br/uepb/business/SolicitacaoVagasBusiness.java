@@ -2,6 +2,9 @@ package com.br.uepb.business;
 
 import java.util.List;
 
+import com.br.uepb.constants.CaronaException;
+import com.br.uepb.dao.impl.CaronaDaoImp;
+import com.br.uepb.dao.impl.PontoDeEncontroDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoVagasDaoImp;
 import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.SolicitacaoPontoDeEncontroDomain;
@@ -18,23 +21,13 @@ import com.br.uepb.domain.UsuarioDomain;
 public class SolicitacaoVagasBusiness {
 
 	SolicitacaoVagasDomain solicitacaoVagas;
-	public static List<SolicitacaoVagasDomain> solicitacoesVagas = new SolicitacaoVagasDaoImp()
-			.list();
+	private SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
 
 	/**
 	 * Salva todoas as solicitacaoVagas e depois limpa a lista de
 	 * {@link SolicitacaoVagasDomain}.
 	 */
 	public void encerrarSistema() {
-		for (SolicitacaoVagasDomain solicitacaoVagas : solicitacoesVagas) {
-			try {
-				SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
-				solicitacaoVagasDaoImp.save(solicitacaoVagas);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		solicitacoesVagas.clear();
 	}
 
 	/**
@@ -51,12 +44,10 @@ public class SolicitacaoVagasBusiness {
 		solicitacaoVagas.setIdSessao(idSessao);
 		solicitacaoVagas.setIdCarona(idCarona);
 
-		solicitacoesVagas.add(solicitacaoVagas);
+		solicitacaoVagasDaoImp.save(solicitacaoVagas);
 
-		solicitacaoVagas.setIdSolicitacao(solicitacoesVagas
-				.indexOf(solicitacaoVagas) + "V");// id da solicitação de vaga
 
-		return solicitacaoVagas.getIdSolicitacao();
+		return solicitacaoVagasDaoImp.getId()+"";
 	}
 
 	/**
@@ -64,17 +55,19 @@ public class SolicitacaoVagasBusiness {
 	 * 
 	 * @param idSessao
 	 * @param idSolicitacao
+	 * @throws Exception 
+	 * @throws CaronaException 
 	 */
-	public void aceitarSolicitacao(String idSessao, String idSolicitacao) {
-
-		for (SolicitacaoVagasDomain solicitacao : solicitacoesVagas) {
-
-			if (solicitacao.getIdSolicitacao().equals(idSolicitacao)) {
+	public void aceitarSolicitacao(String idSessao, String idSolicitacao) throws Exception{
+		
+			SolicitacaoVagasDomain solicitacao = solicitacaoVagasDaoImp.getSolicitacaoVagas(idSolicitacao);
+			if(solicitacao.getStatus().equals("Aceita")){
+				throw new Exception("Solicitação já foi aceita");
+			}else{
 				solicitacao.setStatus("Aceita");
 				new CaronaBusiness().reduzQtdVagas(solicitacao.getIdCarona());
-				return;
-			}
-		}
+				solicitacaoVagasDaoImp.update(solicitacao);
+				}
 	}
 
 	/**
@@ -87,18 +80,19 @@ public class SolicitacaoVagasBusiness {
 	 */
 	public void rejeitarSolicitacao(String idSessao, String idSolicitacao)
 			throws Exception {
-		for (SolicitacaoVagasDomain solicitacao : solicitacoesVagas) {
+		try {
+			SolicitacaoVagasDomain solicitacao = solicitacaoVagasDaoImp.getSolicitacaoVagas(idSolicitacao);
+			if (solicitacao.getStatus().equals("Pendente")) {
 
-			if (solicitacao.getIdSolicitacao().equals(idSolicitacao)) {
-				if (solicitacao.getStatus().equals("Pendente")) {
-
-					solicitacao.setStatus("Recusada");
-					return;
-				} else {
-					throw new Exception("Solicitação inexistente");
-				}
+				solicitacao.setStatus("Recusada");
+				solicitacaoVagasDaoImp.update(solicitacao);
+				return;
+			} else {
+				throw new Exception("Solicitação inexistente");
 			}
-
+			
+		} catch (Exception e) {
+			throw new CaronaException("Solicitação inexistente");
 		}
 
 	}
@@ -111,38 +105,39 @@ public class SolicitacaoVagasBusiness {
 	 * @return no do Dono da carona ou da Solicitação da carona.
 	 */
 	public String getAtributo(String idSolicitacao, String atributo) {
-		for (SolicitacaoVagasDomain solicitacao : solicitacoesVagas) {
-			if (solicitacao.getIdSolicitacao().equals(idSolicitacao)) {
-				try {
-					return new CaronaBusiness().getAtributoCarona(
-							solicitacao.getIdCarona(), atributo);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				if (atributo.equals("Dono da carona")) {
-					for (CaronaDomain carona : CaronaBusiness.getCaronas()) {
-						if (carona.getIdCarona().equals(
-								solicitacao.getIdCarona())) {
-							return new UsuarioBusiness().getAtributoUsuario(
-									carona.getIdSessao(), "nome");
-						}
-					}
+		
+		SolicitacaoVagasDomain solicitacao = solicitacaoVagasDaoImp.getSolicitacaoVagas(idSolicitacao);
+		try {
+			return new CaronaBusiness().getAtributoCarona(
+					solicitacao.getIdCarona(), atributo);
+		} catch (Exception f) {
+			f.printStackTrace();
+		}
+		if (atributo.equals("Dono da carona")) {
+			CaronaDomain carona = new CaronaDaoImp().getCarona(solicitacao.getIdCarona());
+			return new UsuarioBusiness().getAtributoUsuario(
+					carona.getIdUsuario(), "nome");
+		}
 
-				}
-
-				if (atributo.equals("Dono da solicitacao")) {
-					return new UsuarioBusiness().getAtributoUsuario(
-							solicitacao.getIdSessao(), "nome");
-				}
-			}
+		if (atributo.equals("Dono da solicitacao")) {
+			return new UsuarioBusiness().getAtributoUsuario(
+					solicitacao.getIdSessao(), "nome");
+		}
+		if (atributo.equals("Ponto de Encontro")) {
+			return new PontoDeEncontroDaoImp().getPontoDeEncontro(solicitacao.getIdPonto()+"").getPontos();
 		}
 
 		return "";
 	}
 
-	public static boolean ehCaroneiro(String login, String idCarona) {
+	private List<SolicitacaoVagasDomain> getSolicitacoesVagas() {
+		
+		return solicitacaoVagasDaoImp.list();
+	}
 
-		for (SolicitacaoVagasDomain solicitacaoVagas : solicitacoesVagas) {
+	public boolean ehCaroneiro(String login, String idCarona) {
+
+		for (SolicitacaoVagasDomain solicitacaoVagas : getSolicitacoesVagas()) {
 
 			if (solicitacaoVagas.getIdCarona().equals(idCarona)
 					&& solicitacaoVagas.getIdSessao().equals(login)) {
@@ -165,7 +160,7 @@ public class SolicitacaoVagasBusiness {
 
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
-		for (SolicitacaoVagasDomain solicitacao : solicitacoesVagas) {
+		for (SolicitacaoVagasDomain solicitacao : getSolicitacoesVagas()) {
 
 			if (solicitacao.getIdCarona().equals(idCarona)
 					&& CaronaBusiness.ehMotorista(idSessao, idCarona)
@@ -193,7 +188,7 @@ public class SolicitacaoVagasBusiness {
 
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
-		for (SolicitacaoVagasDomain solicitacao : solicitacoesVagas) {
+		for (SolicitacaoVagasDomain solicitacao : getSolicitacoesVagas()) {
 
 			if (solicitacao.getIdCarona().equals(idCarona)
 					&& CaronaBusiness.ehMotorista(idSessao, idCarona)
