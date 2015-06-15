@@ -1,6 +1,8 @@
 package com.br.uepb.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -10,16 +12,16 @@ import javax.persistence.Table;
 public class CaronaRelampagoDomain {
 
 	@Id
-	private String id;
+	@GeneratedValue
+	@Column(name = "id")
+	private int id;
 	private String dataVolta;
-
-	@OneToOne
-	private CaronaDomain carona;
+	private String expirou = "false";
 
 	/**
 	 * @return the idCarona
 	 */
-	public String getIdCarona() {
+	public int getIdCarona() {
 		return id;
 	}
 
@@ -27,7 +29,7 @@ public class CaronaRelampagoDomain {
 	 * @param idCarona
 	 *            the idCarona to set
 	 */
-	public void setIdCarona(String idCarona) {
+	public void setIdCarona(int idCarona) {
 		this.id = idCarona;
 	}
 
@@ -39,19 +41,12 @@ public class CaronaRelampagoDomain {
 		this.dataVolta = dataVolta;
 	}
 
-	/**
-	 * @return the carona
-	 */
-	public CaronaDomain getCarona() {
-		return carona;
+	public String getExpirou() {
+		return expirou;
 	}
 
-	/**
-	 * @param carona
-	 *            the carona to set
-	 */
-	public void setCarona(CaronaDomain carona) {
-		this.carona = carona;
+	public void setExpirou(String expirou) {
+		this.expirou = expirou;
 	}
 
 }

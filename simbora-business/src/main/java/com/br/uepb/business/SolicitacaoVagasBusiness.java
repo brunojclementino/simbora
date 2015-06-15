@@ -22,6 +22,7 @@ public class SolicitacaoVagasBusiness {
 
 	SolicitacaoVagasDomain solicitacaoVagas;
 	private SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
+	private EnviarEmail enviarEmail = new EnviarEmail();
 
 	/**
 	 * Salva todoas as solicitacaoVagas e depois limpa a lista de
@@ -203,5 +204,8 @@ public class SolicitacaoVagasBusiness {
 		}
 		return ids + "}";
 	}
+	/*public String enviarEmail(String idSessao, String destino, String mensagem){
+		return enviarEmail.enviar(destino, mensagem);
+	}*/
 
 }

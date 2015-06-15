@@ -3,6 +3,7 @@ package com.br.uepb.accept;
 import com.br.uepb.business.CaronaBusiness;
 import com.br.uepb.business.CaronaInteresesBusiness;
 import com.br.uepb.business.CaronaMunicipalBusiness;
+import com.br.uepb.business.CaronaRelampagoBusiness;
 import com.br.uepb.business.PerfilBusiness;
 import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.business.SolicitacaoPontoDeEncontroBusiness;
@@ -39,6 +40,7 @@ public class SimboraEasyAccept {
 	SolicitacaoVagasBusiness solicitacaoVagasBusiness = new SolicitacaoVagasBusiness();
 	CaronaInteresesBusiness interesseBusiness = new CaronaInteresesBusiness();
 	PerfilBusiness perfilBusiness = new PerfilBusiness();
+	CaronaRelampagoBusiness caronaRelampagoBusiness = new CaronaRelampagoBusiness();
 	
 	public void zerarSistema() {
 		
@@ -216,6 +218,29 @@ public class SimboraEasyAccept {
 	public String verificarMensagensPerfil(String idSessao) {
 		return perfilBusiness.verificarMensagensPerfil(idSessao);
 	}
-	
+	/*public String enviarEmail(String idSessao, String destino, String mensagem){
+		return solicitacaoVagasBusiness.enviarEmail(idSessao, destino, mensagem);
+	}*/
+	public String cadastrarCaronaRelampago(String idSessao, String origem,
+			String destino, String dataIda, String dataVolta, String hora,
+			String minimoCaroneiros) throws CaronaException {
+		return caronaRelampagoBusiness.cadastrarCaronaRelampago(idSessao, origem, destino, dataIda, dataVolta, hora, minimoCaroneiros);
+	}
+	public String getAtributoCaronaRelampago(String idCarona, String atributo)
+			throws CaronaException {
+		return caronaRelampagoBusiness.getAtributoCaronaRelampago(idCarona, atributo);
+	}
+	public String getMinimoCaroneiros(String idCarona) throws CaronaException {
+		return caronaRelampagoBusiness.getMinimoCaroneiros(idCarona);
+	}
+	public String getCaronaRelampago(String idCarona) throws CaronaException {
+		return caronaRelampagoBusiness.getCaronaRelampago(idCarona);
+	}
+	public String setCaronaRelampagoExpired(String idCarona){
+		return caronaRelampagoBusiness.setCaronaRelampagoExpired(idCarona);
+	}
+	public String getAtributoExpired(String idExpired, String atributo){
+		return caronaRelampagoBusiness.getAtributoExpired(idExpired, atributo);
+	}
 	
 }

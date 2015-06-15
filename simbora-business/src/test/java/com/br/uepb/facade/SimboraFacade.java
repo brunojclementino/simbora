@@ -166,6 +166,30 @@ public class SimboraFacade {
 	public String verificarMensagensPerfil(String idSessao) {
 		return simboraEasyAccept.verificarMensagensPerfil(idSessao);
 	}
+	/*public String enviarEmail(String idSessao, String destino, String mensagem){
+		return simboraEasyAccept.enviarEmail(idSessao, destino, mensagem);
+	}*/
+	public String cadastrarCaronaRelampago(String idSessao, String origem,
+			String destino, String dataIda, String dataVolta, String hora,
+			String minimoCaroneiros) throws CaronaException {
+		return simboraEasyAccept.cadastrarCaronaRelampago(idSessao, origem, destino, dataIda, dataVolta, hora, minimoCaroneiros);
+	}
+	public String getAtributoCaronaRelampago(String idCarona, String atributo)
+			throws CaronaException {
+		return simboraEasyAccept.getAtributoCaronaRelampago(idCarona, atributo);
+	}
+	public String getMinimoCaroneiros(String idCarona) throws CaronaException {
+		return simboraEasyAccept.getMinimoCaroneiros(idCarona);
+	}
+	public String getCaronaRelampago(String idCarona) throws CaronaException {
+		return simboraEasyAccept.getCaronaRelampago(idCarona);
+	}
+	public String setCaronaRelampagoExpired(String idCarona){
+		return simboraEasyAccept.setCaronaRelampagoExpired(idCarona);
+	}
+	public String getAtributoExpired(String idExpired, String atributo){
+		return simboraEasyAccept.getAtributoExpired(idExpired, atributo);
+	}
 
 	public static void main(String[] args) {
 		/*SolicitacaoPontoDeEncontroDomain soli = new SolicitacaoPontoDeEncontroDomain();
@@ -191,7 +215,7 @@ public class SimboraFacade {
 		args = new String[] {"com.br.uepb.facade.SimboraFacade", "scripts/US01.txt",
 				"scripts/US02.txt", "scripts/US03.txt", "scripts/US04.txt", "scripts/US05.txt"
 				, "scripts/US06.txt", "scripts/US07.txt", "scripts/US08.txt", "scripts/US09.txt"
-				,  "scripts/US10.txt",  "scripts/US11.txt"/**/};
+				,  "scripts/US10.txt",  "scripts/US11.txt",  "scripts/US12.txt",  "scripts/US13.txt",  "scripts/US14.txt"};
 		EasyAccept.main(args); 
 	} 
 }

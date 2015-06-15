@@ -4,21 +4,23 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Hours;
 
 import com.br.uepb.constants.CaronaException;
 import com.br.uepb.dao.impl.CaronaRelampagoDaoImpl;
+import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.CaronaRelampagoDomain;
 import com.br.uepb.domain.SessaoDomain;
 
 public class CaronaRelampagoBusiness {
 
-	private static List<CaronaRelampagoDomain> interesseCaronasRelamlago = new CaronaRelampagoDaoImpl()
-			.list();
-
+	public static Logger logger = Logger.getLogger(CaronaRelampagoBusiness.class);
+	CaronaRelampagoDaoImpl caronaRelampagoDaoImpl = new CaronaRelampagoDaoImpl();
+	CaronaRelampagoDomain caronaRelampago;
 	public void encerrarSistema() {
-		for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
+	/*	for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
 			try {
 				CaronaRelampagoDaoImpl relampago = new CaronaRelampagoDaoImpl();
 				relampago.save(caronaRelampagoDomain);
@@ -26,7 +28,7 @@ public class CaronaRelampagoBusiness {
 				e.getMessage();
 			}
 		}
-		interesseCaronasRelamlago.clear();
+		interesseCaronasRelamlago.clear();*/
 	}
 
 	public String cadastrarCaronaRelampago(String idSessao, String origem,
@@ -75,11 +77,19 @@ public class CaronaRelampagoBusiness {
 			throw new CaronaException("Minimo Caroneiros inválido");
 		}
 
-		CaronaRelampagoDomain carona = new CaronaRelampagoDomain();
-		carona.setDataVolta(dataVolta);
-		carona.setDataVolta(dataVolta);
-		interesseCaronasRelamlago.add(carona);
-		return carona.getIdCarona();
+		CaronaDomain carona = new CaronaDomain();
+		carona.setData(dataIda);
+		carona.setDestino(destino);
+		carona.setOrigem(origem);
+		carona.setHora(hora);
+		carona.setIdUsuario(idSessao);
+		carona.setVagas(minimoCaroneiros);
+		
+		caronaRelampago = new CaronaRelampagoDomain();
+		caronaRelampago.setDataVolta(dataVolta);
+		carona.setCaronaRelampago(caronaRelampago);
+		caronaRelampagoDaoImpl.save(carona);
+		return caronaRelampagoDaoImpl.getId()+"";
 	}
 
 	/**
@@ -143,60 +153,67 @@ public class CaronaRelampagoBusiness {
 		}
 		
 		if (atributo.equals("origem")) {
-			for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
-				if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
-					return caronaRelampagoDomain.getCarona().getLocalDeOrigem() + "";
-				}
-			}
+			CaronaDomain carona = caronaRelampagoDaoImpl.getCarona(idCarona);
+			return carona.getOrigem() + "";
 		}
 		if (atributo.equals("destino")) {
-			for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
-				if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
-					return caronaRelampagoDomain.getCarona().getLocalDeDestino() + "";
-				}
-			}
+			CaronaDomain carona = caronaRelampagoDaoImpl.getCarona(idCarona);
+			return carona.getDestino() + "";
 		}
 		if (atributo.equals("minimoCaroneiros")) {
-			for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
-				if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
-					return caronaRelampagoDomain.getCarona().getQtdDeVagas() + "";
-				}
-			}
+			CaronaDomain carona = caronaRelampagoDaoImpl.getCarona(idCarona);
+			return carona.getVagas() + "";
 		}
 		if (atributo.equals("dataIda")) {
-			for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
-				if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
-					return caronaRelampagoDomain.getCarona().getData() + "";
-				}
-			}
+			CaronaDomain carona = caronaRelampagoDaoImpl.getCarona(idCarona);
+			return carona.getData() + "";
 		}
 		if (atributo.equals("dataVolta")) {
-			for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
-				if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
-					return caronaRelampagoDomain.getDataVolta() + "";
-				}
-			}
+			CaronaDomain carona = caronaRelampagoDaoImpl.getCarona(idCarona);
+			return carona.getCaronaRelampago().getDataVolta() + "";
+		}
+		if (atributo.equals("expired")) {
+			CaronaDomain carona = caronaRelampagoDaoImpl.getCarona(idCarona);
+			return carona.getCaronaRelampago().getExpirou() + "";
 		}
 		throw new CaronaException("Atributo inexistente");
 		//return null;
 	}
 
 	private boolean existeCarona(String idCarona) {
-		for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
-			if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
-				return true;
-			}
+		try {
+			Integer.parseInt(idCarona);
+			return caronaRelampagoDaoImpl.ehRelampago(idCarona);
+		} catch (Exception e) {
+			return false;
 		}
-		return false;
+		
 	}
 
 	public String getMinimoCaroneiros(String idCarona) throws CaronaException {
-		for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
-			if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
-				return caronaRelampagoDomain.getCarona().getQtdDeVagas();
-			}
+		if(existeCarona(idCarona)){
+			return caronaRelampagoDaoImpl.getCarona(idCarona).getVagas();
 		}
 		throw new CaronaException("IdCarona não existe");
+	}
+	
+	public String setCaronaRelampagoExpired(String idCarona){
+		CaronaDomain carona = caronaRelampagoDaoImpl.getCarona(idCarona);
+		carona.getCaronaRelampago().setExpirou("true");
+		caronaRelampagoDaoImpl.update(carona);
+		return carona.getId()+"";
+		
+	}
+	
+	public String getAtributoExpired(String idExpired, String atributo){
+		if(atributo.equals("emailTo")){
+			String logins = caronaRelampagoDaoImpl.getUsuariosQueSolicitaramCaronasExpiradas(idExpired).toString();
+			logins = logins.replaceAll(" ", "");//Está sendo feito isso para o retorno ser formatado de acordo com o US13
+			return logins;
+		}
+		else{
+			return "ERROR";
+		}
 	}
 
 	public String getTrajeto(String idCarona) throws CaronaException {
@@ -231,16 +248,11 @@ public class CaronaRelampagoBusiness {
 			throw new CaronaException("Carona Inexistente");
 		}
 		
-		for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
-			if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
-				return caronaRelampagoDomain.getCarona().getLocalDeOrigem() + " para "
-						+ caronaRelampagoDomain.getCarona().getLocalDeDestino() + ", no dia "
-						+ caronaRelampagoDomain.getCarona().getData() + ", as "
-						+ caronaRelampagoDomain.getCarona().getHorarioDeSaida();
-			}
-
-		}
-		return null;
+		CaronaDomain carona = caronaRelampagoDaoImpl.getCarona(idCarona);
+		return carona.getOrigem() + " para "
+				+ carona.getDestino() + ", no dia "
+				+ carona.getData() + ", as "
+				+ carona.getHora();
 	}
 
 	/**
@@ -252,7 +264,6 @@ public class CaronaRelampagoBusiness {
 	 * @return se a data seguir o padrão (dd/mm/aaaa) retorna <code>true</code>,
 	 *         caso contrario <code>false</code>
 	 */
-	@SuppressWarnings("unused")
 	private boolean isData(String data) {
 		try {
 			SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");

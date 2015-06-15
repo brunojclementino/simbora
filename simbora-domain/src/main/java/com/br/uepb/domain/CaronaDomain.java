@@ -34,6 +34,9 @@ public class CaronaDomain {
 	private String idUsuario;
 	
 	@OneToOne(cascade = CascadeType.ALL)
+	private CaronaRelampagoDomain caronaRelampago;
+	
+	@OneToOne(cascade = CascadeType.ALL)
 	private CaronaMunicipalDomain caronaMunicipal;
 	/**
 	 * Método construtor default.
@@ -131,5 +134,13 @@ public class CaronaDomain {
 	public void setCaronaMunicipal(CaronaMunicipalDomain caronaMunicipal) {
 		this.caronaMunicipal = caronaMunicipal;
 	}
+	public CaronaRelampagoDomain getCaronaRelampago() {
+		return caronaRelampago;
+	}
+	public void setCaronaRelampago(CaronaRelampagoDomain caronaRelampago) {
+		this.caronaRelampago = caronaRelampago;
+	}
+	
+	
 	
 }
