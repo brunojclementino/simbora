@@ -216,7 +216,7 @@ public class CaronaRelampagoBusiness {
 		}
 	}
 
-	public String getTrajeto(String idCarona) throws CaronaException {
+	/*public String getTrajeto(String idCarona) throws CaronaException {
 		if (idCarona == null) {
 			throw new CaronaException("Trajeto Inválida");
 		}
@@ -233,7 +233,7 @@ public class CaronaRelampagoBusiness {
 			}
 		}
 		return null;
-	}
+	}*/
 
 	public String getCaronaRelampago(String idCarona) throws CaronaException {
 		if (idCarona == null) {

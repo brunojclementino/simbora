@@ -5,12 +5,13 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.br.uepb.dao.ReviewCaronaDao;
+import com.br.uepb.dao.ReviewCaronasDao;
 import com.br.uepb.domain.ReviewCaronasDomain;
+import com.br.uepb.domain.ReviewDomain;
 import com.br.uepb.util.HibernateUtil;
 
 
-public class ReviewCaronaDaoImp implements ReviewCaronaDao{
+public class ReviewCaronasDaoImp implements ReviewCaronasDao{
 
 	@Override
 	public void save(ReviewCaronasDomain reviewCaronas) {
@@ -70,34 +71,18 @@ public class ReviewCaronaDaoImp implements ReviewCaronaDao{
 		HibernateUtil.closedSession();
     } 
 	
-	public List<String> getCaronasSegurasTranquilas(){
+	public List<ReviewDomain> getCaronasSegurasTranquilas(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		List<String> lista = session.createQuery("SELECT caronaSeguraTranquila FROM ReviewCaronasDomain").list();
+		List<ReviewDomain> lista = session.createQuery("SELECT caronaSeguraTranquila FROM ReviewCaronasDomain").list();
 		t.commit();
 		HibernateUtil.closedSession();
 		return lista;
 	}
-	public List<String> getCaronasNaoFuncionaram(){
+	public List<ReviewDomain> getCaronasNaoFuncionaram(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		List<String> lista = session.createQuery("SELECT caronaNaoFuncionou FROM ReviewCaronasDomain").list();
-		t.commit();
-		HibernateUtil.closedSession();
-		return lista;
-	}
-	public List<String> getFaltaramNasVagas(){
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		List<String> lista = session.createQuery("SELECT faltouNaVaga FROM ReviewCaronasDomain").list();
-		t.commit();
-		HibernateUtil.closedSession();
-		return lista;
-	}
-	public List<String> getPresentesNasVagas(){
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		List<String> lista = session.createQuery("SELECT presenteNaVaga FROM ReviewCaronasDomain").list();
+		List<ReviewDomain> lista = session.createQuery("SELECT caronaNaoFuncionou FROM ReviewCaronasDomain").list();
 		t.commit();
 		HibernateUtil.closedSession();
 		return lista;

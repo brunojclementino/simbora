@@ -17,7 +17,8 @@ import com.br.uepb.dao.impl.CaronaDaoImp;
 import com.br.uepb.dao.impl.CaronaInteresseDaoImpl;
 import com.br.uepb.dao.impl.CaronaMunicipalDaoImp;
 import com.br.uepb.dao.impl.PontoDeEncontroDaoImp;
-import com.br.uepb.dao.impl.ReviewCaronaDaoImp;
+import com.br.uepb.dao.impl.ReviewCaronasDaoImp;
+import com.br.uepb.dao.impl.ReviewVagasCaronaDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoPontoDeEncontroDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoVagasDaoImp;
 import com.br.uepb.dao.impl.UsuarioDaoImp;
@@ -57,7 +58,8 @@ public class SimboraEasyAccept {
 		new SolicitacaoPontoDeEncontroDaoImp().excluirTudo();
 		new SolicitacaoVagasDaoImp().excluirTudo();
 		new PontoDeEncontroDaoImp().excluirTudo();
-		new ReviewCaronaDaoImp().excluirTudo();
+		new ReviewCaronasDaoImp().excluirTudo();
+		new ReviewVagasCaronaDaoImp().excluirTudo();
 		new CaronaInteresseDaoImpl().excluirTudo();
 	}
 
@@ -241,6 +243,15 @@ public class SimboraEasyAccept {
 	}
 	public String getAtributoExpired(String idExpired, String atributo){
 		return caronaRelampagoBusiness.getAtributoExpired(idExpired, atributo);
+	}
+	public void definirCaronaPreferencial(String idCarona) throws CaronaException{
+		caronaBusiness.definirCaronaPreferencial(idCarona);
+	}
+	public boolean isCaronaPreferencial(String idCarona) throws CaronaException{
+		return caronaBusiness.isCaronaPreferencial(idCarona);
+	}
+	public String getUsuariosPreferenciaisCarona(String idCarona) throws CaronaException{
+		return caronaBusiness.getUsuariosPreferenciaisCarona(idCarona);
 	}
 	
 }

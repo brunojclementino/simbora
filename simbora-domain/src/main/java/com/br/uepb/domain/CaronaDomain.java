@@ -32,6 +32,7 @@ public class CaronaDomain {
 	private String hora;
 	private String vagas;
 	private String idUsuario;
+	private boolean ehPreferencial=false;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private CaronaRelampagoDomain caronaRelampago;
@@ -139,6 +140,12 @@ public class CaronaDomain {
 	}
 	public void setCaronaRelampago(CaronaRelampagoDomain caronaRelampago) {
 		this.caronaRelampago = caronaRelampago;
+	}
+	public boolean getEhPreferencial() {
+		return ehPreferencial;
+	}
+	public void setEhPreferencial(boolean ehPreferencial) {
+		this.ehPreferencial = ehPreferencial;
 	}
 	
 	

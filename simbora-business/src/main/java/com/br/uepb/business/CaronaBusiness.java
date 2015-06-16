@@ -579,6 +579,35 @@ public class CaronaBusiness {
 			return false;
 		}
 	}
+	
+	public void definirCaronaPreferencial(String idCarona) throws CaronaException{
+		try {
+			CaronaDomain carona = caronaDaoImp.getCarona(idCarona);
+			carona.setEhPreferencial(true);
+			caronaDaoImp.update(carona);
+		} catch (Exception e) {
+			throw new CaronaException("Carona inválida");
+		}
+	}
+	
+	public boolean isCaronaPreferencial(String idCarona) throws CaronaException{
+		try {
+			CaronaDomain carona = caronaDaoImp.getCarona(idCarona);
+			return carona.getEhPreferencial();
+		} catch (Exception e) {
+			throw new CaronaException("Carona inválida");
+		}
+	}
+	/*Concluir este método*/
+	public String getUsuariosPreferenciaisCarona(String idCarona) throws CaronaException{
+		try {
+			CaronaDomain carona = caronaDaoImp.getCarona(idCarona);
+			
+		} catch (Exception e) {
+			throw new CaronaException("Carona inexistente");
+		}
+		return "";
+	}
 
 	/**
 	 * @return the interesseCaronas

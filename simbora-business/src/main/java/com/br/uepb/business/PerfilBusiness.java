@@ -9,12 +9,15 @@ import com.br.uepb.constants.PerfilException;
 import com.br.uepb.constants.UsuarioException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
 import com.br.uepb.dao.impl.CaronaInteresseDaoImpl;
-import com.br.uepb.dao.impl.ReviewCaronaDaoImp;
+import com.br.uepb.dao.impl.ReviewCaronasDaoImp;
+import com.br.uepb.dao.impl.ReviewVagasCaronaDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoVagasDaoImp;
 import com.br.uepb.dao.impl.UsuarioDaoImp;
 import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.CaronaInteresseDomain;
 import com.br.uepb.domain.ReviewCaronasDomain;
+import com.br.uepb.domain.ReviewVagasCaronaDomain;
+import com.br.uepb.domain.ReviewDomain;
 import com.br.uepb.domain.SessaoDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
 import com.br.uepb.domain.UsuarioDomain;
@@ -34,7 +37,8 @@ public class PerfilBusiness {
 	UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
 	CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
 	SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
-	ReviewCaronaDaoImp reviewCaronaDaoImp = new ReviewCaronaDaoImp();
+	ReviewVagasCaronaDaoImp reviewVagasCaronaDaoImp = new ReviewVagasCaronaDaoImp();
+	ReviewCaronasDaoImp reviewCaronasDaoImp = new ReviewCaronasDaoImp();
 	
 	/**
 	 * Retorna o login do usuario.
@@ -135,8 +139,8 @@ public class PerfilBusiness {
 
 		if (atributo.equals("caronas seguras e tranquilas")) {
 			int caron = 0;
-			for (String idCarona : reviewCaronaDaoImp.getCaronasSegurasTranquilas()) {
-				if (CaronaBusiness.ehMotorista(login, idCarona)) {
+			for (ReviewDomain review : reviewCaronasDaoImp.getCaronasSegurasTranquilas()) {
+				if (CaronaBusiness.ehMotorista(login, review.getIdAvaliado())) {
 					caron++;
 				}
 			}
@@ -146,8 +150,8 @@ public class PerfilBusiness {
 		if (atributo.equals("caronas que não funcionaram")) {
 			int caron = 0;
 			String caronas = "";
-			for (String idCarona : reviewCaronaDaoImp.getCaronasNaoFuncionaram()) {
-				if (CaronaBusiness.ehMotorista(login, idCarona)) {
+			for (ReviewDomain review : reviewCaronasDaoImp.getCaronasNaoFuncionaram()) {
+				if (CaronaBusiness.ehMotorista(login, review.getIdAvaliado())) {
 					caron++;
 				}
 			}
@@ -156,8 +160,8 @@ public class PerfilBusiness {
 
 		if (atributo.equals("faltas em vagas de caronas")) {
 			int caron = 0;
-			for (String idUsuario : reviewCaronaDaoImp.getFaltaramNasVagas()) {
-				if (login.equals(idUsuario)) {
+			for (ReviewDomain review : reviewVagasCaronaDaoImp.getFaltaramNasVagas()) {
+				if (login.equals(review.getIdAvaliado())) {
 					caron++;
 				}
 			}
@@ -166,8 +170,8 @@ public class PerfilBusiness {
 
 		if (atributo.equals("presenças em vagas de caronas")) {
 			int caron = 0;
-			for (String idUsuario : reviewCaronaDaoImp.getPresentesNasVagas()) {
-				if (login.equals(idUsuario)) {
+			for (ReviewDomain review : reviewVagasCaronaDaoImp.getPresentesNasVagas()) {
+				if (login.equals(review.getIdAvaliado())) {
 					caron++;
 				}
 			}
@@ -192,51 +196,72 @@ public class PerfilBusiness {
 			throw new PerfilException("Usuário não possui vaga na carona.");
 		}
 		if (review.equals("faltou")) {
-			ReviewCaronasDomain linha= reviewCaronaDaoImp.getIdCampoVazio("faltouNaVaga");
+			ReviewVagasCaronaDomain linha= reviewVagasCaronaDaoImp.getIdCampoVazio("faltouNaVaga");
+			
 			if(linha!=null){
-				linha.setFaltouNaVaga(loginCaroneiro);
-				reviewCaronaDaoImp.update(linha);
+				ReviewDomain avaliacao = new ReviewDomain();
+				avaliacao.setIdAvaliado(loginCaroneiro);
+				avaliacao.setLogin(idSessao);
+				linha.setFaltouNaVaga(avaliacao);
+				reviewVagasCaronaDaoImp.update(linha);
 			}else{
-				linha = new ReviewCaronasDomain();
-				linha.setFaltouNaVaga(loginCaroneiro);
-				reviewCaronaDaoImp.save(linha);
+				linha = new ReviewVagasCaronaDomain();
+				linha.setFaltouNaVaga(new ReviewDomain());
+				linha.getFaltouNaVaga().setIdAvaliado(loginCaroneiro);
+				linha.getFaltouNaVaga().setLogin(idSessao);
+				reviewVagasCaronaDaoImp.save(linha);
 			}
 			return;
 		}
 
 		if (review.equals("não faltou")) {
-			ReviewCaronasDomain linha= reviewCaronaDaoImp.getIdCampoVazio("presenteNaVaga");
+			ReviewVagasCaronaDomain linha= reviewVagasCaronaDaoImp.getIdCampoVazio("presenteNaVaga");
 			if(linha!=null){
-				linha.setPresenteNaVaga(loginCaroneiro);
-				reviewCaronaDaoImp.update(linha);
+				ReviewDomain avaliacao = new ReviewDomain();
+				avaliacao.setIdAvaliado(loginCaroneiro);
+				avaliacao.setLogin(idSessao);
+				linha.setPresenteNaVaga(avaliacao);
+				reviewVagasCaronaDaoImp.update(linha);
 			}else{
-				linha = new ReviewCaronasDomain();
-				linha.setPresenteNaVaga(loginCaroneiro);
-				reviewCaronaDaoImp.save(linha);
+				linha = new ReviewVagasCaronaDomain();
+				linha.setPresenteNaVaga(new ReviewDomain());
+				linha.getPresenteNaVaga().setIdAvaliado(loginCaroneiro);
+				linha.getPresenteNaVaga().setLogin(idSessao);
+				reviewVagasCaronaDaoImp.save(linha);
 			}
 			return;
 		} else if (review.equals("não funcionou")) {
-			ReviewCaronasDomain linha= reviewCaronaDaoImp.getIdCampoVazio("caronaNaoFuncionou");
+			ReviewVagasCaronaDomain linha= reviewVagasCaronaDaoImp.getIdCampoVazio("caronaNaoFuncionou");
 			if(linha!=null){
-				linha.setCaronaNaoFuncionou(loginCaroneiro);
-				reviewCaronaDaoImp.update(linha);
+				ReviewDomain avaliacao = new ReviewDomain();
+				avaliacao.setIdAvaliado(loginCaroneiro);
+				avaliacao.setLogin(idSessao);
+				linha.setCaronaNaoFuncionou(avaliacao);
+				reviewVagasCaronaDaoImp.update(linha);
 			}else{
-				linha = new ReviewCaronasDomain();
-				linha.setCaronaNaoFuncionou(loginCaroneiro);
-				reviewCaronaDaoImp.save(linha);
+				linha = new ReviewVagasCaronaDomain();
+				linha.setCaronaNaoFuncionou(new ReviewDomain());
+				linha.getCaronaNaoFuncionou().setIdAvaliado(loginCaroneiro);
+				linha.getCaronaNaoFuncionou().setLogin(idSessao);
+				reviewVagasCaronaDaoImp.save(linha);
 			}
 			return;
 		} else if (review.equals("funcionou")) {
-			ReviewCaronasDomain linha= reviewCaronaDaoImp.getIdCampoVazio("caronaSeguraTranquila");
+			ReviewVagasCaronaDomain linha= reviewVagasCaronaDaoImp.getIdCampoVazio("caronaSeguraTranquila");
 			if(linha!=null){
-				linha.setCaronaSeguraTranquila(loginCaroneiro);
-				reviewCaronaDaoImp.update(linha);
+				ReviewDomain avaliacao = new ReviewDomain();
+				avaliacao.setIdAvaliado(loginCaroneiro);
+				avaliacao.setLogin(idSessao);
+				linha.setCaronaSeguraTranquila(avaliacao);
+				reviewVagasCaronaDaoImp.update(linha);
 			}else{
-				linha = new ReviewCaronasDomain();
-				linha.setCaronaSeguraTranquila(loginCaroneiro);
-				reviewCaronaDaoImp.save(linha);
-			}
+				linha = new ReviewVagasCaronaDomain();
+				linha.setCaronaSeguraTranquila(new ReviewDomain());
+				linha.getCaronaSeguraTranquila().setIdAvaliado(loginCaroneiro);
+				linha.getCaronaSeguraTranquila().setLogin(idSessao);
+				reviewVagasCaronaDaoImp.save(linha);
 			return;
+			}
 		}
 
 		throw new PerfilException("Opção inválida.");
@@ -250,24 +275,34 @@ public class PerfilBusiness {
 			throw new PerfilException("Usuário não possui vaga na carona.");
 		} else {
 			if (review.equals("segura e tranquila")) {
-				ReviewCaronasDomain linha= reviewCaronaDaoImp.getIdCampoVazio("caronaSeguraTranquila");
+				ReviewCaronasDomain linha= reviewCaronasDaoImp.getIdCampoVazio("caronaSeguraTranquila");
 				if(linha!=null){
-					linha.setCaronaSeguraTranquila(idCaroneiro);
-					reviewCaronaDaoImp.update(linha);
+					ReviewDomain avaliacao = new ReviewDomain();
+					avaliacao.setIdAvaliado(idCaroneiro);
+					avaliacao.setLogin(idSessao);
+					linha.setCaronaSeguraTranquila(avaliacao);
+					reviewCaronasDaoImp.update(linha);
 				}else{
 					linha = new ReviewCaronasDomain();
-					linha.setCaronaSeguraTranquila(idCaroneiro);
-					reviewCaronaDaoImp.save(linha);
+					linha.setCaronaSeguraTranquila(new ReviewDomain());
+					linha.getCaronaSeguraTranquila().setIdAvaliado(idCaroneiro);
+					linha.getCaronaSeguraTranquila().setLogin(idSessao);
+					reviewCaronasDaoImp.save(linha);
 				}
 			} else if (review.equals("não funcionou")) {
-				ReviewCaronasDomain linha= reviewCaronaDaoImp.getIdCampoVazio("caronaNaoFuncionou");
+				ReviewCaronasDomain linha= reviewCaronasDaoImp.getIdCampoVazio("caronaNaoFuncionou");
 				if(linha!=null){
-					linha.setCaronaNaoFuncionou(idCaroneiro);
-					reviewCaronaDaoImp.update(linha);
+					ReviewDomain avaliacao = new ReviewDomain();
+					avaliacao.setIdAvaliado(idCaroneiro);
+					avaliacao.setLogin(idSessao);
+					linha.setCaronaNaoFuncionou(avaliacao);
+					reviewCaronasDaoImp.update(linha);
 				}else{
 					linha = new ReviewCaronasDomain();
-					linha.setCaronaNaoFuncionou(idCaroneiro);
-					reviewCaronaDaoImp.save(linha);
+					linha.setCaronaNaoFuncionou(new ReviewDomain());
+					linha.getCaronaNaoFuncionou().setIdAvaliado(idCaroneiro);
+					linha.getCaronaNaoFuncionou().setLogin(idSessao);
+					reviewCaronasDaoImp.save(linha);
 				}
 			} else {
 				throw new PerfilException("Opção inválida.");

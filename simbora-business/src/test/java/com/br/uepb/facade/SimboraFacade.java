@@ -190,6 +190,15 @@ public class SimboraFacade {
 	public String getAtributoExpired(String idExpired, String atributo){
 		return simboraEasyAccept.getAtributoExpired(idExpired, atributo);
 	}
+	public void definirCaronaPreferencial(String idCarona) throws CaronaException{
+		simboraEasyAccept.definirCaronaPreferencial(idCarona);
+	}
+	public boolean isCaronaPreferencial(String idCarona) throws CaronaException{
+		return simboraEasyAccept.isCaronaPreferencial(idCarona);
+	}
+	public String getUsuariosPreferenciaisCarona(String idCarona) throws CaronaException{
+		return simboraEasyAccept.getUsuariosPreferenciaisCarona(idCarona);
+	}
 
 	public static void main(String[] args) {
 		/*SolicitacaoPontoDeEncontroDomain soli = new SolicitacaoPontoDeEncontroDomain();
@@ -212,10 +221,10 @@ public class SimboraFacade {
 		soli.setEmAndamento(true);*/
 	//	new PontoDeEncontroDaoImp().save(pontoDeEncontro);
 		//new SolicitacaoPontoDeEncontroDaoImp().save(soli);
-		args = new String[] {"com.br.uepb.facade.SimboraFacade", "scripts/US01.txt",
+		args = new String[] {"com.br.uepb.facade.SimboraFacade", /*"scripts/US01.txt",
 				"scripts/US02.txt", "scripts/US03.txt", "scripts/US04.txt", "scripts/US05.txt"
 				, "scripts/US06.txt", "scripts/US07.txt", "scripts/US08.txt", "scripts/US09.txt"
-				,  "scripts/US10.txt",  "scripts/US11.txt",  "scripts/US12.txt",  "scripts/US13.txt",  "scripts/US14.txt"};
+				,  "scripts/US10.txt",  "scripts/US11.txt",  "scripts/US12.txt",  "scripts/US13.txt",*/  "scripts/US14.txt"};
 		EasyAccept.main(args); 
 	} 
 }

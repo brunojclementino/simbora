@@ -4,13 +4,14 @@ import java.util.List;
 
 import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.ReviewCaronasDomain;
+import com.br.uepb.domain.ReviewVagasCaronaDomain;
 
 /**
  * Interface de Carona com as operações CRUD.
  * 
  * @author Lucas Miranda e Bruno Clementino.
  */
-public interface ReviewCaronaDao {
+public interface ReviewCaronasDao {
 
 	public void save(ReviewCaronasDomain reviewCaronas);
 

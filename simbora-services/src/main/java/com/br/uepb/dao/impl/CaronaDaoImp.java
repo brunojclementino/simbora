@@ -80,5 +80,14 @@ public class CaronaDaoImp implements CaronaDao{
 		
 		return id.get(0);
 	}
+	public int getUsuariosPreferenciais(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		List<Integer> id = session.createQuery("SELECT login FROM ReviewCaronasDomain where ").list();
+		t.commit();
+		HibernateUtil.closedSession();
+		
+		return id.get(0);
+	}
 	
 }
