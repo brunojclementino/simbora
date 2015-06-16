@@ -4,6 +4,6 @@
 <html>
 <body>
 	
-	<%@ include file="../home/perfil.jsp" %>
+	<%@ include file="../home/cadastrousuario.jsp" %>
 </body>
 </html>

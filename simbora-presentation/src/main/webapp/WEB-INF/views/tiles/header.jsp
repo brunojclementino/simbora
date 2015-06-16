@@ -6,14 +6,14 @@
 		
 		<div class="span_logo">
 			<div id="logomarca">
-				<a href="http://localhost:8080/simbora-presentation/home/home.html">
+				<a href="http://localhost:8080/simbora-presentation/home/paginaPrincipal.html">
 					<img src="../images/caronaLogo2.png" width="100" height="100">
 				</a>
 			</div>
 		</div>
 		<div class="span_name_logo">
 			<div class="title-site">
-				<a href="http://localhost:8080/simbora-presentation/home/home.html">Simbora</a>
+				<a href="http://localhost:8080/simbora-presentation/home/login.html">Simbora</a>
 			</div>
 		
 		</div>
