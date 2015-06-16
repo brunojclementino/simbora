@@ -7,7 +7,8 @@
 <body>
 
 	<!-- Content -->
-	<div class="content-wrapper">
+	
+	<div class="jumbotron content-wrapper">
 		<div class="container">
 			<div class="row"></div>
 			<div class="row">

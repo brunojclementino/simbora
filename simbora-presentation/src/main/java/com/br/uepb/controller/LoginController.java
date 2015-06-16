@@ -41,10 +41,11 @@ public class LoginController {
 				BindingResult bindingResult, HttpServletRequest request, ModelMap modelo) throws Exception {
 			
 
-			ModelAndView modelAndView = new ModelAndView("forward:/home/paginaprincipal.html");
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("paginaprincipal");
 			
 			if(bindingResult.hasErrors()){
-				modelAndView.addObject("usuarioDomain", usuarioDomain);
+				modelAndView.setViewName("/login");
 				return modelAndView;
 			}
 						

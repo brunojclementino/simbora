@@ -12,7 +12,7 @@
 			<div class="row"></div>
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-6">
-					<a href="#">
+					<a href="http://localhost:8080/simbora-presentation/home/cadastrocarona.html">
 						<div class="dashboard-div-wrapper bk-clr-one">
 							<i class="fa"></i>
 							<h5>Cadastrar carona</h5>
@@ -63,11 +63,11 @@
 						</div>
 						<div class="panel-body">
 							<div class="list-group">
-								<a href="http://bootply.com/tagged/modal"
+								<a href="#"
 									class="list-group-item">Caronas cadastradas</a> <a
 									href="http://bootply.com/tagged/datetime"
 									class="list-group-item">Cancelamentos</a> <a
-									href="http://bootply.com/tagged/datatable"
+									href="#"
 									class="list-group-item">Caronas que funcionaram</a>
 							</div>
 						</div>

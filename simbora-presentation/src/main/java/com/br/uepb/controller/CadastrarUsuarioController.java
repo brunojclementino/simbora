@@ -39,7 +39,7 @@ public class CadastrarUsuarioController {
 		
 
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/home/cadastrousuario.html");
+		modelAndView.setViewName("forward:/home/login.html");
 
 		if(bindingResult.hasErrors()){
 			modelAndView.addObject("usuarioDomain", usuarioDomain);			

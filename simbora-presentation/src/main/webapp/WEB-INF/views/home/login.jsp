@@ -8,37 +8,45 @@
 
 </head>
 <body>
-	<form:form modelAttribute="usuarioDomain" method="post"
-		class="container">
-		<div class="col-sm-6 col-md-4">
-			<h3>
-				<a href="#">Faça seu cadastro aqui!</a>
-			</h3>
-		</div>
-		<div class="col-sm-6 col-md-4">
-			<table>
-				<h1 id="login_title">Login</h1>
-				<tr>
-					<th class="colunas_loginNome">Login:</th>
-					<th class="colunas_login">
-						<form:input class="formLogin" path="login" placeholder="Login" />
-					</th>
-				</tr>
-				<tr>
-					<th class="colunas_loginNome">Senha:</th>
-					<th class="colunas_login">
-						<form:password class="formLogin" path="senha" placeholder="senha"/>
-					</th>
-				</tr>
-				<tr>
-					<th></th>					
-					<th><a href="#">Esqueceu a senha?</a></th>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="login-panel panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Rede Simbora</h3>
+					</div>
+					<div class="panel-body">
+						<form:form modelAttribute="usuarioDomain" method="post">
+							<form:errors path="*" cssClass="errorblock" element="div" />
 
-					<th id="colunas_botao_login"><form:button class="btn-success">Entrar</form:button>
-					</th>
-				</tr>
-			</table>
+							<div class="form-group">
+								<form:input class="form-control" path="login" name="login"
+									placeholder="Login" />
+							</div>
+
+							<div class="form-group">
+								<form:input class="form-control" path="senha" name="password"
+									type="password" value="" placeholder="senha" />
+							</div>
+
+
+							<button class="btn btn-lg btn-success btn-block">
+								<spring:message code="home.login"></spring:message>
+							</button>
+
+						</form:form>
+					</div>
+
+					<div class="form-group center  font18">
+						<a class="label label-default" href='<spring:url value="cadastrousuario.html"></spring:url>'>
+							<spring:message code="home.login.cadastrousuario"/>
+						</a>
+					</div>
+				</div>
+			</div>
+
 		</div>
-	</form:form>
+	</div>
+
 </body>
 </html>
