@@ -60,7 +60,7 @@ public class CadastrarCaronaController {
 		modelo.addAttribute("ehPreferencial", caronaDomain.getEhPreferencial());
 		
 		
-		caronaBusiness.cadastrarCarona(sessaoDomain.getIdSessao(), caronaDomain.getOrigem(),
+		caronaBusiness.cadastrarCarona((String)request.getAttribute("sessao"), caronaDomain.getOrigem(),
 				caronaDomain.getDestino(), caronaDomain.getData(), caronaDomain.getHora(), caronaDomain.getVagas());
 		
 		

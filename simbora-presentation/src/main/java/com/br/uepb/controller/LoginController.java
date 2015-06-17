@@ -58,6 +58,7 @@ public class LoginController {
 			try {
 				
 				sessaoBusiness.abrirSessao(usuarioDomain.getLogin(), usuarioDomain.getSenha());
+				request.setAttribute("sessao", usuarioDomain.getLogin());
 			} catch (SessaoException e) {
 				modelAndView.setViewName("login");
 				return modelAndView;
