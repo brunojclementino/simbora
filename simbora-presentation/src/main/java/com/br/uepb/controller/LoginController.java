@@ -37,7 +37,7 @@ public class LoginController {
 	    }
 		
 		@RequestMapping(value = "/home/login.html", method = RequestMethod.POST)
-		public ModelAndView validarSenha(@ModelAttribute("login") @Valid UsuarioDomain usuarioDomain, SessaoDomain sessaoDomain, 
+		public ModelAndView validarSenha(@ModelAttribute("usuarioDomain") @Valid UsuarioDomain usuarioDomain, SessaoDomain sessaoDomain, 
 				BindingResult bindingResult, HttpServletRequest request, ModelMap modelo) throws Exception {
 			
 
@@ -59,8 +59,7 @@ public class LoginController {
 				
 				sessaoBusiness.abrirSessao(usuarioDomain.getLogin(), usuarioDomain.getSenha());
 			} catch (SessaoException e) {
-				
-				modelAndView.setViewName("forward:/home/login.html");
+				modelAndView.setViewName("login");
 				return modelAndView;
 			}
 						
