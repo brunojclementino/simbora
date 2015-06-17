@@ -226,8 +226,8 @@ public class SolicitacaoVagasBusiness {
 		}
 		return ids + "}";
 	}
-	/*public String enviarEmail(String idSessao, String destino, String mensagem){
-		return enviarEmail.enviar(destino, mensagem);
-	}*/
+	public boolean enviarEmail(String idSessao, String destino, String mensagem){
+		return enviarEmail.enviarEmail(destino, "Simbora", mensagem);
+	}
 
 }

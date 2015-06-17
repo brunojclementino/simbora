@@ -34,11 +34,11 @@ public class PaginaPrincipalController {
     }
 	
 	@RequestMapping(value = "/home/paginaprincipal.html", method = RequestMethod.POST)
-	public ModelAndView addNovoUsuario(@ModelAttribute("cadastrousuario") @Valid UsuarioDomain usuarioDomain, BindingResult bindingResult, HttpServletRequest request, ModelMap modelo) throws Exception {
+	public ModelAndView addNovoUsuario(@ModelAttribute("usuarioDomain") @Valid UsuarioDomain usuarioDomain, BindingResult bindingResult, HttpServletRequest request, ModelMap modelo) throws Exception {
 		
 
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/home/paginaprincipal.html");
+		modelAndView.setViewName("paginaprincipal");
 
 		if(bindingResult.hasErrors()){
 			modelAndView.addObject("usuarioDomain", usuarioDomain);			

@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 	
 public class EnviarEmail {
 	
-	public static void main(String[] args) {
+	public boolean enviarEmail(String destinatario, String assunto, String mensagem) {
         Properties props = new Properties();
         /** Parâmetros de conexão com servidor Gmail */
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -31,7 +31,7 @@ public class EnviarEmail {
                     });
 
         /** Ativa Debug para sessão */
-        //session.setDebug(true);
+        session.setDebug(true);
 
         try {
 
@@ -39,18 +39,19 @@ public class EnviarEmail {
               message.setFrom(new InternetAddress("simboracarona@gmail.com")); //Remetente
 
               Address[] toUser = InternetAddress //Destinatário(s)
-                         .parse("uepb.bruno@gmail.com");  
+                         .parse(destinatario);  
 
               message.setRecipients(Message.RecipientType.TO, toUser);
-              message.setSubject("Enviando email com JavaMail");//Assunto
-              message.setText("Enviei este email utilizando JavaMail com minha conta GMail! Consegui =]");
+              message.setSubject(assunto);//Assunto
+              message.setText(mensagem);
               /**Método para enviar a mensagem criada*/
               Transport.send(message);
 
               System.out.println("Feito!!!");
+              return true;
 
          } catch (MessagingException e) {
-              throw new RuntimeException(e);
+              return false;
         }
   }
 }

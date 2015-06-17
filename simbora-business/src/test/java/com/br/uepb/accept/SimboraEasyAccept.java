@@ -253,5 +253,8 @@ public class SimboraEasyAccept {
 	public String getUsuariosPreferenciaisCarona(String idCarona) throws CaronaException{
 		return caronaBusiness.getUsuariosPreferenciaisCarona(idCarona);
 	}
+	public boolean enviarEmail(String idSessao, String destino, String mensagem){
+		return solicitacaoVagasBusiness.enviarEmail(idSessao, destino, mensagem);
+	}
 	
 }

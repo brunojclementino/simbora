@@ -200,6 +200,9 @@ public class SimboraFacade {
 	public String getUsuariosPreferenciaisCarona(String idCarona) throws CaronaException{
 		return simboraEasyAccept.getUsuariosPreferenciaisCarona(idCarona);
 	}
+	public boolean enviarEmail(String idSessao, String destino, String mensagem){
+		return simboraEasyAccept.enviarEmail(idSessao, destino, mensagem);
+	}
 
 	public static void main(String[] args) {
 		/*SolicitacaoPontoDeEncontroDomain soli = new SolicitacaoPontoDeEncontroDomain();

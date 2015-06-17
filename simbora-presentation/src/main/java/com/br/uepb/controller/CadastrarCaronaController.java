@@ -36,7 +36,7 @@ public class CadastrarCaronaController {
 
 	@RequestMapping(value = "/home/cadastrocarona.html", method = RequestMethod.POST)
 	public ModelAndView addNovaCarona(
-			@ModelAttribute("cadastrocarona") @Valid CaronaDomain caronaDomain, SessaoDomain sessaoDomain,
+			@ModelAttribute("caronaDomain") @Valid CaronaDomain caronaDomain, SessaoDomain sessaoDomain,
 			BindingResult bindingResult, HttpServletRequest request,
 			ModelMap modelo) throws Exception {
 
