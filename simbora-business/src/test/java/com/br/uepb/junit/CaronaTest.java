@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.br.uepb.accept.SimboraEasyAccept;
 import com.br.uepb.business.CaronaBusiness;
 import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.business.UsuarioBusiness;
@@ -32,15 +33,12 @@ public class CaronaTest {
 		usuarioBusiness = new UsuarioBusiness();
 		sessaoBusiness = new SessaoBusiness();
 
-		usuarioBusiness.encerrarSistema();
-		sessaoBusiness.getSessoes().clear();
-		carona.encerrarSistema();
+		new SimboraEasyAccept().zerarSistema();
 	}
 
 	@Test
 	public void localizarCadastrarCarona() {
 		usuarioBusiness.encerrarSistema();
-		sessaoBusiness.getSessoes().clear();
 		carona.getCaronas().clear();
 		
 		// Serão criados 3 usuarios. (cria usuario, abrir sessao e criarCarona)
@@ -77,9 +75,7 @@ public class CaronaTest {
 
 	@Test
 	public void cadastrarCarona() {
-		carona.caronas.clear();
-		usuarioBusiness.encerrarSistema();
-		sessaoBusiness.getSessoes().clear();
+		String caronaID1 = "",caronaID2 = "",caronaID3 = "",caronaID4 = "",caronaID5="";
 		
 		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
@@ -91,94 +87,93 @@ public class CaronaTest {
 		}
 
 		try {
-			assertEquals("0",
-					carona.cadastrarCarona("mark", "Campina Grande",
-							"João Pessoa", "23/06/2013", "16:00", "3"));
+			caronaID1 = carona.cadastrarCarona("mark", "Campina Grande",
+					"João Pessoa", "23/06/2013", "16:00", "3");
 		} catch (CaronaException e) {
 			fail();
 		} 
 
 		try {
 			assertEquals("Campina Grande",
-					carona.getAtributoCarona("0", "origem"));
+					carona.getAtributoCarona(caronaID1, "origem"));
 		} catch (CaronaException e) {
 			fail();
 		}
 
 		try {
 			assertEquals("João Pessoa",
-					carona.getAtributoCarona("0", "destino"));
+					carona.getAtributoCarona(caronaID1, "destino"));
 		} catch (CaronaException e) {
 			fail();
 		}
 
 		try {
 			assertEquals("Campina Grande - João Pessoa",
-					carona.getTrajeto("0"));
+					carona.getTrajeto(caronaID1));
 		} catch (CaronaException e) {
 			fail();
 		}
 
 		// Cadastrando a segunda carona
 		try {
-			assertEquals("1", carona.cadastrarCarona("mark",
-					"Rio de Janeiro", "São Paulo", "31/05/2013", "08:00", "2"));
+			caronaID2 =  carona.cadastrarCarona("mark",
+					"Rio de Janeiro", "São Paulo", "31/05/2013", "08:00", "2");
 		} catch (Exception e) {
 			fail();
 		}
 
 		try {
-			assertEquals("31/05/2013", carona.getAtributoCarona("1", "data"));
+			assertEquals("31/05/2013", carona.getAtributoCarona(caronaID2, "data"));
 		} catch (Exception e) {
 			fail();
 		}
 
 		try {
-			assertEquals("2", carona.getAtributoCarona("1", "vagas"));
+			assertEquals("2", carona.getAtributoCarona(caronaID2, "vagas"));
 		} catch (Exception e) {
 			fail();
 		}
 
 		// Cadastrando a Terceira carona
 		try {
-			assertEquals("2", carona.cadastrarCarona("mark", "João Pessoa",
-					"Campina Grande", "25/11/2026", "06:59", "4"));
+			caronaID3=carona.cadastrarCarona("mark", "João Pessoa",
+					"Campina Grande", "25/11/2026", "06:59", "4");
 		} catch (Exception e) {
 			fail();
 		}
 		try {
 			assertEquals(
 					"João Pessoa para Campina Grande, no dia 25/11/2026, as 06:59",
-					carona.getCarona("2"));
+					carona.getCarona(caronaID3));
 		} catch (Exception e) {
 			fail();
 		}
 
 		// Cadastro da quarta carona
 		try {
-			assertEquals("3", carona.cadastrarCarona("mark", "João Pessoa",
-					"Lagoa Seca", "25/11/2026", "05:00", "4"));
+			caronaID4=carona.cadastrarCarona("mark", "João Pessoa",
+					"Lagoa Seca", "25/11/2026", "05:00", "4");
 		} catch (Exception e) {
 			fail();
 		}
 		try {
 			assertEquals(
 					"João Pessoa para Lagoa Seca, no dia 25/11/2026, as 05:00",
-					carona.getCarona("3"));
+					carona.getCarona(caronaID4));
 		} catch (Exception e) {
 			fail();
 		}
 		// Cadastro da quinto carona
 		try {
-			assertEquals("4", carona.cadastrarCarona("mark", "João Pessoa",
-					"Lagoa Seca", "25/11/2017", "05:00", "4"));
+			caronaID5=carona.cadastrarCarona("mark", "João Pessoa",
+					"Lagoa Seca", "25/11/2017", "05:00", "4");
 		} catch (Exception e) {
 			fail();
 		}
 		try {
 			assertEquals(
 					"João Pessoa para Lagoa Seca, no dia 25/11/2017, as 05:00",
-					carona.getCarona("4"));
+					carona.getCarona(caronaID5));
 		} catch (Exception e) {
 			fail();
 		}
@@ -190,27 +185,27 @@ public class CaronaTest {
 			fail();
 		}
 		try {
-			assertEquals("{1}", carona.localizarCarona("mark", "Rio de Janeiro", "São Paulo"));
+			assertEquals("{"+caronaID2+"}", carona.localizarCarona("mark", "Rio de Janeiro", "São Paulo"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("{2}", carona.localizarCarona("mark", "João Pessoa", "Campina Grande"));
+			assertEquals("{"+caronaID3+"}", carona.localizarCarona("mark", "João Pessoa", "Campina Grande"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("{2,3,4}", carona.localizarCarona("mark", "João Pessoa", ""));
+			assertEquals("{"+caronaID3+","+caronaID4+","+caronaID5+"}", carona.localizarCarona("mark", "João Pessoa", ""));
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("{1}", carona.localizarCarona("mark", "", "São Paulo"));
+			assertEquals("{"+caronaID2+"}", carona.localizarCarona("mark", "", "São Paulo"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("{0,1,2,3,4}", carona.localizarCarona("mark", "", ""));
+			assertEquals("{"+caronaID1+","+caronaID2+","+caronaID3+","+caronaID4+","+caronaID5+"}", carona.localizarCarona("mark", "", ""));
 		} catch (CaronaException e) {
 			fail();
 		}
@@ -458,7 +453,6 @@ public class CaronaTest {
 		usuarioBusiness.encerrarSistema();
 		carona.encerrarSistema();
 
-		carona.caronas.clear();
 		assertEquals(null, carona.getCarona());
 	}
 
@@ -496,33 +490,34 @@ public class CaronaTest {
 		}
 		
 		// Cadastrar Caronas
+		String caronaID1 = "",caronaID2= "",caronaID3= "",caronaID4= "",caronaID5= "",caronaID6= "";
 		try {
-			assertEquals("0", carona.cadastrarCarona("mark", "Cajazeiras", "Patos", "20/07/2013", "14:00", "4"));
+			caronaID1 = carona.cadastrarCarona("mark", "Cajazeiras", "Patos", "20/07/2013", "14:00", "4");
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("1", carona.cadastrarCarona("mark", "São Francisco", "Palo Alto", "12/09/2013", "21:00", "2"));
+			caronaID2 = carona.cadastrarCarona("mark", "São Francisco", "Palo Alto", "12/09/2013", "21:00", "2");
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("2", carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "01/06/2013", "12:00", "1"));
+			caronaID3 = carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "01/06/2013", "12:00", "1");
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("3", carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "02/06/2013", "12:00", "3"));
+			caronaID4=carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "02/06/2013", "12:00", "3");
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("4", carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "04/06/2013", "16:00", "2"));
+			caronaID5=carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "04/06/2013", "16:00", "2");
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("5", carona.cadastrarCarona("mark", "Leeds", "Londres", "10/02/2013", "10:00", "3"));
+			caronaID6=carona.cadastrarCarona("mark", "Leeds", "Londres", "10/02/2013", "10:00", "3");
 		} catch (CaronaException e) {
 			fail();
 		}
@@ -530,7 +525,7 @@ public class CaronaTest {
 		// Localizar as contas
 		
 		try {
-			assertEquals("{1}", carona.localizarCarona("mark", "São Francisco", "Palo Alto"));
+			assertEquals("{"+caronaID2+"}", carona.localizarCarona("mark", "São Francisco", "Palo Alto"));
 		} catch (CaronaException e) {
 			fail();
 		}
@@ -541,7 +536,7 @@ public class CaronaTest {
 			fail();
 		}
 		try {
-			assertEquals("{2,3,4}", carona.localizarCarona("mark", "Campina Grande", "João Pessoa"));
+			assertEquals("{"+caronaID3+","+caronaID4+","+caronaID5+"}", carona.localizarCarona("mark", "Campina Grande", "João Pessoa"));
 		} catch (CaronaException e) {
 			fail();
 		}

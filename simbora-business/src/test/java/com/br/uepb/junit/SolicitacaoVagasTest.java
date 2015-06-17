@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.br.uepb.accept.SimboraEasyAccept;
 import com.br.uepb.business.CaronaBusiness;
 import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.business.SolicitacaoPontoDeEncontroBusiness;
@@ -32,20 +33,14 @@ public class SolicitacaoVagasTest {
 		sessao = new SessaoBusiness();
 		solicitarVagas = new SolicitacaoPontoDeEncontroBusiness();
 		solicitacao = new SolicitacaoVagasBusiness();
-
-		usuario.encerrarSistema();
-		carona.getCaronas().clear();
-		sessao.getSessoes().clear();
-		solicitarVagas.solicitacoes.clear();
+		
+		new SimboraEasyAccept().zerarSistema();
 	}
 
 	@Test
 	public void criarUsuario() {
-		usuario.getUsuarios().clear();
-		carona.getCaronas().clear();
-		sessao.getSessoes().clear();
-		solicitarVagas.solicitacoes.clear();
 
+		String caronaID1 = "",caronaID2 = "",caronaID3 = "",caronaID4 = "",caronaID5="",caronaID6="";
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
 
@@ -56,44 +51,44 @@ public class SolicitacaoVagasTest {
 		}
 
 		// Cadastro de caronas
-		// Cadastro 0
+		// Cadastro 1
 		try {
-			carona.cadastrarCarona("mark", "Cajazeiras", "Patos", "20/07/2013",
+			caronaID1=carona.cadastrarCarona("mark", "Cajazeiras", "Patos", "20/07/2013",
 					"14:00", "4");
 		} catch (CaronaException e) {
 			e.getMessage();
 		}
-		// Cadastro id = 1
+		// Cadastro 2
 		try {
-			carona.cadastrarCarona("mark", "São Francisco", "Palo Alto",
+			caronaID2=carona.cadastrarCarona("mark", "São Francisco", "Palo Alto",
 					"12/09/2013", "21:00", "2");
 		} catch (CaronaException e) {
 			e.getMessage();
 		}
-		// Casdastro id = 2
+		// Casdastro 3
 		try {
-			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa",
+			caronaID3=carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa",
 					"01/06/2013", "12:00", "1");
 		} catch (CaronaException e) {
 			e.getMessage();
 		}
-		// Casdastro id = 3
+		// Casdastro 4
 		try {
-			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa",
+			caronaID4=carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa",
 					"02/06/2013", "12:00", "3");
 		} catch (CaronaException e) {
 			e.getMessage();
 		}
-		// Casdastro id = 4
+		// Casdastro 5
 		try {
-			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa",
+			caronaID5=carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa",
 					"04/06/2013", "16:00", "2");
 		} catch (CaronaException e) {
 			e.getMessage();
 		}
-		// Casdastro id = 5
+		// Casdastro 6
 		try {
-			carona.cadastrarCarona("mark", "Leeds", "londres", "10/02/2013",
+			caronaID6=carona.cadastrarCarona("mark", "Leeds", "londres", "10/02/2013",
 					"10:00", "3");
 		} catch (CaronaException e) {
 			e.getMessage();
@@ -276,10 +271,6 @@ public class SolicitacaoVagasTest {
 
 	@Test
 	public void todosErros() {
-		usuario.getUsuarios().clear();
-		carona.getCaronas().clear();
-		sessao.getSessoes().clear();
-		solicitarVagas.solicitacoes.clear();
 
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
@@ -333,11 +324,6 @@ public class SolicitacaoVagasTest {
 
 	@Test
 	public void solicitacoesVagasUS05() {
-		usuario.encerrarSistema();
-		carona.encerrarSistema();
-		sessao.getSessoes().clear();
-		solicitarVagas.encerrarSistema();
-		solicitacao.encerrarSistema();
 		
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
@@ -404,7 +390,12 @@ public class SolicitacaoVagasTest {
 			fail();
 		}
 
-		solicitacao.solicitarVaga("bill", "3");
+		try {
+			solicitacao.solicitarVaga("bill", "3");
+		} catch (Exception e) {
+			fail();
+		}
+		
 
 		try {
 			assertEquals("Campina Grande",
@@ -442,7 +433,12 @@ public class SolicitacaoVagasTest {
 			fail();
 		}
 
-		solicitacao.aceitarSolicitacao("mark", "0PE");
+		try {
+			solicitacao.aceitarSolicitacao("mark", "0PE");
+		} catch (Exception e) {
+			fail();
+		}
+		
 
 		try {
 			assertEquals("3", carona.getAtributoCarona("3", "vagas"));
@@ -451,7 +447,12 @@ public class SolicitacaoVagasTest {
 		}
 
 		// Requisitar vaga na carona.
-		solicitacao.solicitarVaga("bill", "4");
+		try {
+			solicitacao.solicitarVaga("bill", "4");
+		} catch (Exception e) {
+			fail();
+		}
+		
 
 		try {
 			assertEquals("Campina Grande",

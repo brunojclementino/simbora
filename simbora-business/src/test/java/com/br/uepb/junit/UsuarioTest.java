@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.br.uepb.accept.SimboraEasyAccept;
 import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.business.UsuarioBusiness;
 import com.br.uepb.constants.SessaoException;
@@ -20,7 +21,8 @@ public class UsuarioTest {
 	public void iniciarTest() {
 		usuario = new UsuarioBusiness();
 		sessao = new SessaoBusiness();
-		usuario.encerrarSistema();
+		new SimboraEasyAccept().zerarSistema();//limpa-se os dados cadastrados na base de dados
+		
 	}
 
 	/**
