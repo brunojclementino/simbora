@@ -1,5 +1,6 @@
 package com.br.uepb.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -8,6 +9,7 @@ import org.hibernate.Transaction;
 
 import com.br.uepb.dao.CaronaDao;
 import com.br.uepb.domain.CaronaDomain;
+import com.br.uepb.domain.ReviewDomain;
 import com.br.uepb.util.HibernateUtil;
 
 
@@ -80,14 +82,24 @@ public class CaronaDaoImp implements CaronaDao{
 		
 		return id.get(0);
 	}
-	public int getUsuariosPreferenciais(){
+	public List<String> getUsuariosPreferenciais(String login){//login do dono da carona que é preferencial
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		List<Integer> id = session.createQuery("SELECT login FROM ReviewCaronasDomain where ").list();
+		List<ReviewDomain> reviews = session.createQuery("select caronaSeguraTranquila from ReviewCaronasDomain").list();
+		
+		List<Integer> caronasDoUsuario = session.createQuery("select id from CaronaDomain where idUsuario = \'"+login+"\'").list();
 		t.commit();
 		HibernateUtil.closedSession();
 		
-		return id.get(0);
+		List<String> loginsPrioritarios = new ArrayList<>();
+		for (ReviewDomain review : reviews) {
+			if(caronasDoUsuario.contains(Integer.parseInt(review.getIdAvaliado()))){
+				loginsPrioritarios.add(review.getLogin());
+			}
+			
+		}
+		
+		return loginsPrioritarios;
 	}
 	
 }

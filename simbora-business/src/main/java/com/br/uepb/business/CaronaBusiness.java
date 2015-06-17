@@ -602,11 +602,12 @@ public class CaronaBusiness {
 	public String getUsuariosPreferenciaisCarona(String idCarona) throws CaronaException{
 		try {
 			CaronaDomain carona = caronaDaoImp.getCarona(idCarona);
-			
+			String usuariosPreferenciais = caronaDaoImp.getUsuariosPreferenciais(carona.getIdUsuario()).toString();
+			usuariosPreferenciais = usuariosPreferenciais.replaceAll(" ", "");
+			return usuariosPreferenciais;
 		} catch (Exception e) {
 			throw new CaronaException("Carona inexistente");
 		}
-		return "";
 	}
 
 	/**

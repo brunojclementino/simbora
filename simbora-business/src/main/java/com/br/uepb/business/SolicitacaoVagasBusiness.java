@@ -37,8 +37,32 @@ public class SolicitacaoVagasBusiness {
 	 * @param idSessao
 	 * @param idCarona
 	 * @return id da solicitação da vaga.
+	 * @throws CaronaException 
 	 */
-	public String solicitarVaga(String idSessao, String idCarona) {
+	public String solicitarVaga(String idSessao, String idCarona) throws CaronaException {
+		try {
+			CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
+			CaronaDomain carona = caronaDaoImp.getCarona(idCarona);
+			if(carona.getEhPreferencial()){
+				for (String login : caronaDaoImp.getUsuariosPreferenciais(carona.getIdUsuario())) {
+					if(login.equals(idSessao)){
+						solicitacaoVagas = new SolicitacaoVagasDomain();
+
+						solicitacaoVagas.setIdSessao(idSessao);
+						solicitacaoVagas.setIdCarona(idCarona);
+
+						solicitacaoVagasDaoImp.save(solicitacaoVagas);
+						return solicitacaoVagasDaoImp.getId()+"";
+					}
+				}
+				throw new CaronaException("Usuário não está na lista preferencial da carona");
+				
+			}
+			
+		} catch (Exception e) {
+			throw e;
+		}
+
 
 		solicitacaoVagas = new SolicitacaoVagasDomain();
 
@@ -46,8 +70,6 @@ public class SolicitacaoVagasBusiness {
 		solicitacaoVagas.setIdCarona(idCarona);
 
 		solicitacaoVagasDaoImp.save(solicitacaoVagas);
-
-
 		return solicitacaoVagasDaoImp.getId()+"";
 	}
 
