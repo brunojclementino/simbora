@@ -1,6 +1,7 @@
 package com.br.uepb.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.context.annotation.Scope;
@@ -38,7 +39,7 @@ public class LoginController {
 		
 		@RequestMapping(value = "/home/login.html", method = RequestMethod.POST)
 		public ModelAndView validarSenha(@ModelAttribute("usuarioDomain") @Valid UsuarioDomain usuarioDomain, SessaoDomain sessaoDomain, 
-				BindingResult bindingResult, HttpServletRequest request, ModelMap modelo) throws Exception {
+				BindingResult bindingResult, ModelMap modelo, HttpSession session) throws Exception {
 			
 
 			ModelAndView modelAndView = new ModelAndView();
@@ -57,8 +58,8 @@ public class LoginController {
 			
 			try {
 				
-				sessaoBusiness.abrirSessao(usuarioDomain.getLogin(), usuarioDomain.getSenha());
-				request.setAttribute("sessao", usuarioDomain.getLogin());
+				String sessao = sessaoBusiness.abrirSessao(usuarioDomain.getLogin(), usuarioDomain.getSenha());
+				session.setAttribute("sessao", sessao);
 			} catch (SessaoException e) {
 				modelAndView.setViewName("login");
 				return modelAndView;

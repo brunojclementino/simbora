@@ -59,11 +59,15 @@ public class CadastrarCaronaController {
 		modelo.addAttribute("idUsuario", caronaDomain.getIdUsuario());
 		modelo.addAttribute("ehPreferencial", caronaDomain.getEhPreferencial());
 		
+		try {
+			caronaBusiness.cadastrarCarona((String)request.getSession().getAttribute("sessao"), caronaDomain.getOrigem(),
+					caronaDomain.getDestino(), caronaDomain.getData(), caronaDomain.getHora(), caronaDomain.getVagas());
+		} catch (Exception e) {
+			return new ModelAndView("cadastrocarona");
+		}
 		
-		caronaBusiness.cadastrarCarona((String)request.getAttribute("sessao"), caronaDomain.getOrigem(),
-				caronaDomain.getDestino(), caronaDomain.getData(), caronaDomain.getHora(), caronaDomain.getVagas());
 		
 		
-		return modelAndView;
+		return new ModelAndView("paginaprincipal");
 	}
 }
