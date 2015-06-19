@@ -1,10 +1,11 @@
 package com.br.uepb.junit;
 
-import static org.junit.Assert.*; 
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.br.uepb.accept.SimboraEasyAccept;
 import com.br.uepb.business.CaronaBusiness;
 import com.br.uepb.business.CaronaRelampagoBusiness;
 import com.br.uepb.business.PerfilBusiness;
@@ -21,175 +22,157 @@ public class CadastroRelampagoTest {
 	SessaoBusiness sessao;
 	CaronaBusiness caronaBusiness;
 	PerfilBusiness perfil;
-	CaronaRelampagoBusiness relampago;
+	CaronaRelampagoBusiness caronaRelampago;
 	SolicitacaoVagasBusiness solicitacao;
 	
+
+	String sessaoID1 = "";
+	String caronaID1 = "", caronaID2 = "", caronaID3 = "";
+	
 	@Before
-	public void before() {
+	public void before() throws SessaoException {
 		usuario = new UsuarioBusiness();
 		sessao = new SessaoBusiness();
 		caronaBusiness = new CaronaBusiness();
 		perfil = new PerfilBusiness();
-		relampago = new CaronaRelampagoBusiness();
+		caronaRelampago = new CaronaRelampagoBusiness();
 		solicitacao = new SolicitacaoVagasBusiness();
 		
-		usuario.encerrarSistema();
-		caronaBusiness.encerrarSistema();
-		sessao.getSessoes().clear();
-		sessao.getUsuarios().clear();
-		perfil.zerarSistema();
-		relampago.encerrarSistema();
-		solicitacao.encerrarSistema();
 		
-		try {
-			usuario.criarUsuario("mark", "m@rk", "Mark Zuckeberg",
+		new SimboraEasyAccept().zerarSistema();
+		
+		usuario.criarUsuario("mark", "m@rk", "Mark Zuckeberg",
 					"Palo Alto, California", "mark@facebook.com");
-		} catch (UsuarioException e) {
-			fail();
-		}
 
-		try {
-			sessao.abrirSessao("mark", "m@rk");
-		} catch (SessaoException e) {
-			fail();
-		}
+		sessaoID1 = sessao.abrirSessao("mark", "m@rk");
 
 	}
 
 	@Test
 	public void test() {
-		relampago.encerrarSistema();
 		try {
-			assertEquals("0R", relampago.cadastrarCaronaRelampago("mark",
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark",
 					"Campina Grande", "João Pessoa", "23/06/2013",
-					"26/06/2013", "16:00", "3"));
+					"26/06/2013", "16:00", "3");
 		} catch (CaronaException e1) {
 			fail();
 		}
 
 		try {
 			assertEquals("Campina Grande",
-					relampago.getAtributoCaronaRelampago("0R", "origem"));
+					caronaRelampago.getAtributoCaronaRelampago(caronaID1, "origem"));
 		} catch (CaronaException e3) {
 			fail();
 		}
 
 		try {
 			assertEquals("João Pessoa",
-					relampago.getAtributoCaronaRelampago("0R", "destino"));
+					caronaRelampago.getAtributoCaronaRelampago(caronaID1, "destino"));
 		} catch (CaronaException e2) {
 			fail();
 		}
 
 		try {
 			assertEquals("Campina Grande - João Pessoa",
-					relampago.getTrajeto("0R"));
+					caronaBusiness.getTrajeto(caronaID1));//Verificando se o trajeto está correto
 		} catch (CaronaException e1) {
 			fail();
 		}
 
 		try {
 			assertEquals("3",
-					relampago.getAtributoCaronaRelampago("0R", "minimoCaroneiros"));
+					caronaRelampago.getAtributoCaronaRelampago(caronaID1, "minimoCaroneiros"));
 		} catch (CaronaException e1) {
 			fail();
 		}
 
 		try {
-			assertEquals("3", relampago.getMinimoCaroneiros("0R"));
+			assertEquals("3", caronaRelampago.getMinimoCaroneiros(caronaID1));
 		} catch (CaronaException e) {
 			fail();
 		}
 
 		try {
-			assertEquals("1R", relampago.cadastrarCaronaRelampago("mark",
+			caronaID2 = caronaRelampago.cadastrarCaronaRelampago("mark",
 					"Rio de Janeiro", "São Paulo", "31/05/2013", "01/06/2013",
-					"08:00", "2"));
+					"08:00", "2");
 		} catch (CaronaException e) {
 			fail();
 		}
 
 		try {
 			assertEquals("31/05/2013",
-					relampago.getAtributoCaronaRelampago("1R", "dataIda"));
+					caronaRelampago.getAtributoCaronaRelampago(caronaID2, "dataIda"));
+		} catch (CaronaException e1) {
+			fail();
+		}
+		try {
+			assertEquals("01/06/2013",
+					caronaRelampago.getAtributoCaronaRelampago(caronaID2, "dataVolta"));
 		} catch (CaronaException e1) {
 			fail();
 		}
 		try {
 			assertEquals("2",
-					relampago.getAtributoCaronaRelampago("1R", "minimoCaroneiros"));
+					caronaRelampago.getAtributoCaronaRelampago(caronaID2, "minimoCaroneiros"));
 		} catch (CaronaException e1) {
 			fail();
 		}
 
 		try {
-			assertEquals("2R", relampago.cadastrarCaronaRelampago("mark",
+			caronaID3 = caronaRelampago.cadastrarCaronaRelampago("mark",
 					"João Pessoa", "Campina Grande", "25/11/2026",
-					"26/11/2026", "06:59", "4"));
+					"26/11/2026", "06:59", "4");
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
 			assertEquals(
 					"João Pessoa para Campina Grande, no dia 25/11/2026, as 06:59",
-					relampago.getCaronaRelampago("2R"));
+					caronaRelampago.getCaronaRelampago(caronaID3));
 		} catch (CaronaException e1) {
 			fail();
 		}
 
-		// Carona 3R
 		try {
-			assertEquals("3R", relampago.cadastrarCaronaRelampago("mark",
-					"João Pessoa", "Lagoa Seca", "25/11/2016", "27/11/2016",
-					"05:00", "4"));
-		} catch (CaronaException e) {
-			fail();
-		}
-		try {
-			assertEquals(
-					"João Pessoa para Lagoa Seca, no dia 25/11/2016, as 05:00",
-					relampago.getCaronaRelampago("3R"));
+			assertEquals("false",
+					caronaRelampago.getAtributoCaronaRelampago(caronaID3, "expired"));
 		} catch (CaronaException e1) {
 			fail();
 		}
-
-		// Carona 4R
+		String idExpired = caronaRelampago.setCaronaRelampagoExpired(caronaID3);
 		try {
-			assertEquals("4R", relampago.cadastrarCaronaRelampago("mark",
-					"João Pessoa", "Lagoa Seca", "25/11/2017", "28/11/2017",
-					"05:00", "4"));
-		} catch (CaronaException e) {
+			assertEquals("true",
+					caronaRelampago.getAtributoCaronaRelampago(caronaID3, "expired"));
+		} catch (CaronaException e1) {
 			fail();
 		}
-		try {
-			assertEquals(
-					"João Pessoa para Lagoa Seca, no dia 25/11/2017, as 05:00",
-					relampago.getCaronaRelampago("4R"));
-		} catch (CaronaException e) {
-			fail();
-		}
-
-		relampago.encerrarSistema();
+			
+		assertEquals("[]", caronaRelampago.getAtributoExpired(idExpired, "emailTo"));
+		
+		
+		
+		
 	}
 	
 	@Test
 	public void entradasInvalidas() {
 		try {
-			relampago.cadastrarCaronaRelampago(null, "Campina Grande", "João Pessoa", "23/06/2013", "26/06/2013", "16:00", "3");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago(null, "Campina Grande", "João Pessoa", "23/06/2013", "26/06/2013", "16:00", "3");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Sessão inválida", e.getMessage());
 		}
 		
 		try {
-			relampago.cadastrarCaronaRelampago("", "Campina Grande", "João Pessoa", "23/06/2013", "26/06/2013", "16:00", "3");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("", "Campina Grande", "João Pessoa", "23/06/2013", "26/06/2013", "16:00", "3");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Sessão inválida", e.getMessage());
 		}
 		
 		try {
-			relampago.cadastrarCaronaRelampago("teste", "Campina Grande", "João Pessoa", "23/06/2013", "26/06/2013", "16:00", "3");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("teste", "Campina Grande", "João Pessoa", "23/06/2013", "26/06/2013", "16:00", "3");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Sessão inexistente", e.getMessage());
@@ -197,27 +180,27 @@ public class CadastroRelampagoTest {
 		
 		
 		try {
-			relampago.cadastrarCaronaRelampago("mark", null, "João Pessoa", "23/06/2013", "26/06/2013", "16:00", "3");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", null, "João Pessoa", "23/06/2013", "26/06/2013", "16:00", "3");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "", "João Pessoa", "23/06/2013", "26/06/2013", "16:00", "3");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "", "João Pessoa", "23/06/2013", "26/06/2013", "16:00", "3");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "Campina Grande", null, "23/06/2013", "26/06/2013", "16:00", "3");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Campina Grande", null, "23/06/2013", "26/06/2013", "16:00", "3");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Destino inválido", e.getMessage());
 		}
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "Campina Grande", "", "23/06/2013", "26/06/2013", "16:00", "3");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Campina Grande", "", "23/06/2013", "26/06/2013", "16:00", "3");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Destino inválido", e.getMessage());
@@ -225,34 +208,41 @@ public class CadastroRelampagoTest {
 		
 		// Data inválida
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", null, "26/06/2013", "16:00", "3");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", null, "26/06/2013", "16:00", "3");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Data inválida", e.getMessage());
 		}
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "", "26/06/2013", "16:00", "3");
-			fail();
-		} catch (CaronaException e) {
-			assertEquals("Data inválida", e.getMessage());
-		}
-		
-		try {
-			relampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "30/02/2012", "26/06/2013", "16:00", "3");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "", "26/06/2013", "16:00", "3");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Data inválida", e.getMessage());
 		}
 		
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "31/04/2012", "26/06/2013", "16:00", "3");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "30/02/2012", "26/06/2013", "16:00", "3");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Data inválida", e.getMessage());
 		}
 		
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "32/12/2012", "02/01/2012", "16:00", "3");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "31/04/2012", "26/06/2013", "16:00", "3");
+			fail();
+		} catch (CaronaException e) {
+			assertEquals("Data inválida", e.getMessage());
+		}
+		
+		try {
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "32/12/2012", "02/01/2012", "16:00", "3");
+			fail();
+		} catch (CaronaException e) {
+			assertEquals("Data inválida", e.getMessage());
+		}
+		
+		try {
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "30/12/2012", "02/13/2012", "16:00", "3");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Data inválida", e.getMessage());
@@ -267,19 +257,19 @@ public class CadastroRelampagoTest {
 		
 		// Hora
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "23/06/2013", "26/06/2013", null, "3");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "23/06/2013", "26/06/2013", null, "3");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Hora inválida", e.getMessage());
 		}
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "Patos", "João Pessoa", "31/05/2013", "02/06/2013", "", "2");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Patos", "João Pessoa", "31/05/2013", "02/06/2013", "", "2");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Hora inválida", e.getMessage());
 		}
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "Patos", "João Pessoa", "31/05/2013", "02/06/2013", "seis", "2");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Patos", "João Pessoa", "31/05/2013", "02/06/2013", "seis", "2");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Hora inválida", e.getMessage());
@@ -287,105 +277,109 @@ public class CadastroRelampagoTest {
 		
 		// quantidade de vagas
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "23/06/2013", "26/06/2013", "16:00", null);
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Campina Grande", "João Pessoa", "23/06/2013", "26/06/2013", "16:00", null);
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Minimo Caroneiros inválido", e.getMessage());
 		}
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "Patos", "João Pessoa", "31/05/2013", "02/06/2013", "16:00", "dois");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Patos", "João Pessoa", "31/05/2013", "02/06/2013", "16:00", "dois");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Minimo Caroneiros inválido", e.getMessage());
 		}
 		try {
-			relampago.cadastrarCaronaRelampago("mark", "Patos", "João Pessoa", "31/05/2013", "02/06/2013", "16:00", "0");
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark", "Patos", "João Pessoa", "31/05/2013", "02/06/2013", "16:00", "0");
 			fail();
 		} catch (CaronaException e) {
 			assertEquals("Minimo Caroneiros inválido", e.getMessage());
 		}
 		
 		try {
-			relampago.getAtributoCaronaRelampago(null, "origem");
+			caronaRelampago.getAtributoCaronaRelampago(null, "origem");
 		} catch (CaronaException e) {
 			assertEquals("Identificador do carona é inválido", e.getMessage());
 		}
 		try {
-			relampago.getAtributoCaronaRelampago("", "origem");
+			caronaRelampago.getAtributoCaronaRelampago("", "origem");
 		} catch (CaronaException e) {
 			assertEquals("Identificador do carona é inválido", e.getMessage());
 		}
 		// Atributo inexistente!
 		try {
-			relampago.getAtributoCaronaRelampago("xpto", "origem");
+			caronaRelampago.getAtributoCaronaRelampago("xpto", "origem");
 		} catch (CaronaException e) {
 			assertEquals("Item inexistente", e.getMessage());
 		}
 		
 		// Cadastra 1 carona Relampago
-		relampago.encerrarSistema();
 		try {
-			assertEquals("0R", relampago.cadastrarCaronaRelampago("mark",
+			caronaID1 = caronaRelampago.cadastrarCaronaRelampago("mark",
 					"João Pessoa", "Lagoa Seca", "25/11/2017", "28/11/2017",
-					"05:00", "4"));
+					"05:00", "4");
 		} catch (CaronaException e) {
 			fail();
 		}
 		
 		try {
-			relampago.getAtributoCaronaRelampago("0R", null);
+			caronaRelampago.getAtributoCaronaRelampago(caronaID1, null);
 		} catch (CaronaException e) {
 			assertEquals("Atributo inválido", e.getMessage());
 		}
 		try {
-			relampago.getAtributoCaronaRelampago("0R", "");
+			caronaRelampago.getAtributoCaronaRelampago(caronaID1, "");
 		} catch (CaronaException e) {
 			assertEquals("Atributo inválido", e.getMessage());
 		}
 		
 		try {
-			relampago.getAtributoCaronaRelampago("0R", "xpto");
+			caronaRelampago.getAtributoCaronaRelampago(caronaID1, "xpto");
 		} catch (CaronaException e) {
 			assertEquals("Atributo inexistente", e.getMessage());
 		}
 		
 		try {
-			relampago.getCaronaRelampago("");
+			caronaRelampago.getCaronaRelampago("");
 		} catch (CaronaException e) {
 			assertEquals("Carona Inexistente", e.getMessage());
 		}
 		try {
-			relampago.getCaronaRelampago(null);
+			caronaRelampago.getCaronaRelampago(null);
 		} catch (CaronaException e) {
 			assertEquals("Carona Inválida", e.getMessage());
 		}
 		
 		try {
-			relampago.getCaronaRelampago("xpto");
+			caronaRelampago.getCaronaRelampago("xpto");
 		} catch (CaronaException e) {
 			assertEquals("Carona Inexistente", e.getMessage());
 		}
 		
 		try {
-			relampago.getTrajeto("");
+			caronaBusiness.getTrajeto("");
 		} catch (CaronaException e) {
 			assertEquals("Trajeto Inexistente", e.getMessage());
 		}
 		
 		try {
-			relampago.getTrajeto(null);
+			caronaBusiness.getTrajeto(null);
 		} catch (CaronaException e) {
 			assertEquals("Trajeto Inválida", e.getMessage());
 		}
 		
 		try {
-			relampago.getTrajeto("xpto");
+			caronaBusiness.getTrajeto("xpto");
 		} catch (CaronaException e) {
 			assertEquals("Trajeto Inexistente", e.getMessage());
 		}
+		try {
+			caronaRelampago.getMinimoCaroneiros("xpto");
+		} catch (CaronaException e) {
+			assertEquals("IdCarona não existe", e.getMessage());
+		}
 	}
 	
-	@Test
+	/*@Test
 	public void bill() {
 		sessao.encerrarSessao("mark");
 		
@@ -428,5 +422,5 @@ public class CadastroRelampagoTest {
 		solicitacao.aceitarSolicitacao("mark", "1V");
 		
 		
-	}
+	}*/
 }

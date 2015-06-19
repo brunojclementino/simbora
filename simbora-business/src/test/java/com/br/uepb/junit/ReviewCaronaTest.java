@@ -25,7 +25,7 @@ public class ReviewCaronaTest {
 	SolicitacaoPontoDeEncontroBusiness solicitacaoPontoEncontro;
 	PerfilBusiness perfilCaroneiro;
 
-	@Before
+	/*@Before
 	public void inicializar() {
 		usuario = new UsuarioBusiness();
 		carona = new CaronaBusiness();
@@ -676,6 +676,6 @@ public class ReviewCaronaTest {
 		}
 		
 		usuario.encerrarSistema();
-	}
+	}*/
 	
 }

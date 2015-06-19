@@ -19,17 +19,6 @@ public class CaronaRelampagoBusiness {
 	public static Logger logger = Logger.getLogger(CaronaRelampagoBusiness.class);
 	CaronaRelampagoDaoImpl caronaRelampagoDaoImpl = new CaronaRelampagoDaoImpl();
 	CaronaRelampagoDomain caronaRelampago;
-	public void encerrarSistema() {
-	/*	for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
-			try {
-				CaronaRelampagoDaoImpl relampago = new CaronaRelampagoDaoImpl();
-				relampago.save(caronaRelampagoDomain);
-			} catch (Exception e) {
-				e.getMessage();
-			}
-		}
-		interesseCaronasRelamlago.clear();*/
-	}
 
 	public String cadastrarCaronaRelampago(String idSessao, String origem,
 			String destino, String dataIda, String dataVolta, String hora,
@@ -99,7 +88,7 @@ public class CaronaRelampagoBusiness {
 	 * @param data
 	 * @return True se tiver mais de 48 horas ou False se tiver menos.
 	 */
-	private boolean isDataValida(String data, String hora){
+	/*private boolean isDataValida(String data, String hora){
 		
 		int ano = Integer.parseInt(data.substring(6, 10));
 		int mes = Integer.parseInt(data.substring(3, 5));
@@ -120,7 +109,7 @@ public class CaronaRelampagoBusiness {
 			return true;
 		}
 		return false;
-	}
+	}*/
 
 	private boolean isMaiorZero(String minimoCaroneiros) {
 		if (Integer.valueOf(minimoCaroneiros) >= 1) {
@@ -212,7 +201,7 @@ public class CaronaRelampagoBusiness {
 			return logins;
 		}
 		else{
-			return "ERROR";
+			return "[]";
 		}
 	}
 

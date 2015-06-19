@@ -24,12 +24,6 @@ public class SolicitacaoVagasBusiness {
 	private SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
 	private EnviarEmail enviarEmail = new EnviarEmail();
 
-	/**
-	 * Salva todoas as solicitacaoVagas e depois limpa a lista de
-	 * {@link SolicitacaoVagasDomain}.
-	 */
-	public void encerrarSistema() {
-	}
 
 	/**
 	 * Cria uma solicitação de vaga na carona.
@@ -86,11 +80,14 @@ public class SolicitacaoVagasBusiness {
 			SolicitacaoVagasDomain solicitacao = solicitacaoVagasDaoImp.getSolicitacaoVagas(idSolicitacao);
 			if(solicitacao.getStatus().equals("Aceita")){
 				throw new Exception("Solicitação já foi aceita");
+			}
+			else if(solicitacao.getStatus().equals("Recusada")){
+				throw new Exception("Solicitação foi recusada");
 			}else{
 				solicitacao.setStatus("Aceita");
 				new CaronaBusiness().reduzQtdVagas(solicitacao.getIdCarona());
 				solicitacaoVagasDaoImp.update(solicitacao);
-				}
+			}
 	}
 
 	/**

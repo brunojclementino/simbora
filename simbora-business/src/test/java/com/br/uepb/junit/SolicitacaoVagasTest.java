@@ -10,11 +10,13 @@ import org.junit.Test;
 
 import com.br.uepb.accept.SimboraEasyAccept;
 import com.br.uepb.business.CaronaBusiness;
+import com.br.uepb.business.PerfilBusiness;
 import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.business.SolicitacaoPontoDeEncontroBusiness;
 import com.br.uepb.business.SolicitacaoVagasBusiness;
 import com.br.uepb.business.UsuarioBusiness;
 import com.br.uepb.constants.CaronaException;
+import com.br.uepb.constants.PerfilException;
 import com.br.uepb.constants.SessaoException;
 
 public class SolicitacaoVagasTest {
@@ -25,22 +27,119 @@ public class SolicitacaoVagasTest {
 	SessaoBusiness sessao;
 	SolicitacaoPontoDeEncontroBusiness solicitarVagas;
 	SolicitacaoVagasBusiness solicitacao;
+	PerfilBusiness perfilBusiness;
+	String caronaID1 = "",caronaID2 = "";
+	String sessaoID1 = "",sessaoID2 = "";
+	String solicitacaoID1 = "",solicitacaoID2 = "";
 
 	@Before
-	public void inicializar() {
+	public void inicializar() throws CaronaException, SessaoException {
 		usuario = new UsuarioBusiness();
 		carona = new CaronaBusiness();
 		sessao = new SessaoBusiness();
 		solicitarVagas = new SolicitacaoPontoDeEncontroBusiness();
 		solicitacao = new SolicitacaoVagasBusiness();
-		
+		perfilBusiness = new PerfilBusiness();
 		new SimboraEasyAccept().zerarSistema();
+		
+		usuario.criarUsuario("lucas", "1uc@5", "Lucas Miranda",
+				"João Dourado, Bahia", "lucas@facebook.com");
+		usuario.criarUsuario("bruno", "brun0", "Bruno Clementino",
+				"Alagoa Nova, Paraíba", "bruno@facebook.com");
+		
+
+		sessaoID1 = sessao.abrirSessao("lucas", "1uc@5");
+		sessaoID2 = sessao.abrirSessao("bruno", "brun0");
+		
+		caronaID1=carona.cadastrarCarona(sessaoID1, "Cajazeiras", "Patos", "20/07/2013", "14:00", "4");
+		caronaID2=carona.cadastrarCarona(sessaoID2, "Campina Grande", "João Pessoa", "12/09/2013", "21:00", "2");
+		carona.definirCaronaPreferencial(caronaID2);
+		
 	}
 
 	@Test
+	public void solicitarVagaTest() throws CaronaException{
+	
+		try {
+			solicitacaoID1 = solicitacao.solicitarVaga(sessaoID2, caronaID1);
+			
+		} catch (Exception e) {
+			fail();
+		}
+		
+		try {
+			solicitacao.aceitarSolicitacao(sessaoID1, solicitacaoID1);
+		} catch (Exception e) {
+			fail();
+		}
+		
+		//Tenta aceitar a solicitacao novamente
+		try {
+			solicitacao.aceitarSolicitacao(sessaoID1, solicitacaoID1);
+		} catch (Exception e) {
+			assertEquals("Solicitação já foi aceita", e.getMessage());
+		}
+		
+		try {
+			solicitacaoID2 = solicitacao.solicitarVaga(sessaoID2, caronaID1);
+			
+		} catch (Exception e) {
+			fail();
+		}
+		
+		try {
+			solicitacao.rejeitarSolicitacao(sessaoID1, solicitacaoID2);
+		} catch (Exception e) {
+			fail();
+		}
+		//tenta recusar a solicitação novamente
+		try {
+			solicitacao.rejeitarSolicitacao(sessaoID1, solicitacaoID2);
+		} catch (Exception e) {
+			assertEquals("Solicitação inexistente", e.getMessage());
+		}
+		//tenta aceitar a solicitação recusada
+		try {
+			solicitacao.aceitarSolicitacao(sessaoID1, solicitacaoID2);
+		} catch (Exception e) {
+			assertEquals("Solicitação foi recusada", e.getMessage());
+		}
+		
+		assertEquals("Lucas Miranda", solicitacao.getAtributo(solicitacaoID1, "Dono da carona"));
+		assertEquals("Bruno Clementino", solicitacao.getAtributo(solicitacaoID1, "Dono da solicitacao"));
+		try {
+			solicitacao.getAtributo(solicitacaoID1, "Ponto de Encontro");
+			fail();//Deve ocorrer uma excessao, pois nenhum ponto de encontro foi definido
+		} catch (Exception e) {
+		}
+		
+		
+		/*try {
+			solicitacaoID2 = solicitacao.solicitarVaga(sessaoID1, caronaID2);
+			
+		} catch (CaronaException e) {
+			assertEquals("Usuário não está na lista preferencial da carona", e.getMessage());
+		}
+		
+		//Fazendo review da carona para que o usuario ser preferencial
+		/*try {
+			perfilBusiness.reviewVagaEmCarona(sessaoID1, "lucas", "segura e tranquila");
+		} catch (PerfilException e) {
+			fail();
+		}
+		
+		try {
+			solicitacaoID2 = solicitacao.solicitarVaga(sessaoID1, caronaID2);
+		} catch (CaronaException e) {
+			fail();
+		}*/
+	}
+	
+	/*@Test
 	public void criarUsuario() {
 
 		String caronaID1 = "",caronaID2 = "",caronaID3 = "",caronaID4 = "",caronaID5="",caronaID6="";
+		String solicitacaoID1 = "",solicitacaoID2 = "",solicitacaoID3 = "",solicitacaoID4 = "",solicitacaoID5="",solicitacaoID6="";
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
 
@@ -108,7 +207,7 @@ public class SolicitacaoVagasTest {
 		}
 
 		try {
-			solicitarVagas.sugerirPontoEncontro("bill", "3",
+			sugestaoID1=solicitarVagas.sugerirPontoEncontro("bill", "3",
 					"Acude Velho; Hiper Bompreco");
 		} catch (Exception e) {
 			e.getMessage();
@@ -508,6 +607,6 @@ public class SolicitacaoVagasTest {
 		}
 
 		usuario.encerrarSistema();
-	}
+	}*/
 
 }

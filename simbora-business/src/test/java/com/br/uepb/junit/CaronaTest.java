@@ -25,48 +25,41 @@ public class CaronaTest {
 	CaronaBusiness carona;
 	UsuarioBusiness usuarioBusiness;
 	SessaoBusiness sessaoBusiness;
+	String sessaoID1 = "";
 
 	@Before
-	public void inicializar() {
+	public void inicializar() throws SessaoException {
 
 		carona = new CaronaBusiness();
 		usuarioBusiness = new UsuarioBusiness();
 		sessaoBusiness = new SessaoBusiness();
 
 		new SimboraEasyAccept().zerarSistema();
+		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg", "Palo Alto, California", "mark@facebook.com");
+		
+		sessaoID1 = sessaoBusiness.abrirSessao("mark", "m@rk");
+		
 	}
 
 	@Test
 	public void localizarCadastrarCarona() {
-		usuarioBusiness.encerrarSistema();
-		carona.getCaronas().clear();
-		
-		// Serão criados 3 usuarios. (cria usuario, abrir sessao e criarCarona)
-		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
-				"Palo Alto, California", "mark@facebook.com");
-
-		try {
-			sessaoBusiness.abrirSessao("mark", "m@rk");
-		} catch (SessaoException e) {
-			assertEquals("Login inválido", e.getMessage());
-		}
 
 		try { 
-			assertEquals("{}", carona.localizarCarona("mark",
+			assertEquals("{}", carona.localizarCarona(sessaoID1,
 					"Campina Grande", "João Pessoa"));
 		} catch (CaronaException e) {
 			fail();
 		}
 
 		try {
-			assertEquals("{}", carona.localizarCarona("mark",
+			assertEquals("{}", carona.localizarCarona(sessaoID1,
 					"São Francisco", "Palo Alto"));
 		} catch (CaronaException e) {
 			fail();
 		}
 
 		try {
-			assertEquals("{}", carona.localizarCarona("mark",
+			assertEquals("{}", carona.localizarCarona(sessaoID1,
 					"Rio de Janeiro", "São Paulo"));
 		} catch (CaronaException e) {
 			fail();
@@ -76,18 +69,9 @@ public class CaronaTest {
 	@Test
 	public void cadastrarCarona() {
 		String caronaID1 = "",caronaID2 = "",caronaID3 = "",caronaID4 = "",caronaID5="";
-		
-		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
-				"Palo Alto, California", "mark@facebook.com");
 
 		try {
-			sessaoBusiness.abrirSessao("mark", "m@rk");
-		} catch (SessaoException e) {
-			assertEquals("Login inválido", e.getMessage());
-		}
-
-		try {
-			caronaID1 = carona.cadastrarCarona("mark", "Campina Grande",
+			caronaID1 = carona.cadastrarCarona(sessaoID1, "Campina Grande",
 					"João Pessoa", "23/06/2013", "16:00", "3");
 		} catch (CaronaException e) {
 			fail();
@@ -116,7 +100,7 @@ public class CaronaTest {
 
 		// Cadastrando a segunda carona
 		try {
-			caronaID2 =  carona.cadastrarCarona("mark",
+			caronaID2 =  carona.cadastrarCarona(sessaoID1,
 					"Rio de Janeiro", "São Paulo", "31/05/2013", "08:00", "2");
 		} catch (Exception e) {
 			fail();
@@ -136,7 +120,7 @@ public class CaronaTest {
 
 		// Cadastrando a Terceira carona
 		try {
-			caronaID3=carona.cadastrarCarona("mark", "João Pessoa",
+			caronaID3=carona.cadastrarCarona(sessaoID1, "João Pessoa",
 					"Campina Grande", "25/11/2026", "06:59", "4");
 		} catch (Exception e) {
 			fail();
@@ -151,7 +135,7 @@ public class CaronaTest {
 
 		// Cadastro da quarta carona
 		try {
-			caronaID4=carona.cadastrarCarona("mark", "João Pessoa",
+			caronaID4=carona.cadastrarCarona(sessaoID1, "João Pessoa",
 					"Lagoa Seca", "25/11/2026", "05:00", "4");
 		} catch (Exception e) {
 			fail();
@@ -165,7 +149,7 @@ public class CaronaTest {
 		}
 		// Cadastro da quinto carona
 		try {
-			caronaID5=carona.cadastrarCarona("mark", "João Pessoa",
+			caronaID5=carona.cadastrarCarona(sessaoID1, "João Pessoa",
 					"Lagoa Seca", "25/11/2017", "05:00", "4");
 		} catch (Exception e) {
 			fail();
@@ -180,32 +164,32 @@ public class CaronaTest {
 		
 		// Localizar caronas
 		try {
-			assertEquals("{}", carona.localizarCarona("mark", "São Francisco", "Palo Alto"));
+			assertEquals("{}", carona.localizarCarona(sessaoID1, "São Francisco", "Palo Alto"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("{"+caronaID2+"}", carona.localizarCarona("mark", "Rio de Janeiro", "São Paulo"));
+			assertEquals("{"+caronaID2+"}", carona.localizarCarona(sessaoID1, "Rio de Janeiro", "São Paulo"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("{"+caronaID3+"}", carona.localizarCarona("mark", "João Pessoa", "Campina Grande"));
+			assertEquals("{"+caronaID3+"}", carona.localizarCarona(sessaoID1, "João Pessoa", "Campina Grande"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("{"+caronaID3+","+caronaID4+","+caronaID5+"}", carona.localizarCarona("mark", "João Pessoa", ""));
+			assertEquals("{"+caronaID3+","+caronaID4+","+caronaID5+"}", carona.localizarCarona(sessaoID1, "João Pessoa", ""));
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("{"+caronaID2+"}", carona.localizarCarona("mark", "", "São Paulo"));
+			assertEquals("{"+caronaID2+"}", carona.localizarCarona(sessaoID1, "", "São Paulo"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("{"+caronaID1+","+caronaID2+","+caronaID3+","+caronaID4+","+caronaID5+"}", carona.localizarCarona("mark", "", ""));
+			assertEquals("{"+caronaID1+","+caronaID2+","+caronaID3+","+caronaID4+","+caronaID5+"}", carona.localizarCarona(sessaoID1, "", ""));
 		} catch (CaronaException e) {
 			fail();
 		}
@@ -216,15 +200,6 @@ public class CaronaTest {
 	public void cadastrarCaronasTest() {
 		usuarioBusiness.getUsuarios().clear();
 		carona.encerrarSistema();
-		
-		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
-				"Palo Alto, California", "mark@facebook.com");
-
-		try {
-			sessaoBusiness.abrirSessao("mark", "m@rk");
-		} catch (SessaoException e) {
-			assertEquals("Login inválido", e.getMessage());
-		}
 		
 		try {
 			carona.cadastrarCarona(null, "Campina Grande", "João Pessoa", "23/06/2013", "16:00", "3");
@@ -245,92 +220,80 @@ public class CaronaTest {
 		}
 		
 		try {
-			carona.cadastrarCarona("mark", null, "João Pessoa", "23/06/2013", "16:00", "3");
+			carona.cadastrarCarona(sessaoID1, null, "João Pessoa", "23/06/2013", "16:00", "3");
 		} catch (CaronaException e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		
 		try {
-			carona.cadastrarCarona("mark", " ", "São Paulo", "31/05/2013", "08:00", "2");
+			carona.cadastrarCarona(sessaoID1, " ", "São Paulo", "31/05/2013", "08:00", "2");
 		} catch (CaronaException e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 
 		try {
-			carona.cadastrarCarona("mark", "Campina Grande", null, "23/06/2013", "16:00", "3");
+			carona.cadastrarCarona(sessaoID1, "Campina Grande", null, "23/06/2013", "16:00", "3");
 		} catch (CaronaException e) {
 			assertEquals("Destino inválido", e.getMessage());
 		}
 		
 		try {
-			carona.cadastrarCarona("mark", "São Paulo", " ", "31/05/2013", "08:00", "2");
+			carona.cadastrarCarona(sessaoID1, "São Paulo", " ", "31/05/2013", "08:00", "2");
 		} catch (CaronaException e) {
 			assertEquals("Destino inválido", e.getMessage());
 		}
 		
 		try {
-			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", null, "16:00", "3");
+			carona.cadastrarCarona(sessaoID1, "Campina Grande", "João Pessoa", null, "16:00", "3");
 		} catch (CaronaException e) {
 			assertEquals("Data inválida", e.getMessage());
 		}
 		
 		try {
-			carona.cadastrarCarona("mark", "Patos", "João Pessoa", " ", "08:00", "2");
+			carona.cadastrarCarona(sessaoID1, "Patos", "João Pessoa", " ", "08:00", "2");
 		} catch (CaronaException e) {
 			assertEquals("Data inválida", e.getMessage());
 		}
 		
 		try {
-			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "30/02/2012", "16:00", "3");
+			carona.cadastrarCarona(sessaoID1, "Campina Grande", "João Pessoa", "30/02/2012", "16:00", "3");
 		} catch (CaronaException e) {
 			assertEquals("Data inválida", e.getMessage());
 		}
 		
 		try {
-			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "31/04/2012", "16:00", "3");
-		} catch (CaronaException e) {
-			assertEquals("Data inválida", e.getMessage());
-		}
-		
-		try {
-			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "32/12/2012", "16:00", "3");
-		} catch (CaronaException e) {
-			assertEquals("Data inválida", e.getMessage());
-		}
-		
-		try {
-			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "32/12/2011", "16:00", "3");
+			carona.cadastrarCarona(sessaoID1, "Campina Grande", "João Pessoa", "32/12/2012", "16:00", "3");
 		} catch (CaronaException e) {
 			assertEquals("Data inválida", e.getMessage());
 		}
 		
 		// Hora
 		try {
-			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "23/06/2013", null, "3");
+			carona.cadastrarCarona(sessaoID1, "Campina Grande", "João Pessoa", "23/06/2013", null, "3");
 		} catch (CaronaException e) {
 			assertEquals("Hora inválida", e.getMessage());
 		}
 		try {
-			carona.cadastrarCarona("mark", "Patos", "João Pessoa", "23/06/2013", "", "2");
+			carona.cadastrarCarona(sessaoID1, "Patos", "João Pessoa", "23/06/2013", "", "2");
 		} catch (CaronaException e) {
 			assertEquals("Hora inválida", e.getMessage());
 		}
 		
 		try {
-			carona.cadastrarCarona("mark", "Patos", "João Pessoa", "23/06/2013", "seis", "2");
+			carona.cadastrarCarona(sessaoID1, "Patos", "João Pessoa", "23/06/2013", "seis", "2");
 		} catch (CaronaException e) {
 			assertEquals("Hora inválida", e.getMessage());
 		}
 		
 		// Quantidade de vagas
 		try {
-			carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "23/06/2013", "16:00", null);
+			carona.cadastrarCarona(sessaoID1, "Campina Grande", "João Pessoa", "23/06/2013", "16:00", null);
 		} catch (CaronaException e) {
 			assertEquals("Vaga inválida", e.getMessage());
 		}
 		
 		try {
-			carona.cadastrarCarona("mark", "Patos", "João Pessoa", "31/05/2013", "08:00", "duas");
+			carona.cadastrarCarona(sessaoID1, "Patos", "João Pessoa", "31/05/2013", "08:00", "duas");
 		} catch (CaronaException e) {
 			assertEquals("Vaga inválida", e.getMessage());
 		}
@@ -410,81 +373,67 @@ public class CaronaTest {
 		
 		//Localizar carona - Tudo tem que dá erro!
 		try {
-			carona.localizarCarona("mark", "-", "João Pessoa");
+			carona.localizarCarona(sessaoID1, "-", "João Pessoa");
 		} catch (CaronaException e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		try {
-			carona.localizarCarona("mark", "()", "João Pessoa");
+			carona.localizarCarona(sessaoID1, "()", "João Pessoa");
 		} catch (CaronaException e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		try {
-			carona.localizarCarona("mark", "!", "João Pessoa");
+			carona.localizarCarona(sessaoID1, "!", "João Pessoa");
 		} catch (CaronaException e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		try {
-			carona.localizarCarona("mark", "!?", "João Pessoa");
+			carona.localizarCarona(sessaoID1, "!?", "João Pessoa");
 		} catch (CaronaException e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		
 		//Destino errado
 		try {
-			carona.localizarCarona("mark", "Campina Grande", ".");
+			carona.localizarCarona(sessaoID1, "Campina Grande", ".");
 		} catch (CaronaException e) {
 			assertEquals("Destino inválido", e.getMessage());
 		}
 		try {
-			carona.localizarCarona("mark", "Campina Grande", "()");
+			carona.localizarCarona(sessaoID1, "Campina Grande", "()");
 		} catch (CaronaException e) {
 			assertEquals("Destino inválido", e.getMessage());
 		}
 		try {
-			carona.localizarCarona("mark", "Campina Grande", "!?");
+			carona.localizarCarona(sessaoID1, "Campina Grande", "!?");
 		} catch (CaronaException e) {
 			assertEquals("Destino inválido", e.getMessage());
 		}
 	
 		sessaoBusiness.encerrarSessao("m@rk");
 
-		// Limpar tudo do BD
-		usuarioBusiness.encerrarSistema();
-		carona.encerrarSistema();
 
 		assertEquals(null, carona.getCarona());
 	}
 
 	@Test
 	public void localizarCaronasTests () {
-		usuarioBusiness.encerrarSistema();
-		sessaoBusiness.getSessoes().clear();
-		carona.encerrarSistema();
-		
-		usuarioBusiness.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
-				"Palo Alto, California", "mark@facebook.com");
+
 
 		try {
-			sessaoBusiness.abrirSessao("mark", "m@rk");
-		} catch (SessaoException e) {
-			assertEquals("Login inválido", e.getMessage());
-		}
-
-		try {
-			assertEquals("{}", carona.localizarCarona("mark", "Campina Grande", "João Pessoa"));
+			assertEquals("{}", carona.localizarCarona(sessaoID1, "Campina Grande", "João Pessoa"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		
 		try {
-			assertEquals("{}", carona.localizarCarona("mark", "São Francisco", "Palo Alto"));
+			assertEquals("{}", carona.localizarCarona(sessaoID1, "São Francisco", "Palo Alto"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		
 		try {
-			assertEquals("{}", carona.localizarCarona("mark", "Rio de Janeiro", "São Paulo"));
+			assertEquals("{}", carona.localizarCarona(sessaoID1, "Rio de Janeiro", "São Paulo"));
 		} catch (CaronaException e) {
 			fail();
 		}
@@ -492,32 +441,32 @@ public class CaronaTest {
 		// Cadastrar Caronas
 		String caronaID1 = "",caronaID2= "",caronaID3= "",caronaID4= "",caronaID5= "",caronaID6= "";
 		try {
-			caronaID1 = carona.cadastrarCarona("mark", "Cajazeiras", "Patos", "20/07/2013", "14:00", "4");
+			caronaID1 = carona.cadastrarCarona(sessaoID1, "Cajazeiras", "Patos", "20/07/2013", "14:00", "4");
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			caronaID2 = carona.cadastrarCarona("mark", "São Francisco", "Palo Alto", "12/09/2013", "21:00", "2");
+			caronaID2 = carona.cadastrarCarona(sessaoID1, "São Francisco", "Palo Alto", "12/09/2013", "21:00", "2");
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			caronaID3 = carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "01/06/2013", "12:00", "1");
+			caronaID3 = carona.cadastrarCarona(sessaoID1, "Campina Grande", "João Pessoa", "01/06/2013", "12:00", "1");
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			caronaID4=carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "02/06/2013", "12:00", "3");
+			caronaID4=carona.cadastrarCarona(sessaoID1, "Campina Grande", "João Pessoa", "02/06/2013", "12:00", "3");
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			caronaID5=carona.cadastrarCarona("mark", "Campina Grande", "João Pessoa", "04/06/2013", "16:00", "2");
+			caronaID5=carona.cadastrarCarona(sessaoID1, "Campina Grande", "João Pessoa", "04/06/2013", "16:00", "2");
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			caronaID6=carona.cadastrarCarona("mark", "Leeds", "Londres", "10/02/2013", "10:00", "3");
+			caronaID6=carona.cadastrarCarona(sessaoID1, "Leeds", "Londres", "10/02/2013", "10:00", "3");
 		} catch (CaronaException e) {
 			fail();
 		}
@@ -525,49 +474,98 @@ public class CaronaTest {
 		// Localizar as contas
 		
 		try {
-			assertEquals("{"+caronaID2+"}", carona.localizarCarona("mark", "São Francisco", "Palo Alto"));
+			assertEquals("{"+caronaID2+"}", carona.localizarCarona(sessaoID1, "São Francisco", "Palo Alto"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		
 		try {
-			assertEquals("{}", carona.localizarCarona("mark", "Rio de Janeiro", "São Paulo"));
+			assertEquals("{}", carona.localizarCarona(sessaoID1, "Rio de Janeiro", "São Paulo"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		try {
-			assertEquals("{"+caronaID3+","+caronaID4+","+caronaID5+"}", carona.localizarCarona("mark", "Campina Grande", "João Pessoa"));
+			assertEquals("{"+caronaID3+","+caronaID4+","+caronaID5+"}", carona.localizarCarona(sessaoID1, "Campina Grande", "João Pessoa"));
 		} catch (CaronaException e) {
 			fail();
 		}
 		
 		// Testar os possiveis erros
 		try {
-			carona.localizarCarona("mark", "()", "João Pessoa");
+			carona.localizarCarona(sessaoID1, "()", "João Pessoa");
 		} catch (CaronaException e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		try {
-			carona.localizarCarona("mark", "!", "João Pessoa");
+			carona.localizarCarona(sessaoID1, "!", "João Pessoa");
 		} catch (CaronaException e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		try {
-			carona.localizarCarona("mark", "!?", "João Pessoa");
+			carona.localizarCarona(sessaoID1, "!?", "João Pessoa");
 		} catch (CaronaException e) {
 			assertEquals("Origem inválida", e.getMessage());
 		}
 		
 		try {
-			carona.localizarCarona("mark", "Campina Grande", "()");
+			carona.localizarCarona(sessaoID1, "Campina Grande", "()");
 		} catch (CaronaException e) {
 			assertEquals("Destino inválido", e.getMessage());
 		}
 		try {
-			carona.localizarCarona("mark", "Campina Grande", "!?");
+			carona.localizarCarona(sessaoID1, "Campina Grande", "!?");
 		} catch (CaronaException e) {
 			assertEquals("Destino inválido", e.getMessage());
 		}
+	}
+	
+	@Test
+	public void getCaronaUsuarioTest() throws CaronaException {
+		String caronaID1, caronaID2;
+		caronaID1 = carona.cadastrarCarona(sessaoID1, "Cajazeiras", "Patos", "20/07/2013", "14:00", "4");
+		
+		assertEquals(caronaID1, carona.getCaronaUsuario(sessaoID1, "1"));
+		
+		//É esperado vazio porque o usuario só tem uma carona cadastrada
+		assertEquals("", carona.getCaronaUsuario(sessaoID1, "2"));
+		
+		caronaID2 = carona.cadastrarCarona(sessaoID1, "Alagoa Nova", "Campina Grande", "12/06/2015", "11:00", "3");
+		
+		assertEquals("{"+caronaID1+","+caronaID2+"}", carona.getTodasCaronasUsuario(sessaoID1));
+		
+	}
+	
+	@Test
+	public void caronaPreferencialTest() throws CaronaException{
+		String caronaID1, caronaID2;
+		caronaID1 = carona.cadastrarCarona(sessaoID1, "Cajazeiras", "Patos", "20/07/2013", "14:00", "4");
+		try {
+			carona.definirCaronaPreferencial("5");
+		} catch (CaronaException e) {
+			assertEquals("Carona inválida", e.getMessage());
+		}
+		
+		try {
+			carona.definirCaronaPreferencial(caronaID1);
+		} catch (Exception e) {
+			fail();
+		}
+		
+		try {
+			carona.isCaronaPreferencial("");
+		} catch (Exception e) {
+			assertEquals("Carona inválida", e.getMessage());
+		}
+
+		assertEquals(true, carona.isCaronaPreferencial(caronaID1));
+		
+		try {
+			carona.getUsuariosPreferenciaisCarona("");
+		} catch (Exception e) {
+			assertEquals("Carona inexistente", e.getMessage());
+		}
+		
+		assertEquals("[]", carona.getUsuariosPreferenciaisCarona(caronaID1));
 	}
 	
 }

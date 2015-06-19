@@ -417,10 +417,7 @@ public class CaronaBusiness {
 		if (idCarona == null) {
 			throw new CaronaException("Carona Inválida");
 		}
-		if (idCarona.trim().isEmpty()) {
-			throw new CaronaException("Carona Inexistente");
-		}
-		if(caronaDaoImp.getCarona(idCarona)==null){
+		if (idCarona.trim().isEmpty() || caronaDaoImp.getCarona(idCarona)==null) {
 			throw new CaronaException("Carona Inexistente");
 		}
 
@@ -445,14 +442,6 @@ public class CaronaBusiness {
 
 	public CaronaDomain getCarona() {
 		return carona;
-	}
-
-	public void setCarona(CaronaDomain carona) {
-		this.carona = carona;
-	}
-
-	public List<SessaoDomain> getSessao() {
-		return SessaoBusiness.getSessoes();
 	}
 
 	/**
@@ -503,21 +492,16 @@ public class CaronaBusiness {
 	 * @return
 	 */
 	public String getCaronaUsuario(String idSessao, String indexCarona) {
-		try {
-
-			int indice = Integer.parseInt(indexCarona);
-			int cont = 1;
-			// percorre as caronas para verificar qual a carona x do usuario
-			for (CaronaDomain carona : getCaronas()) {
-				if ((carona.getIdUsuario()+"").equals(idSessao)) {
-					if (cont == indice) {
-						return carona.getId()+"";
-					}
-					cont++;
+		int indice = Integer.parseInt(indexCarona);
+		int cont = 1;
+		// percorre as caronas para verificar qual a carona x do usuario
+		for (CaronaDomain carona : getCaronas()) {
+			if ((carona.getIdUsuario()+"").equals(idSessao)) {
+				if (cont == indice) {
+					return carona.getId()+"";
 				}
+				cont++;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return "";
 	}
@@ -550,7 +534,7 @@ public class CaronaBusiness {
 		return ids + "}";
 	}
 
-	private String destinoCidade(String cidade) {
+	/*private String destinoCidade(String cidade) {
 		String ids = "{";
 		boolean flag = true;// indica se a quantidade de ids é 0
 		for (CaronaDomain carona : getCaronas()) {
@@ -564,7 +548,7 @@ public class CaronaBusiness {
 		}
 
 		return ids + "}";
-	}
+	}*/
 
 	public static boolean ehMotorista(String idSessao, String idCarona) {
 		try {

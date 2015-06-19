@@ -43,16 +43,4 @@ public class CaronaInteresesBusiness {
 		
 		return caronaInteresseDaoImpl.getId()+"";
 	}
-
-	public void encerrarSistema() {
-		/*for (CaronaInteresseDomain carona : interesseCaronas) {
-			try {
-				CaronaInteresseDaoImpl caronaInteresseDaoImp = new CaronaInteresseDaoImpl();
-				caronaInteresseDaoImp.save(carona);
-			} catch (Exception e) {
-				e.getMessage();
-			}
-		}
-		interesseCaronas.clear();*/
-	}
 }

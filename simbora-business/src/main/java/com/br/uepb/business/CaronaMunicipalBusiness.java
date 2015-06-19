@@ -171,7 +171,7 @@ public class CaronaMunicipalBusiness {
 	 * @return Se for motorista {@link TrueFalseType}, caso contrario
 	 *         <code>false</code>
 	 */
-	public boolean ehMotorista(String login, String idCarona) {
+	/*public boolean ehMotorista(String login, String idCarona) {
 		for (CaronaDomain carona : getCaronasMunicipais()) {
 			if (idCarona.equals(carona.getId())
 					&& login.equals(carona.getIdUsuario())) {
@@ -180,7 +180,7 @@ public class CaronaMunicipalBusiness {
 		}
 
 		return false;
-	}
+	}*/
 
 	/**
 	 * Retorna o id da carona.
@@ -255,7 +255,6 @@ public class CaronaMunicipalBusiness {
 	 * @return se a data seguir o padrão (dd/mm/aaaa) retorna <code>true</code>,
 	 *         caso contrario <code>false</code>
 	 */
-	@SuppressWarnings("unused")
 	private boolean isData(String data) {
 		try {
 			SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
@@ -276,7 +275,6 @@ public class CaronaMunicipalBusiness {
 	 * @return se for um horario retorna <code>true</code>, caso contrario
 	 *         <code>false</code>
 	 */
-	@SuppressWarnings("unused")
 	private boolean isHora(String data) {
 		try {
 			SimpleDateFormat formatoData = new SimpleDateFormat("HH:mm");

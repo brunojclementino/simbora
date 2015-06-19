@@ -30,44 +30,40 @@ public class UsuarioTest {
 	 */
 	@Test
 	public void criarUsuarios_EV() {
-		usuario.encerrarSistema();
-
+		String sessaoID1 = "", sessaoID2 = "";
+		
 		usuario.criarUsuario("mark", "m@rk", "Mark Zuckerberg",
 				"Palo Alto, California", "mark@facebook.com");
 
 		usuario.criarUsuario("steve", "5t3v3", "Steven Paul Jobs",
 				"Palo Alto, California", "jobs@apple.com");
 
-		usuario.criarUsuario("bill", "severino", "William Henry Gates III",
-				"Medina, Washington", "billzin@msn.com");
-
 		// Abrir Sessão
 		try {
-			sessao.abrirSessao("mark", "m@rk");
+			sessaoID1 = sessao.abrirSessao("mark", "m@rk");
 		} catch (SessaoException e) {
 			fail();
 		}
 		//
 		assertEquals("Mark Zuckerberg",
-				usuario.getAtributoUsuario("mark", "nome"));
+				usuario.getAtributoUsuario(sessaoID1, "nome"));
 
 		assertEquals("Palo Alto, California",
 				usuario.getAtributoUsuario("mark", "endereco"));
 
 		// Abrir Sessão
 		try {
-			sessao.abrirSessao("steve", "5t3v3");
+			sessaoID2 = sessao.abrirSessao("steve", "5t3v3");
 		} catch (SessaoException e) {
 			assertEquals("", e.getMessage());
 		}
 		//
 		assertEquals("Steven Paul Jobs",
-				usuario.getAtributoUsuario("steve", "nome"));
+				usuario.getAtributoUsuario(sessaoID2, "nome"));
 
 		assertEquals("Palo Alto, California",
-				usuario.getAtributoUsuario("steve", "endereco"));
+				usuario.getAtributoUsuario(sessaoID2, "endereco"));
 
-		usuario.getUsuarios().clear();
 	}
 
 	@Test
@@ -212,10 +208,5 @@ public class UsuarioTest {
 		}catch (UsuarioException e) {
 			assertEquals("Atributo inexistente", e.getMessage());
 		}		
-	}
-	
-	@Test
-	public void encerraSistema() {
-		usuario.encerrarSistema();
 	}
 }

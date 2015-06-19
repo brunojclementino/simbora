@@ -27,23 +27,6 @@ public class UsuarioBusiness {
 	
 	UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
 
-	//private static List<UsuarioDomain> usuarios = SessaoBusiness.getUsuarios();
-	
-	/**
-	 * Esse método faz duas ações: salva os dados dos usuários e limpa a lista
-	 * dos usuário. Para isso ele preserva as informações dos usuários.
-	 */
-	public void encerrarSistema() {
-		/*for (UsuarioDomain usuario : getUsuarios()) {
-			try {
-				UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
-				usuarioDaoImp.save(usuario);
-			} catch (Exception e) {
-			}
-		}
-		getUsuarios().clear();
-		usuarioDaoImp.excluirTudo();*/
-	}
 
 	/**
 	 * Para criar o usuario, ele faz uma verificação se o usuário é válido ou
@@ -186,58 +169,8 @@ public class UsuarioBusiness {
 		return false;
 	}
 
-	/**
-	 * retorna a quantidade de usuarios.
-	 * 
-	 * @return int
-	 */
-	public int getSize() {
-		return getUsuarios().size();
-	}
-
-	public boolean enviarEmail(String idUsuario, String email, String mensagem) {
-
-		if (!ehUsuario(idUsuario)) {
-			return false;
-		}
-
-		/*for (UsuarioDomain usuarioDomain : usuarios) {
-			
-		}*/
-	
-		
-		if (mensagem.equals("A solicitação foi recebida")) {
-			/*for (SolicitacaoVagasDomain solicitacao : SolicitacaoVagasBusiness.solicitacoesVagas) {
-				
-			}*/
-			return true;
-		}
-		if (mensagem.equals("A carona foi confirmada")) {
-			return true;
-		}
-		if (mensagem.equals("A carona foi rejeitada por falta de vaga")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean ehUsuario(String idUsuario) {
-
-		for (UsuarioDomain usuarioDomain : getUsuarios()) {
-			if (usuarioDomain.getLogin().equals(idUsuario)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public List<UsuarioDomain> getUsuarios() {
 		return usuarioDaoImp.list();
-	}
-	
-	public void zerarSistema() {
-		
 	}
 	
 }

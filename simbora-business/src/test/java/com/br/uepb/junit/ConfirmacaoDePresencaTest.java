@@ -14,7 +14,7 @@ import com.br.uepb.constants.SessaoException;
 
 public class ConfirmacaoDePresencaTest {
 
-	UsuarioBusiness usuario;
+	/*UsuarioBusiness usuario;
 	CaronaBusiness carona;
 	SessaoBusiness sessao;
 	SolicitacaoVagasBusiness solicitarVagas;
@@ -69,5 +69,5 @@ public class ConfirmacaoDePresencaTest {
 		} catch (Exception e) {
 			fail();
 		}
-	}
+	}*/
 }
