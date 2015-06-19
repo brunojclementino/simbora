@@ -22,6 +22,7 @@
 					<div class="form-group">
 	    			<label>Nome: </label>
 	    			<form:input path="nome" type="text" class="form-control" placeholder="Insira o Nome" />
+	    			<form:errors path="nome" cssClass="error" />
 					</div>
 					
 					<div class="form-group">

@@ -23,48 +23,69 @@ import com.br.uepb.domain.UsuarioDomain;
 @Scope("request")
 public class LoginController {
 
-		private UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
-		private SessaoBusiness sessaoBusiness = new SessaoBusiness();
-		
-		@RequestMapping(value = "/home/login.html", method = RequestMethod.GET)
-	    public ModelAndView showCadastroUsuario(HttpServletRequest request){
-			
-			ModelAndView modelAndView = new ModelAndView();
-			modelAndView.setViewName("login");		
-			modelAndView.addObject("usuarioDomain", new UsuarioDomain());
-			modelAndView.addObject("sessaoDomain", new SessaoDomain());
-			
-			return modelAndView;
-	    }
-		
-		@RequestMapping(value = "/home/login.html", method = RequestMethod.POST)
-		public ModelAndView validarSenha(@ModelAttribute("usuarioDomain") @Valid UsuarioDomain usuarioDomain, SessaoDomain sessaoDomain, 
-				BindingResult bindingResult, ModelMap modelo, HttpSession session) throws Exception {
-			
+	private UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
+	private SessaoBusiness sessaoBusiness = new SessaoBusiness();
 
-			ModelAndView modelAndView = new ModelAndView();
-			modelAndView.setViewName("paginaprincipal");
-			
-			if(bindingResult.hasErrors()){
-				modelAndView.setViewName("/login");
-				return modelAndView;
-			}
-						
-			modelo.addAttribute("login", usuarioDomain.getLogin());
-			modelo.addAttribute("senha", usuarioDomain.getSenha());
-			
-			usuarioBusiness=new UsuarioBusiness();
-			sessaoBusiness = new SessaoBusiness();
-			
-			try {
-				
-				String sessao = sessaoBusiness.abrirSessao(usuarioDomain.getLogin(), usuarioDomain.getSenha());
-				session.setAttribute("sessao", sessao);
-			} catch (SessaoException e) {
-				modelAndView.setViewName("login");
-				return modelAndView;
-			}
-						
+	@RequestMapping(value = "/home/login.html", method = RequestMethod.GET)
+	public ModelAndView showCadastroUsuario(HttpServletRequest request) {
+
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("login");
+		modelAndView.addObject("usuarioDomain", new UsuarioDomain());
+		modelAndView.addObject("sessaoDomain", new SessaoDomain());
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/home/login.html", method = RequestMethod.POST)
+	public ModelAndView validarSenha(
+			@ModelAttribute("usuarioDomain") @Valid UsuarioDomain usuarioDomain,
+			SessaoDomain sessaoDomain, BindingResult bindingResult,
+			ModelMap modelo, HttpSession session) throws Exception {
+
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("paginaprincipal");
+
+		if (bindingResult.hasErrors()) {
+			modelAndView.setViewName("/login");
 			return modelAndView;
 		}
+
+		modelo.addAttribute("login", usuarioDomain.getLogin());
+		modelo.addAttribute("senha", usuarioDomain.getSenha());
+
+		usuarioBusiness = new UsuarioBusiness();
+		sessaoBusiness = new SessaoBusiness();
+
+		String nome = (String)usuarioDomain.getNome();
+		
+		session.setAttribute("nome", nome);
+
+		try {
+			session.setAttribute("sessao", usuarioDomain.getLogin());
+			String sessao = sessaoBusiness.abrirSessao(
+					usuarioDomain.getLogin(), usuarioDomain.getSenha());
+			session.setAttribute("sessao", sessao);
+			session.setAttribute("usuario", (UsuarioDomain) usuarioDomain);
+			
+			
+		} catch (SessaoException e) {
+			modelAndView.setViewName("login");
+			return modelAndView;
+		}
+
+		return modelAndView;
+	}
+	
+
+	@RequestMapping(value = "/home", method = RequestMethod.POST)
+	public ModelAndView lognout(
+			@ModelAttribute("sessaoDomain") @Valid SessaoBusiness sessaoDomain, HttpSession session) throws Exception {
+
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("login");
+		sessaoBusiness.encerrarSessao((String)session.getAttribute("sessao"));
+
+		return modelAndView;
+	}
 }

@@ -18,25 +18,29 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Informações básicas</div>
 					<div class="panel-body">
-						<form>
+						
+						<form:form modelAttribute="usuarioDomain" method="post">
+						
 							<div class="form-group">
-								<label for="login">Login: </label> <label>bill</label>
+								<label for="login">Login: </label> 
+								<label for="login">${sessao }</label>
 							</div>
 
 							<div class="form-group">
-								<label for="nome">Nome: </label> <label for="nome">William
-									Henry Gates III</label>
+								<label>Nome: </label> 
+								<label for="nome">${usuario.nome }</label>
 							</div>
 
 							<div class="form-group">
-								<label for="email">E-mail: </label> <label for="email">billz@o@gmail.com</label>
+								<label for="email">E-mail: </label> 
+								<form:label path="email">${usuario.email }</form:label>
 							</div>
 
 							<div class="form-group">
-								<label for="endereco">Endereço: </label> <label>California</label>
+								<label>Endereço: </label> 
+								<label for="endereco">${usuario.endereco }</label>
 							</div>
-
-						</form>
+						</form:form>
 					</div>
 				</div>
 			</div>

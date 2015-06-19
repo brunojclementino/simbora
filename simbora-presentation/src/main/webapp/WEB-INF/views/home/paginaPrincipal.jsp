@@ -13,38 +13,32 @@
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-6">
 					<a href='<spring:url value="cadastrocarona.html"></spring:url>'>
-						<div class="dashboard-div-wrapper bk-clr-one">
-							<i class="fa"></i>
-							<h5>Cadastrar carona</h5>
+						<div class="btn btn-default btn-size azul">
+							<h4>Cadastrar carona</h4>
 						</div>
 					</a>
 				</div>
 
 				<div class="col-md-3 col-sm-3 col-xs-6">
 					<a href="#">
-						<div class="dashboard-div-wrapper bk-clr-two">
-							<i class="fa"></i>
-
-							<h5>Buscar carona</h5>
+						<div class="btn btn-default btn-size verde">
+							<h4>Buscar carona</h4>
 						</div>
 					</a>
 				</div>
 
 				<div class="col-md-3 col-sm-3 col-xs-6">
 					<a href="#">
-						<div class="dashboard-div-wrapper bk-clr-three">
-							<i class="fa"></i>
-
-							<h5>Caronas solicitadas</h5>
+						<div class="btn btn-default btn-size amarelo">
+							<h4>Caronas solicitadas</h4>
 						</div>
 					</a>
 				</div>
 
 				<div class="col-md-3 col-sm-3 col-xs-6">
-					<a href="#">
-						<div class="dashboard-div-wrapper bk-clr-four">
-							<i class="fa"></i>
-							<h5>Perfil</h5>
+					<a href="perfil.html">
+						<div class="btn btn-default btn-size vermelho">
+							<h4>Perfil</h4>
 						</div>
 					</a>
 				</div>

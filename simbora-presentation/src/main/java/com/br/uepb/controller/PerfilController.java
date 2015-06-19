@@ -14,40 +14,39 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.business.UsuarioBusiness;
-import com.br.uepb.constants.SessaoException;
 import com.br.uepb.domain.SessaoDomain;
 import com.br.uepb.domain.UsuarioDomain;
 
 @Controller
-public class PaginaPrincipalController {
+public class PerfilController {
 
-	private UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
-	SessaoBusiness sessaoBusiness = new SessaoBusiness();
+	UsuarioBusiness usuariobusiness;
 
-	@RequestMapping(value = "/home/paginaprincipal.html", method = RequestMethod.GET)
-	public ModelAndView showCadastroUsuario(HttpServletRequest request) {
-
+	@RequestMapping(value = "/home/perfil.html", method = RequestMethod.GET)
+	public ModelAndView showPerfil(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("paginaprincipal");
+		modelAndView.setViewName("perfil");
 		modelAndView.addObject("usuarioDomain", new UsuarioDomain());
-
 		return modelAndView;
-	} 
+	}
 
-	@RequestMapping(value = "/home/paginaprincipal.html", method = RequestMethod.POST)
-	public ModelAndView addNovoUsuario(
-			@ModelAttribute("usuarioDomain") @Valid UsuarioDomain usuarioDomain,
-			BindingResult bindingResult, HttpServletRequest request,
-			ModelMap modelo) throws Exception {
+	@RequestMapping(value = "/home/perfil.html", method = RequestMethod.POST)
+	public ModelAndView mostarPerfil(
+			@Valid UsuarioDomain usuarioDomain, HttpServletRequest request,
+			HttpSession session) throws Exception {
 
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("paginaprincipal");
+		modelAndView.setViewName("/perfil");
 
-		if (bindingResult.hasErrors()) {
-			modelAndView.addObject("usuarioDomain", usuarioDomain);
-			return modelAndView;
-		}
+		usuariobusiness = new UsuarioBusiness();
+		UsuarioDomain u = new UsuarioDomain();
 
+		u.setNome(usuarioDomain.getNome());
+		u.setEndereco(usuarioDomain.getEndereco());
+		u.setEmail(usuarioDomain.getEmail());
+		session.setAttribute("n", u);
+		modelAndView.addObject("usuario", (UsuarioDomain) u);
+		
 		return modelAndView;
 	}
 }

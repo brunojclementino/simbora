@@ -8,6 +8,7 @@
 
 </head>
 <body>
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
@@ -15,6 +16,7 @@
 					<div class="panel-heading">
 						<h3 class="panel-title">Simbora</h3>
 					</div>
+					
 					<div class="panel-body">
 						<form:form modelAttribute="usuarioDomain" method="post">
 							<form:errors path="*" cssClass="errorblock" element="div" />
@@ -29,11 +31,7 @@
 									type="password" value="" placeholder="senha" />
 							</div>
 
-
-							<button class="btn btn-lg btn-success btn-block">
-								<spring:message code="home.login"></spring:message>
-							</button>
-
+							<button class="btn btn-lg btn-success btn-block ">Login</button>
 						</form:form>
 					</div>
 

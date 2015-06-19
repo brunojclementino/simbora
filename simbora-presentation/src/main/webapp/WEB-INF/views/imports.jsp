@@ -4,19 +4,10 @@
   <link href="../styles/bootstrap-custom.css" rel="stylesheet">
   <!-- CSS Datepicker -->
   <link href="../styles/bootstrap-datetimepicker.min.css" rel="stylesheet">
- 
-  <!-- CSS do Site Simbora -->
-  <link href="../styles/site-core.css" rel="stylesheet">
-  <link href="../styles/style.css" rel="stylesheet">
-  <link href="../styles/font-awesome.css" rel="stylesheet">
-  <link href="../styles/bootstrap_simbora.css" rel="stylesheet">
-  <link href="../styles/sb-admin-2.css" rel="stylesheet">
   
-  <!-- JS -->
-  <link href="../js/simbora/bootstrap.js" rel="stylesheet">
-  <link href="../js/simbora/jquery-1.11.1.js" rel="stylesheet">
+  <!-- Simbora -->	
+  <link href="../styles/site-core.css" rel="stylesheet"> 
   
-  <link type="text/css" rel="stylesheet" href="site-mobile.css" media="handheld, screen and (max-width:801px)" />
 <!--[if IE]>
    <link type="text/css" rel="stylesheet" href="site-web.css" media="screen" />
 <![endif]-->
