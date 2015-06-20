@@ -1,18 +1,11 @@
 * {
 	margin: 0px;	
 }	
-table {
-	width: 80%; 
-	height: 30%;
-	margin-left: 20%; 
-}
 
-.space {
-	margin-right: 3px;
-}
 .all {
 	width: 100%;
 }
+
 #login_title {
 	font-size: 55px;
 	font-weight: bold;
@@ -153,7 +146,24 @@ img {
 .vermelho {
 	background-color: #ea0000;
 }
-
-
-
-
+.footer {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background-color: #ced5d1;
+}
+.in10 {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.nav-buscar {
+	font-style: normal;
+	font-size: 20px;
+	color: black;
+	margin: 5px;
+	padding: 3px;
+}
+.tab {
+	text-align: center;
+	background-color: #808080;
+	color: #FFFFFF;
+}
