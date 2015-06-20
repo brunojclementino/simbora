@@ -1,5 +1,6 @@
 package com.br.uepb.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.br.uepb.constants.CaronaException;
@@ -21,7 +22,6 @@ public class SolicitacaoVagasBusiness {
 	SolicitacaoVagasDomain solicitacaoVagas;
 	private SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
 	private EnviarEmail enviarEmail = new EnviarEmail();
-
 
 	/**
 	 * Cria uma solicitação de vaga na carona.
@@ -48,13 +48,11 @@ public class SolicitacaoVagasBusiness {
 					}
 				}
 				throw new CaronaException("Usuário não está na lista preferencial da carona");
-				
 			}
 			
 		} catch (Exception e) {
 			throw e;
 		}
-
 
 		solicitacaoVagas = new SolicitacaoVagasDomain();
 
@@ -221,8 +219,28 @@ public class SolicitacaoVagasBusiness {
 		}
 		return ids + "}";
 	}
+	
 	public boolean enviarEmail(String idSessao, String destino, String mensagem){
 		return enviarEmail.enviarEmail(destino, "Simbora", mensagem);
 	}
 
+	public List<SolicitacaoVagasDomain> getSolicitacoes(String id) {
+		List<SolicitacaoVagasDomain> list = new ArrayList<SolicitacaoVagasDomain>();
+		for (SolicitacaoVagasDomain s : getSolicitacoesVagas()) {
+			if (s.getIdSessao().equals(id)) {
+				list.add(s);
+			}
+		}
+		return list;
+	}
+
+	public List<SolicitacaoVagasDomain> getAllSolicitacoesPendentes(String idSessao) {
+		List<SolicitacaoVagasDomain> lstSolcitacoes = new ArrayList<SolicitacaoVagasDomain>();
+		for (SolicitacaoVagasDomain solicitacao : getSolicitacoesVagas()) {
+			if (solicitacao.getStatus().equals("Pendente") && solicitacao.getIdSessao().equals(idSessao)) {
+				lstSolcitacoes.add(solicitacao);
+			}
+		}
+		return lstSolcitacoes;
+	}
 }
