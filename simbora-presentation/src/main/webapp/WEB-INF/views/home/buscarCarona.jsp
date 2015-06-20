@@ -38,10 +38,11 @@
 					<tr>
 						<th class="col-md-3 tab">Origem</th>
 						<th class="col-md-3 tab">Destino</th>
-						<th class="col-md-2 tab">Vagas</th>
+						<th class="col-md-1 tab">Vagas</th>
 						<th class="col-md-1 tab">Hora</th>
 						<th class="col-md-1 tab">Data</th>
 						<th class="col-md-1 tab">Preferencia</th>
+						<th class="col-md-1 tab">Ver mais</th>
 					</tr>
 				</thead>
 				<c:forEach items="${lstCaronas }" var="car">
@@ -49,10 +50,13 @@
 						<tr>
 							<td class="col-md-3">${car.origem }</td>
 							<td class="col-md-3">${car.destino }</td>
-							<td class="col-md-2">${car.vagas }</td>
+							<td class="col-md-1">${car.vagas }</td>
 							<td class="col-md-1">${car.hora }</td>
 							<td class="col-md-1">${car.data }</td>
 							<td class="col-md-1">${car.ehPreferencial }</td>
+							<td class="col-md-1"><a
+								href='<spring:url value="solicitarVagaCarona.html"></spring:url>'
+								class="glyphicon glyphicon-plus"></a></td>
 						</tr>
 					</tbody>
 				</c:forEach>

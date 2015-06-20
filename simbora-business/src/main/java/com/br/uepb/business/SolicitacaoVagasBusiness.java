@@ -7,9 +7,7 @@ import com.br.uepb.dao.impl.CaronaDaoImp;
 import com.br.uepb.dao.impl.PontoDeEncontroDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoVagasDaoImp;
 import com.br.uepb.domain.CaronaDomain;
-import com.br.uepb.domain.SolicitacaoPontoDeEncontroDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
-import com.br.uepb.domain.UsuarioDomain;
 
 /**
  * O responsável por gerenciar as solicitações de vagas nas caronas pelos

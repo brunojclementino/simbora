@@ -41,4 +41,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/home/buscarCarona.jsp" />
 	</definition>
 	
+	<definition name="solicitarVagaCarona" extends="base.layout">
+		<put-attribute name="body" value="/WEB-INF/views/home/solicitarVagaCarona.jsp" />
+	</definition>
 </tiles-definitions>
