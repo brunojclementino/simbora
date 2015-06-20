@@ -20,7 +20,7 @@
 				</div>
 
 				<div class="col-md-3 col-sm-3 col-xs-6">
-					<a href="#">
+					<a href='<spring:url value="buscarCarona.html"></spring:url>'>
 						<div class="btn btn-default btn-size verde">
 							<h4>Buscar carona</h4>
 						</div>

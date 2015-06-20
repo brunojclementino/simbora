@@ -31,28 +31,31 @@
 		<!-- /.container-fluid -->
 	</nav>
 
-
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th class="col-md-3 tab">Origem</th>
-				<th class="col-md-3 tab">Destino</th>
-				<th class="col-md-2 tab">Vagas</th>
-				<th class="col-md-1 tab">Hora</th>
-				<th class="col-md-1 tab">Data</th>
-				<th class="col-md-1 tab">Preferencia</th>
-			</tr>
-		</thead>
-	<c:forEach items="${lstCaronas }" var="car">
-		<tbody>
-			<tr>
-				<td class="col-md-3">${car.origem }</td>
-				<td class="col-md-3">${car.destino }</td>
-				<td class="col-md-2">${car.vagas }</td>
-				<td class="col-md-1">${car.hora }</td>
-				<td class="col-md-1">${car.data }</td>
-				<td class="col-md-1">${car.ehPreferencial }</td>
-			</tr>
-		</tbody>
-	</c:forEach>
-	</table>
+	<div class="content-wrapper">
+		<div class="container">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th class="col-md-3 tab">Origem</th>
+						<th class="col-md-3 tab">Destino</th>
+						<th class="col-md-2 tab">Vagas</th>
+						<th class="col-md-1 tab">Hora</th>
+						<th class="col-md-1 tab">Data</th>
+						<th class="col-md-1 tab">Preferencia</th>
+					</tr>
+				</thead>
+				<c:forEach items="${lstCaronas }" var="car">
+					<tbody>
+						<tr>
+							<td class="col-md-3">${car.origem }</td>
+							<td class="col-md-3">${car.destino }</td>
+							<td class="col-md-2">${car.vagas }</td>
+							<td class="col-md-1">${car.hora }</td>
+							<td class="col-md-1">${car.data }</td>
+							<td class="col-md-1">${car.ehPreferencial }</td>
+						</tr>
+					</tbody>
+				</c:forEach>
+			</table>
+		</div>
+	</div>
