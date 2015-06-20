@@ -55,7 +55,7 @@
 							<td class="col-md-1">${car.data }</td>
 							<td class="col-md-1">${car.ehPreferencial }</td>
 							<td class="col-md-1"><a
-								href='<spring:url value="solicitarVagaCarona.html"></spring:url>'
+								href='<spring:url value="solicitarVagaCarona.html?idCarona=${car.id }"></spring:url>'
 								class="glyphicon glyphicon-plus"></a></td>
 						</tr>
 					</tbody>

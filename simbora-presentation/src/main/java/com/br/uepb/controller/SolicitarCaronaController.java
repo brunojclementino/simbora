@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.br.uepb.business.CaronaBusiness;
@@ -29,7 +30,7 @@ public class SolicitarCaronaController {
 	SolicitacaoVagasBusiness solicitarVagasBusiness;
 	
 	@RequestMapping(value = "/home/solicitarVagaCarona.html", method = RequestMethod.GET)
-	public ModelAndView mostarInformacoesDonoCarona(HttpServletRequest request) {
+	public ModelAndView mostarInformacoesDonoCarona(@RequestParam("idCarona") String idCarona, HttpServletRequest request) {
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("solicitarVagaCarona");
@@ -47,7 +48,7 @@ public class SolicitarCaronaController {
 		CaronaDomain carona = new CaronaDomain();
 		String id = (String) request.getParameter("id");
 		for (CaronaDomain c : caronaBusiness.getCaronas()) {
-			if(String.valueOf(c.getId()).equals(id)){
+			if(String.valueOf(c.getId()).equals(idCarona)){
 				carona = c;
 			}
 		}
