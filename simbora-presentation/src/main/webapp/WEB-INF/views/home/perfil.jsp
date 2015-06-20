@@ -19,26 +19,26 @@
 					<div class="panel-heading">Informações básicas</div>
 					<div class="panel-body">
 						
-						<form:form modelAttribute="usuarioDomain" method="post">
+						<form:form modelAttribute="usuarioDomain"  method="post">
 						
 							<div class="form-group">
 								<label for="login">Login: </label> 
-								<label for="login">${sessao }</label>
+								<label for="login">${usuarioDomain.login }</label>
 							</div>
 
 							<div class="form-group">
 								<label>Nome: </label> 
-								<label for="nome">${usuario.nome }</label>
+								<label for="nome">${usuarioDomain.nome }</label>
 							</div>
 
 							<div class="form-group">
 								<label for="email">E-mail: </label> 
-								<form:label path="email">${usuario.email }</form:label>
+								<form:label path="email">${usuarioDomain.email }</form:label>
 							</div>
 
 							<div class="form-group">
 								<label>Endereço: </label> 
-								<label for="endereco">${usuario.endereco }</label>
+								<label for="endereco">${usuarioDomain.endereco }</label>
 							</div>
 						</form:form>
 					</div>

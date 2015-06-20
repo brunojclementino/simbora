@@ -26,7 +26,16 @@ public class PerfilController {
 	public ModelAndView showPerfil(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("perfil");
-		modelAndView.addObject("usuarioDomain", new UsuarioDomain());
+		
+		usuariobusiness = new UsuarioBusiness();
+		UsuarioDomain usuario = new UsuarioDomain();
+		String login = (String)request.getSession().getAttribute("sessao");
+		usuario.setLogin(login);
+		usuario.setEmail(usuariobusiness.getAtributoUsuario(login, "email"));
+		usuario.setEndereco(usuariobusiness.getAtributoUsuario(login, "endereco"));
+		usuario.setNome(usuariobusiness.getAtributoUsuario(login, "nome"));
+		
+		modelAndView.addObject("usuarioDomain", usuario);
 		return modelAndView;
 	}
 
