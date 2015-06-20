@@ -43,26 +43,26 @@
 						<div class="panel-heading">Informações da Corona</div>
 						<div class="panel-body">
 
-							<form:form>
+							<form:form modelAttribute="caronaDomain" method="post" >
 
 								<div class="form-group">
-									<label for="login">Origem: </label> <label for="login"></label>
+									<label for="login">Origem: </label> 
+									<label for="login">${caronaDomain.origem }</label>
 								</div>
 
 								<div class="form-group">
-									<label>Destino: </label> <label for="nome"></label>
+									<label>Destino: </label> 
+									<label for="nome">${caronaDomain.destino }</label>
 								</div>
 
 								<div class="form-group">
-									<label for="email">Hora: </label> <label></label>
+									<label for="email">Hora: </label> 
+									<label>${caronaDomain.hora }</label>
 								</div>
 
 								<div class="form-group">
-									<label>Vagas: </label> <label for="endereco"></label>
-								</div>
-
-								<div class="form-group">
-									<label>Vagas: </label> <label for="endereco"></label>
+									<label>Vagas: </label> 
+									<label>${caronaDomain.vagas }</label>
 								</div>
 							</form:form>
 						</div>

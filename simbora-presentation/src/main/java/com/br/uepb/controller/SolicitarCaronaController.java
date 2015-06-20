@@ -37,13 +37,22 @@ public class SolicitarCaronaController {
 		usuarioBusiness = new UsuarioBusiness();
 		UsuarioDomain usuario = new UsuarioDomain();
 		String login = (String) request.getSession().getAttribute("sessao");
-		usuario.setLogin(login);
-		usuario.setEmail(usuarioBusiness.getAtributoUsuario(login, "email"));
-		usuario.setEndereco(usuarioBusiness.getAtributoUsuario(login,
-				"endereco"));
-		usuario.setNome(usuarioBusiness.getAtributoUsuario(login, "nome"));
+			usuario.setLogin(login);
+			usuario.setEmail(usuarioBusiness.getAtributoUsuario(login, "email"));
+			usuario.setEndereco(usuarioBusiness.getAtributoUsuario(login, "endereco"));
+			usuario.setNome(usuarioBusiness.getAtributoUsuario(login, "nome"));
 		modelAndView.addObject("usuarioDomain", usuario);
 
+		caronaBusiness = new CaronaBusiness();
+		CaronaDomain carona = new CaronaDomain();
+		String id = (String) request.getParameter("id");
+		for (CaronaDomain c : caronaBusiness.getCaronas()) {
+			if(String.valueOf(c.getId()).equals(id)){
+				carona = c;
+			}
+		}
+		 
+		modelAndView.addObject("caronaDomain", carona);	
 		return modelAndView;
 	}
 
