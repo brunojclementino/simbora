@@ -3,14 +3,11 @@ package com.br.uepb.business;
 import java.util.List;
 
 import com.br.uepb.constants.CaronaException;
-import com.br.uepb.dao.impl.PontoDeEncontroDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoPontoDeEncontroDaoImp;
 import com.br.uepb.dao.impl.SolicitacaoVagasDaoImp;
-import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.PontoDeEncontroDomain;
 import com.br.uepb.domain.SolicitacaoPontoDeEncontroDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
-import com.br.uepb.domain.UsuarioDomain;
 
 /**
  * O responsável por gerenciar as solicitações de pontos de encontros feitas por

@@ -1,12 +1,11 @@
 package com.br.uepb.business;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.br.uepb.constants.PerfilException;
-import com.br.uepb.constants.UsuarioException;
 import com.br.uepb.dao.impl.CaronaDaoImp;
 import com.br.uepb.dao.impl.CaronaInteresseDaoImpl;
 import com.br.uepb.dao.impl.ReviewCaronasDaoImp;
@@ -33,13 +32,13 @@ import com.br.uepb.domain.UsuarioDomain;
 public class PerfilBusiness {
 
 	public final static Logger logger = Logger.getLogger(PerfilBusiness.class);
-	
+
 	UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
 	CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
 	SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
 	ReviewVagasCaronaDaoImp reviewVagasCaronaDaoImp = new ReviewVagasCaronaDaoImp();
 	ReviewCaronasDaoImp reviewCaronasDaoImp = new ReviewCaronasDaoImp();
-	
+
 	/**
 	 * Retorna o login do usuario.
 	 * 
@@ -65,7 +64,7 @@ public class PerfilBusiness {
 		} catch (Exception e) {
 			throw new PerfilException("Login inválido");
 		}
-		
+
 	}
 
 	/**
@@ -139,7 +138,9 @@ public class PerfilBusiness {
 
 		if (atributo.equals("caronas seguras e tranquilas")) {
 			int caron = 0;
-			for (ReviewDomain review : reviewCaronasDaoImp.getCaronasSegurasTranquilas()) {
+
+			for (ReviewDomain review : reviewCaronasDaoImp
+					.getCaronasSegurasTranquilas()) {
 				if (CaronaBusiness.ehMotorista(login, review.getIdAvaliado())) {
 					caron++;
 				}
@@ -150,7 +151,8 @@ public class PerfilBusiness {
 		if (atributo.equals("caronas que não funcionaram")) {
 			int caron = 0;
 			String caronas = "";
-			for (ReviewDomain review : reviewCaronasDaoImp.getCaronasNaoFuncionaram()) {
+			for (ReviewDomain review : reviewCaronasDaoImp
+					.getCaronasNaoFuncionaram()) {
 				if (CaronaBusiness.ehMotorista(login, review.getIdAvaliado())) {
 					caron++;
 				}
@@ -160,7 +162,8 @@ public class PerfilBusiness {
 
 		if (atributo.equals("faltas em vagas de caronas")) {
 			int caron = 0;
-			for (ReviewDomain review : reviewVagasCaronaDaoImp.getFaltaramNasVagas()) {
+			for (ReviewDomain review : reviewVagasCaronaDaoImp
+					.getFaltaramNasVagas()) {
 				if (login.equals(review.getIdAvaliado())) {
 					caron++;
 				}
@@ -170,7 +173,8 @@ public class PerfilBusiness {
 
 		if (atributo.equals("presenças em vagas de caronas")) {
 			int caron = 0;
-			for (ReviewDomain review : reviewVagasCaronaDaoImp.getPresentesNasVagas()) {
+			for (ReviewDomain review : reviewVagasCaronaDaoImp
+					.getPresentesNasVagas()) {
 				if (login.equals(review.getIdAvaliado())) {
 					caron++;
 				}
@@ -196,15 +200,16 @@ public class PerfilBusiness {
 			throw new PerfilException("Usuário não possui vaga na carona.");
 		}
 		if (review.equals("faltou")) {
-			ReviewVagasCaronaDomain linha= reviewVagasCaronaDaoImp.getIdCampoVazio("faltouNaVaga");
-			
-			if(linha!=null){
+			ReviewVagasCaronaDomain linha = reviewVagasCaronaDaoImp
+					.getIdCampoVazio("faltouNaVaga");
+
+			if (linha != null) {
 				ReviewDomain avaliacao = new ReviewDomain();
 				avaliacao.setIdAvaliado(loginCaroneiro);
 				avaliacao.setLogin(idSessao);
 				linha.setFaltouNaVaga(avaliacao);
 				reviewVagasCaronaDaoImp.update(linha);
-			}else{
+			} else {
 				linha = new ReviewVagasCaronaDomain();
 				linha.setFaltouNaVaga(new ReviewDomain());
 				linha.getFaltouNaVaga().setIdAvaliado(loginCaroneiro);
@@ -215,14 +220,15 @@ public class PerfilBusiness {
 		}
 
 		if (review.equals("não faltou")) {
-			ReviewVagasCaronaDomain linha= reviewVagasCaronaDaoImp.getIdCampoVazio("presenteNaVaga");
-			if(linha!=null){
+			ReviewVagasCaronaDomain linha = reviewVagasCaronaDaoImp
+					.getIdCampoVazio("presenteNaVaga");
+			if (linha != null) {
 				ReviewDomain avaliacao = new ReviewDomain();
 				avaliacao.setIdAvaliado(loginCaroneiro);
 				avaliacao.setLogin(idSessao);
 				linha.setPresenteNaVaga(avaliacao);
 				reviewVagasCaronaDaoImp.update(linha);
-			}else{
+			} else {
 				linha = new ReviewVagasCaronaDomain();
 				linha.setPresenteNaVaga(new ReviewDomain());
 				linha.getPresenteNaVaga().setIdAvaliado(loginCaroneiro);
@@ -231,14 +237,15 @@ public class PerfilBusiness {
 			}
 			return;
 		} else if (review.equals("não funcionou")) {
-			ReviewVagasCaronaDomain linha= reviewVagasCaronaDaoImp.getIdCampoVazio("caronaNaoFuncionou");
-			if(linha!=null){
+			ReviewVagasCaronaDomain linha = reviewVagasCaronaDaoImp
+					.getIdCampoVazio("caronaNaoFuncionou");
+			if (linha != null) {
 				ReviewDomain avaliacao = new ReviewDomain();
 				avaliacao.setIdAvaliado(loginCaroneiro);
 				avaliacao.setLogin(idSessao);
 				linha.setCaronaNaoFuncionou(avaliacao);
 				reviewVagasCaronaDaoImp.update(linha);
-			}else{
+			} else {
 				linha = new ReviewVagasCaronaDomain();
 				linha.setCaronaNaoFuncionou(new ReviewDomain());
 				linha.getCaronaNaoFuncionou().setIdAvaliado(loginCaroneiro);
@@ -247,20 +254,21 @@ public class PerfilBusiness {
 			}
 			return;
 		} else if (review.equals("funcionou")) {
-			ReviewVagasCaronaDomain linha= reviewVagasCaronaDaoImp.getIdCampoVazio("caronaSeguraTranquila");
-			if(linha!=null){
+			ReviewVagasCaronaDomain linha = reviewVagasCaronaDaoImp
+					.getIdCampoVazio("caronaSeguraTranquila");
+			if (linha != null) {
 				ReviewDomain avaliacao = new ReviewDomain();
 				avaliacao.setIdAvaliado(loginCaroneiro);
 				avaliacao.setLogin(idSessao);
 				linha.setCaronaSeguraTranquila(avaliacao);
 				reviewVagasCaronaDaoImp.update(linha);
-			}else{
+			} else {
 				linha = new ReviewVagasCaronaDomain();
 				linha.setCaronaSeguraTranquila(new ReviewDomain());
 				linha.getCaronaSeguraTranquila().setIdAvaliado(loginCaroneiro);
 				linha.getCaronaSeguraTranquila().setLogin(idSessao);
 				reviewVagasCaronaDaoImp.save(linha);
-			return;
+				return;
 			}
 		}
 
@@ -275,14 +283,15 @@ public class PerfilBusiness {
 			throw new PerfilException("Usuário não possui vaga na carona.");
 		} else {
 			if (review.equals("segura e tranquila")) {
-				ReviewCaronasDomain linha= reviewCaronasDaoImp.getIdCampoVazio("caronaSeguraTranquila");
-				if(linha!=null){
+				ReviewCaronasDomain linha = reviewCaronasDaoImp
+						.getIdCampoVazio("caronaSeguraTranquila");
+				if (linha != null) {
 					ReviewDomain avaliacao = new ReviewDomain();
 					avaliacao.setIdAvaliado(idCaroneiro);
 					avaliacao.setLogin(idSessao);
 					linha.setCaronaSeguraTranquila(avaliacao);
 					reviewCaronasDaoImp.update(linha);
-				}else{
+				} else {
 					linha = new ReviewCaronasDomain();
 					linha.setCaronaSeguraTranquila(new ReviewDomain());
 					linha.getCaronaSeguraTranquila().setIdAvaliado(idCaroneiro);
@@ -290,14 +299,15 @@ public class PerfilBusiness {
 					reviewCaronasDaoImp.save(linha);
 				}
 			} else if (review.equals("não funcionou")) {
-				ReviewCaronasDomain linha= reviewCaronasDaoImp.getIdCampoVazio("caronaNaoFuncionou");
-				if(linha!=null){
+				ReviewCaronasDomain linha = reviewCaronasDaoImp
+						.getIdCampoVazio("caronaNaoFuncionou");
+				if (linha != null) {
 					ReviewDomain avaliacao = new ReviewDomain();
 					avaliacao.setIdAvaliado(idCaroneiro);
 					avaliacao.setLogin(idSessao);
 					linha.setCaronaNaoFuncionou(avaliacao);
 					reviewCaronasDaoImp.update(linha);
-				}else{
+				} else {
 					linha = new ReviewCaronasDomain();
 					linha.setCaronaNaoFuncionou(new ReviewDomain());
 					linha.getCaronaNaoFuncionou().setIdAvaliado(idCaroneiro);
@@ -321,41 +331,44 @@ public class PerfilBusiness {
 	}
 
 	public String verificarMensagensPerfil(String idSessao) {
-		String msgem = "[", idUsuario ="";
+		String msgem = "[", idUsuario = "";
 		CaronaInteresseDomain caronaInteresse = new CaronaInteresseDomain();
-		CaronaDomain carona = new CaronaDomain(); 
+		CaronaDomain carona = new CaronaDomain();
 		UsuarioDomain usuario = new UsuarioDomain();
 
-		// Pegar a carona do passageiro 
-		for (CaronaInteresseDomain caronaInteresseDomain : new CaronaInteresseDaoImpl().list()) {
+		// Pegar a carona do passageiro
+		for (CaronaInteresseDomain caronaInteresseDomain : new CaronaInteresseDaoImpl()
+				.list()) {
 			if (caronaInteresseDomain.getIdSessao().equals(idSessao)) {
 				caronaInteresse = caronaInteresseDomain;
 			}
 		}
-		
+
 		for (SessaoDomain sessao : SessaoBusiness.getSessoes()) {
 			if (sessao.getIdSessao().equals(caronaInteresse.getIdSessao())) {
 				idUsuario = sessao.getIdUsuario();
 			}
 		}
-		
+
 		for (CaronaDomain car : new CaronaDaoImp().list()) {
 			if (caronaInteresse.getOrigem().equals(car.getOrigem())
-					&& caronaInteresse.getDestino().equals(
-							car.getDestino())
+					&& caronaInteresse.getDestino().equals(car.getDestino())
 					&& caronaInteresse.getData().equals(car.getData())) {
 				idSessao = car.getIdUsuario();
-				/*System.out.println("Carona: "+ caronaInteresse.getData() 
-						+", "+ caronaInteresse.getOrigem());*/
-		
+				/*
+				 * System.out.println("Carona: "+ caronaInteresse.getData()
+				 * +", "+ caronaInteresse.getOrigem());
+				 */
+
 				for (UsuarioDomain user : new UsuarioDaoImp().list()) {
 					if (user.getLogin().equals(car.getIdUsuario())) {
 						usuario = user;
 					}
 				}
-				
+
 				msgem += "Carona cadastrada no dia "
-						+ car.getData() + ", ás "
+						+ car.getData()
+						+ ", ás "
 						+ car.getHora()
 						+ " de acordo com os seus interesses registrados. Entrar em contato com "
 						+ usuario.getEmail();
@@ -363,4 +376,61 @@ public class PerfilBusiness {
 		}
 		return msgem + "]";
 	}
+
+	/**
+	 * 
+	 * @param login
+	 * @return todas as caronas criadas pelo usuário.
+	 * @throws PerfilException
+	 */
+	public List<CaronaDomain> getHistoricoCaronas(String login)
+			throws PerfilException {
+
+		if (login == null || login.trim().isEmpty()) {
+			throw new PerfilException("Login inválido");
+		}
+		List<CaronaDomain> caronaDomain = new ArrayList<CaronaDomain>();
+
+		for (CaronaDomain carona : getCaronas()) {
+			if (carona.getIdUsuario().equals(login)) {
+				caronaDomain.add(carona);
+			}
+		}
+		return caronaDomain;
+	}
+
+	/**
+	 * Retorna uma List das caronas que foram consideradas seguras e tranquilas.
+	 * @param login
+	 * @return
+	 */
+	public List<ReviewDomain> getSegurasTransquilas(String login) {
+		List<ReviewDomain> lstreview = new ArrayList<ReviewDomain>();
+
+		for (ReviewDomain review : reviewCaronasDaoImp
+				.getCaronasSegurasTranquilas()) {
+			if (CaronaBusiness.ehMotorista(login, review.getIdAvaliado())) {
+				lstreview.add(review);
+			}
+		}
+		return lstreview;
+	}
+
+	/**
+	 * Retorna uma List das caronas que não deu certo ou não funcionaram.
+	 * @param login
+	 * @return
+	 */
+	public List<ReviewDomain> getNaoFunc(String login) {
+		List<ReviewDomain> lstreview = new ArrayList<ReviewDomain>();
+
+		for (ReviewDomain review : reviewCaronasDaoImp
+				.getCaronasNaoFuncionaram()) {
+			if (CaronaBusiness.ehMotorista(login, review.getIdAvaliado())) {
+				lstreview.add(review);
+			}
+		}
+		return lstreview;
+	}
+
 }
