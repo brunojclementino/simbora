@@ -40,7 +40,7 @@
 
 				<div class="col-md-4 col-sm-3 col-xs-6">
 					<div class="panel panel-default">
-						<div class="panel-heading">Informações da Corona</div>
+						<div class="panel-heading">Informações da Carona</div>
 						<div class="panel-body">
 
 							<form:form modelAttribute="caronaDomain" method="post" >
@@ -76,7 +76,7 @@
 						<p>Faça uma solicitação da carona. Após a solicitação espere o dono da carona 
 						aprovar a sua solicitação.</p>
 						<form:form methodParam="solicitacaoVagasDomain">
-							<button class="btn btn-success">Solicitação carona</button>
+							<button class="btn btn-success" value="solicitarVagaCarona.html?idCarona=${idCarona }">Solicitação carona</button>
 						</form:form>
 						</div>
 					</div>

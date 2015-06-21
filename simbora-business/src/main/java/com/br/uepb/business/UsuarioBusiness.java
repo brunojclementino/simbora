@@ -173,4 +173,8 @@ public class UsuarioBusiness {
 		return usuarioDaoImp.list();
 	}
 	
+	public UsuarioDomain getUsuarioDomain(String login){
+		return usuarioDaoImp.getUsuario(login);
+	}
+	
 }

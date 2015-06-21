@@ -37,24 +37,28 @@ public class SolicitarCaronaController {
 		modelAndView.setViewName("solicitarVagaCarona");
 
 		usuarioBusiness = new UsuarioBusiness();
-		UsuarioDomain usuario = new UsuarioDomain();
-		String login = (String) request.getSession().getAttribute("sessao");
+		caronaBusiness = new CaronaBusiness();
+		CaronaDomain carona = caronaBusiness.getCaronaDomain(idCarona);
+		UsuarioDomain usuario = usuarioBusiness.getUsuarioDomain(carona.getIdUsuario());
+		
+	/*	String login = (String) request.getSession().getAttribute("sessao");
 			usuario.setLogin(login);
 			usuario.setEmail(usuarioBusiness.getAtributoUsuario(login, "email"));
 			usuario.setEndereco(usuarioBusiness.getAtributoUsuario(login, "endereco"));
-			usuario.setNome(usuarioBusiness.getAtributoUsuario(login, "nome"));
+			usuario.setNome(usuarioBusiness.getAtributoUsuario(login, "nome"));*/
 		modelAndView.addObject("usuarioDomain", usuario);
 
 		caronaBusiness = new CaronaBusiness();
-		CaronaDomain carona = new CaronaDomain();
+		/*CaronaDomain carona = new CaronaDomain();
 		String id = (String) request.getParameter("id");
 		for (CaronaDomain c : caronaBusiness.getCaronas()) {
 			if(String.valueOf(c.getId()).equals(idCarona)){
 				carona = c;
 			}
-		}
+		}*/
 		 
 		modelAndView.addObject("caronaDomain", carona);	
+		request.getSession().setAttribute("idCarona", idCarona);
 		return modelAndView;
 	}
 
@@ -74,9 +78,9 @@ public class SolicitarCaronaController {
 		solicitacaoVagasDomain.setIdCarona(caronaDomain.getIdUsuario());
 
 		solicitarVagasBusiness = new SolicitacaoVagasBusiness();
-		solicitarVagasBusiness.solicitarVaga(login, String.valueOf(caronaDomain.getId()));
-		
-		modelAndView.setViewName("/solicitarVagaCarona");
+		solicitarVagasBusiness.solicitarVaga(login, (String) request.getSession().getAttribute("idCarona"));
+		session.removeAttribute("idCarona");
+		modelAndView.setViewName("buscarCarona");
 
 		return modelAndView;
 	}

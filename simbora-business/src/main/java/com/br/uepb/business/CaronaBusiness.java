@@ -593,6 +593,10 @@ public class CaronaBusiness {
 			throw new CaronaException("Carona inexistente");
 		}
 	}
+	
+	public CaronaDomain getCaronaDomain(String idCarona){
+		return caronaDaoImp.getCarona(idCarona);
+	}
 
 	/**
 	 * @return the interesseCaronas

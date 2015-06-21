@@ -53,9 +53,8 @@ public class CadastrarUsuarioController {
 		usuarioBusiness = new UsuarioBusiness();
 		try {
 			usuarioBusiness.criarUsuario(usuarioDomain.getLogin(),
-					usuarioDomain.getSenha(), usuarioDomain.getLogin(),
-					usuarioDomain.getLogin(), usuarioDomain.getLogin()
-							+ "@email.com");
+					usuarioDomain.getSenha(), usuarioDomain.getNome(),
+					usuarioDomain.getEndereco(), usuarioDomain.getEmail());
 		} catch (UsuarioException e) {
 
 		}
