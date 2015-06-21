@@ -1,7 +1,6 @@
 package com.br.uepb.domain;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Address;
@@ -13,8 +12,11 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
+
 public class Email {
 
+	final static Logger logger = Logger.getLogger(Email.class);
 	private String email;
 	private String password;
 	private String titulo;

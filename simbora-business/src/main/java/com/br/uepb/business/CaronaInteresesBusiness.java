@@ -8,7 +8,7 @@ import com.br.uepb.constants.CaronaException;
 import com.br.uepb.dao.impl.CaronaInteresseDaoImpl;
 import com.br.uepb.domain.CaronaInteresseDomain;
 
-public class CaronaInteresesBusiness {
+public class CaronaInteresesBusiness { 
 
 	
 	public static Logger logger = Logger.getLogger(CaronaInteresesBusiness.class);

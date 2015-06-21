@@ -2,9 +2,7 @@ package com.br.uepb.dao;
 
 import java.util.List;
 
-import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.ReviewCaronasDomain;
-import com.br.uepb.domain.ReviewVagasCaronaDomain;
 
 /**
  * Interface de Carona com as operações CRUD.

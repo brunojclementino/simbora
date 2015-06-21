@@ -199,7 +199,6 @@ public class CaronaTest {
 	@Test
 	public void cadastrarCaronasTest() {
 		usuarioBusiness.getUsuarios().clear();
-		carona.encerrarSistema();
 		
 		try {
 			carona.cadastrarCarona(null, "Campina Grande", "João Pessoa", "23/06/2013", "16:00", "3");

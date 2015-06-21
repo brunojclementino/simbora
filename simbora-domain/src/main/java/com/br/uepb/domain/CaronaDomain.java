@@ -8,11 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * Classe que define o local de origem, local de destino, data da carona,
  * horário de saída e a quantidade de vaga no carro.
- * 
+ * Esta classe também define se uma carona é preferencial
  * @author Lucas Miranda
  * @author Bruno José Clementino
  *
@@ -21,7 +23,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="CARONA")
 public class CaronaDomain {
-	
+	final static Logger logger = Logger.getLogger(CaronaDomain.class);
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
@@ -42,9 +44,7 @@ public class CaronaDomain {
 	/**
 	 * Método construtor default.
 	 */
-	public CaronaDomain() {
-		// TODO Auto-generated constructor stub
-	}
+	
 	/**
 	 * @return the id
 	 */

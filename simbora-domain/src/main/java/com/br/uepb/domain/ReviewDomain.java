@@ -6,10 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.log4j.Logger;
+
 @Entity
 @Table(name="REVIEW")
 public class ReviewDomain {
 
+	final static Logger logger = Logger.getLogger(ReviewDomain.class);
 	@Id
 	@GeneratedValue
 	@Column(name = "id")

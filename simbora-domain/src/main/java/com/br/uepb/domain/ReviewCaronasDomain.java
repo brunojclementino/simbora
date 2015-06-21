@@ -8,10 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.apache.log4j.Logger;
+
 @Entity
 @Table(name="REVIEWCARONAS")
 public class ReviewCaronasDomain {
-	
+	final static Logger logger = Logger.getLogger(ReviewCaronasDomain.class);
 	@Id
 	@GeneratedValue
 	@Column(name = "id")

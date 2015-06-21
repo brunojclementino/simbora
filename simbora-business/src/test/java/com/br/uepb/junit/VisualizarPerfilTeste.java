@@ -192,13 +192,7 @@ public class VisualizarPerfilTeste {
 		try {
 			assertEquals("0", perfil.getAtributoPerfil("mark", "presenças em vagas de caronas"));
 		} catch (PerfilException e) {
-			fail();
-		}
-		
-		try {
-			perfil.reviewCarona(sessaoID1, "bruno", "não funcionou");;
-		} catch (PerfilException e) {
-			fail();
+			fail(); 
 		}
 	}
 	

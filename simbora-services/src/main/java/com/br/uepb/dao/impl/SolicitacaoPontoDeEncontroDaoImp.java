@@ -6,11 +6,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.br.uepb.dao.SolicitacaoPontoDeEncontroDao;
-import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.SolicitacaoPontoDeEncontroDomain;
 import com.br.uepb.util.HibernateUtil;
 
-
+ 
 
 public class SolicitacaoPontoDeEncontroDaoImp implements SolicitacaoPontoDeEncontroDao{
 

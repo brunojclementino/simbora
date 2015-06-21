@@ -9,6 +9,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * 
@@ -18,6 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="SOLICITACAOPONTODEENCONTRO")
 public class SolicitacaoPontoDeEncontroDomain {
+	final static Logger logger = Logger.getLogger(SolicitacaoPontoDeEncontroDomain.class);
 	/**
 	 * Armazena respectivamente os pontos de sugestão (0), resposta (1) e
 	 * confirmação (2).

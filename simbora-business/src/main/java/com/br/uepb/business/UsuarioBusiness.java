@@ -17,7 +17,7 @@ import com.br.uepb.domain.UsuarioDomain;
  * 
  * @author Lucas Miranda e Bruno Clementino
  * @see Usuario
- */
+ */ 
 public class UsuarioBusiness {
 
 	public static Logger logger = Logger.getLogger(UsuarioBusiness.class);

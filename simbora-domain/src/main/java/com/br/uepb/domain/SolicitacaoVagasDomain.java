@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.log4j.Logger;
+
 /**
  * Esta classe regista as solicitações do caroneiro. 
  * 
@@ -15,7 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="SOLICITACAOVAGAS")
 public class SolicitacaoVagasDomain {
-	
+	final static Logger logger = Logger.getLogger(SolicitacaoVagasDomain.class);
 	@Id
 	@GeneratedValue
 	@Column(name = "idSolicitacao")

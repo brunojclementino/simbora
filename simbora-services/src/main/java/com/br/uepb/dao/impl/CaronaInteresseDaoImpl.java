@@ -1,6 +1,6 @@
 package com.br.uepb.dao.impl;
 
-import java.util.List; 
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;

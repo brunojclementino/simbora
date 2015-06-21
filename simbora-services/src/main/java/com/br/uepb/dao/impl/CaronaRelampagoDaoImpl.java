@@ -1,14 +1,12 @@
 package com.br.uepb.dao.impl;
 
-import java.util.List;  
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.br.uepb.dao.CaronaRelampagoDao;
 import com.br.uepb.domain.CaronaDomain;
-import com.br.uepb.domain.CaronaRelampagoDomain;
-import com.br.uepb.domain.SolicitacaoVagasDomain;
 import com.br.uepb.util.HibernateUtil;
 
 public class CaronaRelampagoDaoImpl implements CaronaRelampagoDao {

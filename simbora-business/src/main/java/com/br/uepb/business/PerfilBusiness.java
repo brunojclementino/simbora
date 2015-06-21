@@ -24,7 +24,7 @@ import com.br.uepb.domain.UsuarioDomain;
 /**
  * Esta classe gerencia o perfil do usuário. Responsável por transmitir as
  * informações relacionadas as atividades dos usuários. Define os métodos de
- * acesso público: visualizarPerfil e getAtributoPerfil
+ * acesso público: visualizarPerfil e getAtributoPerfil 
  * 
  * @author Lucas Miranda e Bruno Clementino
  *
@@ -355,10 +355,7 @@ public class PerfilBusiness {
 					&& caronaInteresse.getDestino().equals(car.getDestino())
 					&& caronaInteresse.getData().equals(car.getData())) {
 				idSessao = car.getIdUsuario();
-				/*
-				 * System.out.println("Carona: "+ caronaInteresse.getData()
-				 * +", "+ caronaInteresse.getOrigem());
-				 */
+				
 
 				for (UsuarioDomain user : new UsuarioDaoImp().list()) {
 					if (user.getLogin().equals(car.getIdUsuario())) {

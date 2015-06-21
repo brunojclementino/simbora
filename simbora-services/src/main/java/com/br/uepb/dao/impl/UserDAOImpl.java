@@ -7,7 +7,7 @@ import com.br.uepb.domain.UsuarioDom;
 
 @Service
 public class UserDAOImpl implements UserDAO {
-
+ 
 	@Override
 	public UsuarioDom getUser(String cpf) {
 		UsuarioDom ud = new UsuarioDom();

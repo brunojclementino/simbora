@@ -2,6 +2,8 @@ package com.br.uepb.domain;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 /**
  * Define as informações básicas do usuário.
  * 
@@ -9,9 +11,10 @@ import java.util.List;
  *
  */
 public class PerfilDomain {
+	
+	final static Logger logger = Logger.getLogger(PerfilDomain.class);
 	private String idUsuario;
 	private List<String> idCaronas;
-	private String statusCarona = "";
 	/**
 	 * @return the idUsuario
 	 */
@@ -40,10 +43,5 @@ public class PerfilDomain {
 	 */
 	public void setIdCaronas(List<String> idCaronas) {
 		this.idCaronas = idCaronas;
-	}
-
-	public void reviewVagaEmCarona(String sessao, String sessaoCarona,
-									String loginCaroneiro, String review) {
-		statusCarona = review;
 	}
 }

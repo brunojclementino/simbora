@@ -6,8 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.br.uepb.dao.ReviewVagasCaronaDao;
-import com.br.uepb.domain.ReviewVagasCaronaDomain;
 import com.br.uepb.domain.ReviewDomain;
+import com.br.uepb.domain.ReviewVagasCaronaDomain;
 import com.br.uepb.util.HibernateUtil;
 
 

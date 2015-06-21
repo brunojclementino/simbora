@@ -13,7 +13,7 @@ import com.br.uepb.domain.SolicitacaoVagasDomain;
  * O responsável por gerenciar as solicitações de pontos de encontros feitas por
  * usuários a determinadas caronas
  * 
- * @author Lucas Miranda e Bruno Clementino
+ * @author Lucas Miranda e Bruno Clementino 
  *
  */
 public class SolicitacaoPontoDeEncontroBusiness {
@@ -32,12 +32,6 @@ public class SolicitacaoPontoDeEncontroBusiness {
 	private SolicitacaoPontoDeEncontroDomain solicitacaoEncontro;
 	private PontoDeEncontroDomain pontoDeEncontro;
 
-	/**
-	 * Salva os pontos de encontro que foram aceitas e que ainda estão
-	 * pendentes. Depois a List é limpada.
-	 */
-	public void encerrarSistema() {
-	}
 
 	/**
 	 * Faz uma sugestão do ponto de encontro. Trata os possiveis erros de
@@ -138,45 +132,10 @@ public class SolicitacaoPontoDeEncontroBusiness {
 
 	public String getAtributoSolicitacao(String idSolicitacao, String atributo)
 			throws CaronaException {
-		/*try {
-			SolicitacaoPontoDeEncontroDomain solicitacaoPontoDeEncontro = solicitacaoPontoDeEncontroDaoImp.getSolicitacaoPontoDeEncontro(idSolicitacao);
-			return getAtributo(solicitacaoPontoDeEncontro, atributo);
-			
-		} catch (Exception e) {*/
 			return new SolicitacaoVagasBusiness().getAtributo(idSolicitacao, atributo);
-		//}
+		
 		
 	}
-
-	/*private String getAtributo(SolicitacaoPontoDeEncontroDomain solicitacao,
-			String atributo) {
-		PontoDeEncontroDomain encontro = solicitacao.getPontoDeEncontro(2);
-		try {
-			return new CaronaBusiness().getAtributoCarona(
-					encontro.getIdCarona(), atributo);
-		} catch (Exception e) {
-		}
-
-		if (atributo.equals("Dono da carona")) {
-			encontro = solicitacao.getPontoDeEncontro(1);
-			return new UsuarioBusiness().getAtributoUsuario(
-					encontro.getIdSessao(), "nome");
-		}
-
-		if (atributo.equals("Dono da solicitacao")) {
-			encontro = solicitacao.getPontoDeEncontro(0);
-			return new UsuarioBusiness().getAtributoUsuario(
-					encontro.getIdSessao(), "nome");
-		}
-
-		if (atributo.equals("Ponto de Encontro")) {
-			encontro = solicitacao.getPontoDeEncontro(2);
-			// retorna apenas o ponto de encontro marcado
-			return encontro.getPontos();
-		}
-
-		return "";
-	}*/
 
 	public void aceitarSolicitacaoPontoEncontro(String idSessao,
 			String idSolicitacao) throws Exception {
@@ -226,12 +185,8 @@ public class SolicitacaoPontoDeEncontroBusiness {
 		boolean flag = true;// indica se a quantidade de ids � 0
 		PontoDeEncontroDomain pontoEncontro;
 		for (SolicitacaoPontoDeEncontroDomain solicitacao : getSolicitacoes()) {
-			try {// N�o identifiquei o erro que estava ocorrendo quando o
-					// atributo pontoDeEncontro era null e tentava pegar
-					// o valor dele e passar para a nova vari�vel
-				pontoEncontro = solicitacao.getPontoDeEncontro(2);// Pontos de
-																	// encontros
-																	// confirmados
+			try {
+				pontoEncontro = solicitacao.getPontoDeEncontro(2);
 			} catch (Exception e) {
 				pontoEncontro = null;
 			}

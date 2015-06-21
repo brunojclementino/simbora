@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * Usuário básico. Ele tem como fun��es: 
@@ -24,6 +26,7 @@ import javax.persistence.Table;
 @Table(name="USUARIO")
 public class UsuarioDomain implements Serializable{
 
+	final static Logger logger = Logger.getLogger(UsuarioDomain.class);
 	private static final long serialVersionUID = 1L;
 
 	@Id

@@ -18,7 +18,7 @@ public class CaronaRelampagoBusiness {
 
 	public static Logger logger = Logger.getLogger(CaronaRelampagoBusiness.class);
 	CaronaRelampagoDaoImpl caronaRelampagoDaoImpl = new CaronaRelampagoDaoImpl();
-	CaronaRelampagoDomain caronaRelampago;
+	CaronaRelampagoDomain caronaRelampago; 
 
 	public String cadastrarCaronaRelampago(String idSessao, String origem,
 			String destino, String dataIda, String dataVolta, String hora,
@@ -45,10 +45,6 @@ public class CaronaRelampagoBusiness {
 		if (dataIda == null || dataIda.trim().isEmpty() || !isData(dataIda)) {
 			throw new CaronaException("Data inválida");
 		}
-		/* Para passar nos Tests comentei, apos ter feito todos os US's remova este comentario!
-		if (!isDataValida(dataIda, hora)) {
-			throw new CaronaException("Data inválida");
-		}*/
 		if (dataVolta == null || dataVolta.trim().isEmpty()
 				|| !isData(dataVolta)) {
 			throw new CaronaException("Data inválida");
@@ -166,7 +162,6 @@ public class CaronaRelampagoBusiness {
 			return carona.getCaronaRelampago().getExpirou() + "";
 		}
 		throw new CaronaException("Atributo inexistente");
-		//return null;
 	}
 
 	private boolean existeCarona(String idCarona) {
@@ -205,25 +200,7 @@ public class CaronaRelampagoBusiness {
 		}
 	}
 
-	/*public String getTrajeto(String idCarona) throws CaronaException {
-		if (idCarona == null) {
-			throw new CaronaException("Trajeto Inválida");
-		}
-		if (idCarona.trim().isEmpty()) {
-			throw new CaronaException("Trajeto Inexistente");
-		}
-		if (!existeCarona(idCarona)) {
-			throw new CaronaException("Trajeto Inexistente");
-		}
-		for (CaronaRelampagoDomain caronaRelampagoDomain : interesseCaronasRelamlago) {
-			if (caronaRelampagoDomain.getIdCarona().equals(idCarona)) {
-				return caronaRelampagoDomain.getCarona().getLocalDeOrigem() + " - "
-						+ caronaRelampagoDomain.getCarona().getLocalDeDestino();
-			}
-		}
-		return null;
-	}*/
-
+	
 	public String getCaronaRelampago(String idCarona) throws CaronaException {
 		if (idCarona == null) {
 			throw new CaronaException("Carona Inválida");
@@ -273,7 +250,6 @@ public class CaronaRelampagoBusiness {
 	 * @return se for um horario retorna <code>true</code>, caso contrario
 	 *         <code>false</code>
 	 */
-	@SuppressWarnings("unused")
 	private boolean isHora(String data) {
 		try {
 			SimpleDateFormat formatoData = new SimpleDateFormat("HH:mm");

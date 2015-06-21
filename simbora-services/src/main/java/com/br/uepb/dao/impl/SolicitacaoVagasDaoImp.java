@@ -7,12 +7,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.br.uepb.dao.SolicitacaoVagasDao;
-import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.SolicitacaoVagasDomain;
 import com.br.uepb.util.HibernateUtil;
 
 
-public class SolicitacaoVagasDaoImp implements SolicitacaoVagasDao{
+public class SolicitacaoVagasDaoImp implements SolicitacaoVagasDao{ 
 
 	@Override
 	public void save(SolicitacaoVagasDomain solicitacaoVagas) {

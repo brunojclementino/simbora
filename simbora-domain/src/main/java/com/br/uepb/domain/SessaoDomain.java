@@ -1,5 +1,7 @@
 package com.br.uepb.domain;
 
+import org.apache.log4j.Logger;
+
 /**
  * A sessão é aonde será guardada duas informações básicas do 
  * usuário do sistema. Serão gerados um identificador da sessão, 
@@ -10,7 +12,7 @@ package com.br.uepb.domain;
  *
  */
 public class SessaoDomain {
-	
+	final static Logger logger = Logger.getLogger(SessaoDomain.class);
 	private String idSessao;
 	private String idUsuario;
 	private boolean statusSessao = false;

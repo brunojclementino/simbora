@@ -3,15 +3,13 @@
  */
 package com.br.uepb.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;  
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+
+import org.apache.log4j.Logger;
 
 /**
  * @author Lucas e Bruno
@@ -21,6 +19,7 @@ import javax.persistence.Table;
 @Table (name="CARONAMUNICIPAL")
 public class CaronaMunicipalDomain {
 	
+	final static Logger logger = Logger.getLogger(CaronaMunicipalDomain.class);
 	@Id
 	@GeneratedValue
 	@Column(name = "id")

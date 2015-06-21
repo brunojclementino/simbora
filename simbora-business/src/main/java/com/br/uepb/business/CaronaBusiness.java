@@ -32,20 +32,6 @@ public class CaronaBusiness {
 	CaronaDomain carona;
 	CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
 	
-	/**
-	 * Salva todos as caronas e em seguida limpa a List<CaronaDomain>.
-	 */
-	public void encerrarSistema() {
-		/*for (CaronaDomain carona : caronas) {
-			try {
-				CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
-				caronaDaoImp.save(carona);
-			} catch (Exception e) {
-				e.getMessage();
-			}
-		}
-		caronas.clear();*/
-	}
 
 	/**
 	 * Esse metodo deverá retornar as possíveis caronas cadastradas no sistema.
@@ -96,7 +82,7 @@ public class CaronaBusiness {
 	}
 
 	/**
-	 * Esse método será chamado caso a origem e destino não for vazias!
+	 * Esse método será chamado caso a origem e destino não sejam vazios!
 	 * 
 	 * @param origem
 	 * @param destino
@@ -114,10 +100,6 @@ public class CaronaBusiness {
 				ids += carona.getId();
 				flag = false;
 			}
-			/*if (ids.equals("{0") || ids.equals("{0,")) {
-				ids = "{";
-				flag = true;
-			}*/
 		}
 
 		return ids + "}";
@@ -276,7 +258,6 @@ public class CaronaBusiness {
 	 * @return se a data seguir o padrão (dd/mm/aaaa) retorna <code>true</code>,
 	 *         caso contrario <code>false</code>
 	 */
-	@SuppressWarnings("unused")
 	private boolean isData(String data) {
 		try {
 			SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
@@ -297,7 +278,6 @@ public class CaronaBusiness {
 	 * @return se for um horario retorna <code>true</code>, caso contrario
 	 *         <code>false</code>
 	 */
-	@SuppressWarnings("unused")
 	private boolean isHora(String data) {
 		try {
 			SimpleDateFormat formatoData = new SimpleDateFormat("HH:mm");
@@ -476,12 +456,6 @@ public class CaronaBusiness {
 		} catch (Exception e) {
 			throw new CaronaException("Carona não encontrada");
 		}
-		/*for (CaronaDomain carona : caronas) {
-			if (carona.getId() == Integer.parseInt(idcarona)) {
-				int qtdVagasAtual = Integer.parseInt(carona.getVagas()) + 1;
-				carona.setVagas(qtdVagasAtual + "");
-			}
-		}*/
 	}
 
 	/**
@@ -534,22 +508,6 @@ public class CaronaBusiness {
 		return ids + "}";
 	}
 
-	/*private String destinoCidade(String cidade) {
-		String ids = "{";
-		boolean flag = true;// indica se a quantidade de ids é 0
-		for (CaronaDomain carona : getCaronas()) {
-			if (carona.getOrigem().equals(cidade)) {
-				if (!flag) {
-					ids += ",";
-				}
-				ids += carona.getId();
-				flag = false;
-			}
-		}
-
-		return ids + "}";
-	}*/
-
 	public static boolean ehMotorista(String idSessao, String idCarona) {
 		try {
 			CaronaDomain carona = new CaronaDaoImp().getCarona(idCarona);
@@ -597,19 +555,4 @@ public class CaronaBusiness {
 	public CaronaDomain getCaronaDomain(String idCarona){
 		return caronaDaoImp.getCarona(idCarona);
 	}
-
-	/**
-	 * @return the interesseCaronas
-	 * 
-	 */
-	/*public static List<CaronaDomain> getInteresseCaronas() {
-		return interesseCaronas;
-	}*/
-	
-	/**
-	 * @param interesseCaronas the interesseCaronas to set
-	 */
-	/*public static void setInteresseCaronas(List<CaronaDomain> interesseCaronas) {
-		CaronaBusiness.interesseCaronas = interesseCaronas;
-	}*/
 }

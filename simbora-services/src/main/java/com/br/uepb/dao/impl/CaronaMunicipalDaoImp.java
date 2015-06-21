@@ -7,7 +7,6 @@ import org.hibernate.Transaction;
 
 import com.br.uepb.dao.CaronaMunicipalDao;
 import com.br.uepb.domain.CaronaDomain;
-import com.br.uepb.domain.CaronaMunicipalDomain;
 import com.br.uepb.util.HibernateUtil;
 
 public class CaronaMunicipalDaoImp implements CaronaMunicipalDao {

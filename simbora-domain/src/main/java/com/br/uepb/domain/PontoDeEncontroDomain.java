@@ -1,10 +1,11 @@
 package com.br.uepb.domain;
 
-import javax.persistence.Column; 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.apache.log4j.Logger;
 
 /**
  * Gerencia os pontos de encontro. 
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="PONTODEENCONTRO")
 public class PontoDeEncontroDomain {
+	final static Logger logger = Logger.getLogger(PontoDeEncontroDomain.class);
 	
 	@Id
 	@GeneratedValue

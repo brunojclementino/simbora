@@ -16,7 +16,7 @@ public class UsuarioDaoImp implements UsuarioDao{
 	@Override
 	public void save(UsuarioDomain usuario) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
+		Transaction t = session.beginTransaction(); 
 		session.save(usuario);
 		t.commit();
 		HibernateUtil.closedSession();
