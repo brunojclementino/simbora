@@ -14,16 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.br.uepb.business.SessaoBusiness;
-import com.br.uepb.business.UsuarioBusiness;
 import com.br.uepb.constants.SessaoException;
-import com.br.uepb.domain.SessaoDomain;
 import com.br.uepb.domain.UsuarioDomain;
 
 @Controller
 @Scope("request")
 public class LoginController {
 
-	private UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
 	private SessaoBusiness sessaoBusiness = new SessaoBusiness();
 
 	@RequestMapping(value = "/home/login.html", method = RequestMethod.GET)
@@ -32,7 +29,7 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
 		modelAndView.addObject("usuarioDomain", new UsuarioDomain());
-		modelAndView.addObject("sessaoDomain", new SessaoDomain());
+		modelAndView.addObject("mensagem", new String(""));
 
 		return modelAndView;
 	}
@@ -40,7 +37,7 @@ public class LoginController {
 	@RequestMapping(value = "/home/login.html", method = RequestMethod.POST)
 	public ModelAndView validarSenha(
 			@ModelAttribute("usuarioDomain") @Valid UsuarioDomain usuarioDomain,
-			SessaoDomain sessaoDomain, BindingResult bindingResult,
+			String mensagem, BindingResult bindingResult,
 			ModelMap modelo, HttpSession session) throws Exception {
 
 		ModelAndView modelAndView = new ModelAndView();
@@ -54,13 +51,12 @@ public class LoginController {
 		modelo.addAttribute("login", usuarioDomain.getLogin());
 		modelo.addAttribute("senha", usuarioDomain.getSenha());
 
-		usuarioBusiness = new UsuarioBusiness();
 		sessaoBusiness = new SessaoBusiness();
 
 		String nome = (String)usuarioDomain.getNome();
 		
 		session.setAttribute("nome", nome);
-
+		
 		try {
 			session.setAttribute("sessao", usuarioDomain.getLogin());
 			String sessao = sessaoBusiness.abrirSessao(
@@ -71,6 +67,8 @@ public class LoginController {
 			
 		} catch (SessaoException e) {
 			modelAndView.setViewName("login");
+			mensagem = "Login ou senha inválido";
+			session.setAttribute("mensagem", (String) mensagem);
 			return modelAndView;
 		}
 

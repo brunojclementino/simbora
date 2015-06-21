@@ -20,7 +20,7 @@
 					<div class="panel-body">
 						<form:form modelAttribute="usuarioDomain" method="post">
 							<form:errors path="*" cssClass="errorblock" element="div" />
-
+							<c:if test="${mensagem!='j' }"> ${mensagem}</c:if>
 							<div class="form-group">
 								<form:input class="form-control" path="login" name="login"
 									placeholder="Login" />
