@@ -1,5 +1,7 @@
 package com.br.uepb.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.br.uepb.business.CaronaBusiness;
 import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.business.UsuarioBusiness;
 import com.br.uepb.constants.SessaoException;
+import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.SessaoDomain;
 import com.br.uepb.domain.UsuarioDomain;
 
@@ -23,6 +27,7 @@ public class PaginaPrincipalController {
 
 	private UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
 	SessaoBusiness sessaoBusiness = new SessaoBusiness();
+	private CaronaBusiness caronaBusiness = new CaronaBusiness();
 
 	@RequestMapping(value = "/home/paginaprincipal.html", method = RequestMethod.GET)
 	public ModelAndView showCadastroUsuario(HttpServletRequest request) {
@@ -30,6 +35,8 @@ public class PaginaPrincipalController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("paginaprincipal");
 		modelAndView.addObject("usuarioDomain", new UsuarioDomain());
+		List<CaronaDomain> lstCaronas = caronaBusiness.getCaronas();
+		request.getSession().setAttribute("lstCaronas", lstCaronas);
 
 		return modelAndView;
 	} 

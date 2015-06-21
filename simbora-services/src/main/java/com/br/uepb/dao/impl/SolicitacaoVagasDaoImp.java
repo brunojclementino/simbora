@@ -1,5 +1,6 @@
 package com.br.uepb.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -80,4 +81,19 @@ public class SolicitacaoVagasDaoImp implements SolicitacaoVagasDao{
 		return id.get(0);
 	}
 	
+	public List<SolicitacaoVagasDomain> solicitacoesDoMotorista(String login) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		List<Integer> lista = session.createQuery("select id from CaronaDomain where idUsuario=\'"+login+"\'").list();
+		List<SolicitacaoVagasDomain> solicitacoes = session.createQuery("from SolicitacaoVagasDomain").list();
+		List<SolicitacaoVagasDomain> s = new ArrayList<>();
+		for (SolicitacaoVagasDomain solicitacao : solicitacoes) {
+			if(lista.contains(Integer.parseInt(solicitacao.getIdCarona()))){
+				s.add(solicitacao);
+			}
+		}
+		t.commit();
+		HibernateUtil.closedSession();
+		return s;
+	}
 }

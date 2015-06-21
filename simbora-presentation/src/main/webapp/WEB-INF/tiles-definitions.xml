@@ -44,4 +44,8 @@
 	<definition name="solicitarVagaCarona" extends="base.layout">
 		<put-attribute name="body" value="/WEB-INF/views/home/solicitarVagaCarona.jsp" />
 	</definition>
+	
+	<definition name="solicitacoesrecebidas" extends="base.layout">
+		<put-attribute name="body" value="/WEB-INF/views/home/solicitacoesRecebidas.jsp" />
+	</definition>
 </tiles-definitions>
