@@ -4,20 +4,20 @@
 <nav class="container margem">
 	<div class="col-md-8">
 
-		<div class="col-md-8">
+		<div class="col-md-6">
 			<div id="logomarca">
 				<a href='<spring:url value="paginaprincipal.html"></spring:url>'>
-					<img src="../images/caronaLogo.png" width="100" height="100">
+					<img src="../images/caronaLogo.png" title="SIMBORA" width="100" height="100">
 				</a>
 			</div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-6">
 			<div class="title-site">
 				<a href='<spring:url value="paginaprincipal.html"></spring:url>'>Simbora</a>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-4 left margem-top">
+	<div class="col-md-4">
 		<form:form methodParam="sessaoDomain" method="post">
 			<div class="dropdown right">
 				<button class="btn btn-default dropdown-toggle" type="button"
@@ -30,8 +30,8 @@
 					
 					 <li role="separator" class="divider"></li>
 					<li class="left all">
-					<button class="btn all left">
-						<span class="glyphicon glyphicon-log-out space left" aria-hidden="true"></span>
+					<button class="btn all">
+						<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 						 Sair
 					</button>
 					</li>

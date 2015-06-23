@@ -60,7 +60,7 @@
 							<div class="list-group">
 								<a href="#"
 									class="list-group-item">Caronas cadastradas</a> <a
-									href="http://bootply.com/tagged/datetime"
+									href="#"
 									class="list-group-item">Cancelamentos</a> <a
 									href="#"
 									class="list-group-item">Caronas que funcionaram</a>

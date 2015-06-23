@@ -108,14 +108,21 @@ img {
 	
 	border: 0px;
 }
+.margemZero {
+	margin: 0px;
+}
 .margem {
 	margin-bottom: 30px;
 }
 
 .margem-top {
-	margin-top: 10px;
+	margin-top: 2%;
 }
 
+.margem-bottom {
+	margin-bottom: 3%;	
+}	
+	
 .left {
 	float: left;
 }
@@ -167,10 +174,17 @@ img {
 	background-color: #808080;
 	color: #FFFFFF;
 }
+.font11 {
+	font-size: 11px;
+}
 .font13 {
 	font-size: 13px;
 }
 
 .font15 {
 	font-size: 15px;
+}
+
+.widthForm {
+	width: 75%;
 }

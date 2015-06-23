@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import org.apache.log4j.Logger;
 
 /**
+ * Carona municipal também é uma {@link CaronaDomain}, mas que tem algumas informações que são diferentes.
+ * A Exemplo Local de Origem que na {@link CaronaDomain} fica origem. Também tem a cidade onde a carona será
+ * feita.
  * @author Lucas e Bruno
  *
  */

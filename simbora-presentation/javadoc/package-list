@@ -1,0 +1,11 @@
+com.br.uepb.accept
+com.br.uepb.business
+com.br.uepb.constants
+com.br.uepb.controller
+com.br.uepb.dao
+com.br.uepb.dao.impl
+com.br.uepb.domain
+com.br.uepb.facade
+com.br.uepb.junit
+com.br.uepb.util
+com.br.uepb.validator.adapter

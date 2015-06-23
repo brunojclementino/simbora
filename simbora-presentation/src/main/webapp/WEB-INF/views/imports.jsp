@@ -6,8 +6,9 @@
   <link href="../styles/bootstrap-datetimepicker.min.css" rel="stylesheet">
   
   <!-- Simbora -->	
-  <link href="../styles/site-core.css" rel="stylesheet"> 
-  
+  <link href="../styles/site-core.css" rel="stylesheet">
+  <link href="../styles/bootstrap-datetimepicker.min.css" rel="stylesheet">
+ 	 
 <!--[if IE]>
    <link type="text/css" rel="stylesheet" href="site-web.css" media="screen" />
 <![endif]-->
@@ -30,6 +31,7 @@
 <script src="../js/bootstrap.min.js"></script>
 <!-- JS Datapicker -->
 <script src="../js/bootstrap-datetimepicker.min.js"></script>
+<script src="../js/bootstrap-datepicker.min.js"></script>
 
 <!-- Clear and handle PlaceHolders  -->
 <script src="../js/placeholderManagement.js"></script>
