@@ -30,7 +30,7 @@
 							</div>
 
 							<form:form modelAttribute="caronaDomain" method="POST"
-								class="widthForm">
+								class="widthForm" action="cadastrocarona.html">
 
 								<div class="form-group">
 									<label>Cidade de origem: </label>
@@ -93,11 +93,11 @@
 
 
 							<form:form modelAttribute="caronaDomain" method="POST"
-								class="widthForm">
+								class="widthForm" action="cadastrocaronamunicipal.html">
 								<!-- Mudar o path da cidade! -->
 								<div class="form-group">
 									<label>Cidade: </label>
-									<form:input path="vagas" type="text" class="form-control"
+									<form:input path="caronaMunicipal.cidade" type="text" class="form-control"
 										placeholder="Qual a cidade da carona?" />
 								</div>
 
@@ -163,7 +163,7 @@
 
 
 							<form:form modelAttribute="caronaDomain" method="POST"
-								class="widthForm">
+								class="widthForm" action="cadastrocaronamunicipal.html">
 
 								<div class="form-group">
 									<label>Cidade de origem: </label>
@@ -188,7 +188,7 @@
 								<div class="form-group">
 									<label>Data da volta: </label>
 									<div class="hero-unit">
-										<form:input path="data" class="form-control" type="text"
+										<form:input path="caronaRelampago.dataVolta" class="form-control" type="text"
 											placeholder="Selecione a data da volta." id="data"></form:input>
 									</div>
 								</div>

@@ -64,9 +64,76 @@ public class CadastrarCaronaController {
 		} catch (Exception e) {
 			return new ModelAndView("cadastrocarona");
 		}
+		return new ModelAndView("paginaprincipal");
+	}
+	
+	@RequestMapping(value = "/home/cadastrocaronamunicipal.html", method = RequestMethod.POST)
+	public ModelAndView addNovaCaronaMunicipal(
+			@ModelAttribute("caronaMunicipalDomain") @Valid CaronaDomain caronaDomain, SessaoDomain sessaoDomain,
+			BindingResult bindingResult, HttpServletRequest request,
+			ModelMap modelo) throws Exception {
+
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("cadastrocarona");
+
+		if (bindingResult.hasErrors()) {
+			modelAndView.addObject("caronaMunicipalDomain", caronaDomain);
+			modelAndView.addObject("sessaoDomain", sessaoDomain);
+			modelAndView.setViewName("/paginaPrincipal");
+			return modelAndView;
+		}
+		modelo.addAttribute("idSessao", sessaoDomain.getIdSessao());
+		modelo.addAttribute("id", caronaDomain.getId());
+		modelo.addAttribute("origem", caronaDomain.getOrigem());
+		modelo.addAttribute("destino", caronaDomain.getDestino());
+		modelo.addAttribute("data", caronaDomain.getData());
+		modelo.addAttribute("hora", caronaDomain.getHora());
+		modelo.addAttribute("vagas", caronaDomain.getVagas());
+		modelo.addAttribute("idUsuario", caronaDomain.getIdUsuario());
+		modelo.addAttribute("cidade", caronaDomain.getCaronaMunicipal().getCidade());
+		modelo.addAttribute("ehPreferencial", caronaDomain.getEhPreferencial());
 		
+		try {
+			caronaBusiness.cadastrarCarona((String)request.getSession().getAttribute("sessao"), caronaDomain.getOrigem(),
+					caronaDomain.getDestino(), caronaDomain.getData(), caronaDomain.getHora(), caronaDomain.getVagas());
+		} catch (Exception e) {
+			return new ModelAndView("cadastrocarona");
+		}
+		return new ModelAndView("paginaprincipal");
+	}
+	
+	@RequestMapping(value = "/home/cadastrocaronarelampago.html", method = RequestMethod.POST)
+	public ModelAndView addNovaCaronaRelampago(
+			@ModelAttribute("caronaRelampagoDomain") @Valid CaronaDomain caronaDomain, SessaoDomain sessaoDomain,
+			BindingResult bindingResult, HttpServletRequest request,
+			ModelMap modelo) throws Exception {
+
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("cadastrocarona");
+
+		if (bindingResult.hasErrors()) {
+			modelAndView.addObject("caronaMunicipalDomain", caronaDomain);
+			modelAndView.addObject("sessaoDomain", sessaoDomain);
+			modelAndView.setViewName("/paginaPrincipal");
+			return modelAndView;
+		}
+		modelo.addAttribute("idSessao", sessaoDomain.getIdSessao());
+		modelo.addAttribute("id", caronaDomain.getId());
+		modelo.addAttribute("origem", caronaDomain.getOrigem());
+		modelo.addAttribute("destino", caronaDomain.getDestino());
+		modelo.addAttribute("data", caronaDomain.getData());
+		modelo.addAttribute("hora", caronaDomain.getHora());
+		modelo.addAttribute("vagas", caronaDomain.getVagas());
+		modelo.addAttribute("idUsuario", caronaDomain.getIdUsuario());
+		modelo.addAttribute("dataVolta", caronaDomain.getCaronaRelampago().getDataVolta());
+		modelo.addAttribute("ehPreferencial", caronaDomain.getEhPreferencial());
 		
-		
+		try {
+			caronaBusiness.cadastrarCarona((String)request.getSession().getAttribute("sessao"), caronaDomain.getOrigem(),
+					caronaDomain.getDestino(), caronaDomain.getData(), caronaDomain.getHora(), caronaDomain.getVagas());
+		} catch (Exception e) {
+			return new ModelAndView("cadastrocarona");
+		}
 		return new ModelAndView("paginaprincipal");
 	}
 }
