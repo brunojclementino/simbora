@@ -24,7 +24,7 @@ public class LoginController {
 	private SessaoBusiness sessaoBusiness = new SessaoBusiness();
 
 	@RequestMapping(value = "/home/login.html", method = RequestMethod.GET)
-	public ModelAndView showCadastroUsuario(HttpServletRequest request) {
+	public ModelAndView showLogin(HttpServletRequest request) {
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
@@ -38,7 +38,7 @@ public class LoginController {
 	public ModelAndView validarSenha(
 			@ModelAttribute("usuarioDomain") @Valid UsuarioDomain usuarioDomain,
 			String mensagem, BindingResult bindingResult,
-			ModelMap modelo, HttpSession session) throws Exception {
+			ModelMap modelo, HttpSession session, HttpServletRequest request) throws Exception {
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("paginaprincipal");
@@ -72,18 +72,16 @@ public class LoginController {
 			return modelAndView;
 		}
 
-		return modelAndView;
+		return new PaginaPrincipalController().showPaginaPrincipal(request);
 	}
 	
 
-	@RequestMapping(value = "/home", method = RequestMethod.POST)
+	@RequestMapping(value = "/home/sair.html", method = RequestMethod.POST)
 	public ModelAndView lognout(
-			@ModelAttribute("sessaoDomain") @Valid SessaoBusiness sessaoDomain, HttpSession session) throws Exception {
+			@ModelAttribute("sessaoDomain") @Valid SessaoBusiness sessaoDomain, HttpServletRequest request) throws Exception {
 
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("login");
-		sessaoBusiness.encerrarSessao((String)session.getAttribute("sessao"));
-
-		return modelAndView;
+		sessaoBusiness.encerrarSessao((String)request.getSession().getAttribute("sessao"));
+		request.getSession().removeAttribute("sessao");
+		return new ModelAndView("redirect:login.html");
 	}
 }

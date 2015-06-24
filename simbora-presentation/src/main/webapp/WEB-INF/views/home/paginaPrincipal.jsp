@@ -87,10 +87,9 @@
 							
 							<div class="clearfix"></div>
 							<h5>Saindo de ${carona.origem } no
-							dia ${carona.data } as ${carona.hora }hr com destino à ${carona.destino }.</h5>
+							dia ${carona.data } as ${carona.hora } horas com destino à ${carona.destino }.</h5>
 						</div>
 					</div>
 					
 				</c:forEach>
-				<c:set var="lstCaronas" value="${lstUsers}" scope="request" />
 				</div>

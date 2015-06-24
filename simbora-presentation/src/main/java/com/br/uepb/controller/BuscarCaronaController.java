@@ -28,15 +28,18 @@ public class BuscarCaronaController {
 	@RequestMapping(value = "/home/buscarCarona.html", method = RequestMethod.GET)
 	public ModelAndView mostarCaronas(HttpServletRequest request) {
 
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("buscarCarona");
-		modelAndView.addObject("caronaDomain", new CaronaDomain());
-		modelAndView.addObject("sessaoDomain", new SessaoDomain());
-		
-		List<CaronaDomain> lstCaronas = caronaBusiness.getCaronas();
-		request.getSession().setAttribute("lstCaronas", lstCaronas);
-		
-		return modelAndView;
+		if(request.getSession().getAttribute("sessao")!=null){
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("buscarCarona");
+			modelAndView.addObject("caronaDomain", new CaronaDomain());
+			modelAndView.addObject("sessaoDomain", new SessaoDomain());
+			
+			List<CaronaDomain> lstCaronas = caronaBusiness.getCaronas();
+			request.getSession().setAttribute("lstCaronas", lstCaronas);
+			
+			return modelAndView;
+		}
+		return new ModelAndView("redirect:login.html");
 	}
 
 	@RequestMapping(value = "/home/buscarCarona.html", method = RequestMethod.POST)

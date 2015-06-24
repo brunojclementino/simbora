@@ -18,7 +18,7 @@
 		</div>
 	</div>
 	<div class="col-md-4">
-		<form:form methodParam="sessaoDomain" method="post">
+		<form:form methodParam="sessaoDomain" method="post" action="sair.html">
 			<div class="dropdown right">
 				<button class="btn btn-default dropdown-toggle" type="button"
 					id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
@@ -26,11 +26,8 @@
 					Olá ${sessao } <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-					<li><a href="perfil.html"><span class="glyphicon glyphicon-user space"></span> Perfil</a></li>
-					
-					 <li role="separator" class="divider"></li>
 					<li class="left all">
-					<button class="btn all">
+					<button class="btn all" >
 						<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 						 Sair
 					</button>

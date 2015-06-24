@@ -30,15 +30,18 @@ public class PaginaPrincipalController {
 	private CaronaBusiness caronaBusiness = new CaronaBusiness();
 
 	@RequestMapping(value = "/home/paginaprincipal.html", method = RequestMethod.GET)
-	public ModelAndView showCadastroUsuario(HttpServletRequest request) {
+	public ModelAndView showPaginaPrincipal(HttpServletRequest request) {
 
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("paginaprincipal");
-		modelAndView.addObject("usuarioDomain", new UsuarioDomain());
-		List<CaronaDomain> lstCaronas = caronaBusiness.getCaronas();
-		request.getSession().setAttribute("lstCaronas", lstCaronas);
-
-		return modelAndView;
+		if(request.getSession().getAttribute("sessao")!=null){
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("paginaprincipal");
+			modelAndView.addObject("usuarioDomain", new UsuarioDomain());
+			List<CaronaDomain> lstCaronas = caronaBusiness.getCaronas();
+			request.getSession().setAttribute("lstCaronas", lstCaronas);
+	
+			return modelAndView;
+		}
+		return new ModelAndView("redirect:login.html");
 	} 
 
 	@RequestMapping(value = "/home/paginaprincipal.html", method = RequestMethod.POST)

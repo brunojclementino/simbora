@@ -25,12 +25,15 @@ public class CadastrarCaronaController {
 	@RequestMapping(value = "/home/cadastrocarona.html", method = RequestMethod.GET)
 	public ModelAndView showCadastroCarona(HttpServletRequest request) {
 
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("cadastrocarona");
-		modelAndView.addObject("caronaDomain", new CaronaDomain());
-		modelAndView.addObject("sessaoDomain", new SessaoDomain());
-		
-		return modelAndView;
+		if(request.getSession().getAttribute("sessao")!=null){
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("cadastrocarona");
+			modelAndView.addObject("caronaDomain", new CaronaDomain());
+			modelAndView.addObject("sessaoDomain", new SessaoDomain());
+			
+			return modelAndView;
+		}
+		return new ModelAndView("redirect:login.html");
 	}
 
 	@RequestMapping(value = "/home/cadastrocarona.html", method = RequestMethod.POST)
@@ -64,7 +67,7 @@ public class CadastrarCaronaController {
 		} catch (Exception e) {
 			return new ModelAndView("cadastrocarona");
 		}
-		return new ModelAndView("paginaprincipal");
+		return new PaginaPrincipalController().showPaginaPrincipal(request);
 	}
 	
 	@RequestMapping(value = "/home/cadastrocaronamunicipal.html", method = RequestMethod.POST)
@@ -99,7 +102,7 @@ public class CadastrarCaronaController {
 		} catch (Exception e) {
 			return new ModelAndView("cadastrocarona");
 		}
-		return new ModelAndView("paginaprincipal");
+		return new PaginaPrincipalController().showPaginaPrincipal(request);
 	}
 	
 	@RequestMapping(value = "/home/cadastrocaronarelampago.html", method = RequestMethod.POST)
@@ -134,6 +137,6 @@ public class CadastrarCaronaController {
 		} catch (Exception e) {
 			return new ModelAndView("cadastrocarona");
 		}
-		return new ModelAndView("paginaprincipal");
+		return new PaginaPrincipalController().showPaginaPrincipal(request);
 	}
 }

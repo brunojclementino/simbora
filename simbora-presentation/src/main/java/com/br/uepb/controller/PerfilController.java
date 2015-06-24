@@ -33,41 +33,44 @@ public class PerfilController {
 	
 	@RequestMapping(value = "/home/perfil.html", method = RequestMethod.GET)
 	public ModelAndView showPerfil(HttpServletRequest request) {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("perfil");
-		
-		usuariobusiness = new UsuarioBusiness();
-		UsuarioDomain usuario = new UsuarioDomain();
-		String login = (String)request.getSession().getAttribute("sessao");
-		usuario.setLogin(login);
-		usuario.setEmail(usuariobusiness.getAtributoUsuario(login, "email"));
-		usuario.setEndereco(usuariobusiness.getAtributoUsuario(login, "endereco"));
-		usuario.setNome(usuariobusiness.getAtributoUsuario(login, "nome"));
-		
-		modelAndView.addObject("usuarioDomain", usuario);
-		
-		solicitacaoBusiness = new SolicitacaoVagasBusiness();
-		modelAndView.addObject("solicitacaoDomain", solicitacaoBusiness.getSolicitacoes(login));
-		
-		perfilBusiness = new PerfilBusiness();
-		caronaBusiness = new CaronaBusiness();
-		try {
-			List<CaronaDomain> caronasHistorico = perfilBusiness.getHistoricoCaronas(login);
-			modelAndView.addObject("carHist", caronasHistorico);
-			 
-			List<ReviewDomain> caronasSegurasTranquilas = perfilBusiness.getSegurasTransquilas(login);
-			modelAndView.addObject("carSegTranq", caronasSegurasTranquilas);
+		if(request.getSession().getAttribute("sessao")!=null){
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("perfil");
 			
-			List<ReviewDomain> caronasNaoFunc = perfilBusiness.getNaoFunc(login);
-			modelAndView.addObject("carNaoFunc", caronasNaoFunc);
+			usuariobusiness = new UsuarioBusiness();
+			UsuarioDomain usuario = new UsuarioDomain();
+			String login = (String)request.getSession().getAttribute("sessao");
+			usuario.setLogin(login);
+			usuario.setEmail(usuariobusiness.getAtributoUsuario(login, "email"));
+			usuario.setEndereco(usuariobusiness.getAtributoUsuario(login, "endereco"));
+			usuario.setNome(usuariobusiness.getAtributoUsuario(login, "nome"));
 			
-			List<SolicitacaoVagasDomain> solicitacoes = solicitacaoBusiness.getAllSolicitacoesPendentes(login);
-			modelAndView.addObject("solicitacoes", solicitacoes);
-		} catch (PerfilException e) {
-			e.printStackTrace();
-		} 
-		
-		return modelAndView;
+			modelAndView.addObject("usuarioDomain", usuario);
+			
+			solicitacaoBusiness = new SolicitacaoVagasBusiness();
+			modelAndView.addObject("solicitacaoDomain", solicitacaoBusiness.getSolicitacoes(login));
+			
+			perfilBusiness = new PerfilBusiness();
+			caronaBusiness = new CaronaBusiness();
+			try {
+				List<CaronaDomain> caronasHistorico = perfilBusiness.getHistoricoCaronas(login);
+				modelAndView.addObject("carHist", caronasHistorico);
+				 
+				List<ReviewDomain> caronasSegurasTranquilas = perfilBusiness.getSegurasTransquilas(login);
+				modelAndView.addObject("carSegTranq", caronasSegurasTranquilas);
+				
+				List<ReviewDomain> caronasNaoFunc = perfilBusiness.getNaoFunc(login);
+				modelAndView.addObject("carNaoFunc", caronasNaoFunc);
+				
+				List<SolicitacaoVagasDomain> solicitacoes = solicitacaoBusiness.getAllSolicitacoesPendentes(login);
+				modelAndView.addObject("solicitacoes", solicitacoes);
+			} catch (PerfilException e) {
+				e.printStackTrace();
+			} 
+			
+			return modelAndView;
+		}
+		return new ModelAndView("redirect:login.html");
 	}
 
 	@RequestMapping(value = "/home/perfil.html", method = RequestMethod.POST)
