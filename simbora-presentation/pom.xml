@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>simbora-presentation</artifactId>
 	<name>simbora-presentation</name>
-	<packaging>war</packaging>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -177,4 +177,5 @@
 	        <version>4.1.0.Final</version>
 	    </dependency>
 	</dependencies>
+	<packaging>war</packaging>
 </project>

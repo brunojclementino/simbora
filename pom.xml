@@ -110,9 +110,13 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>2.3.2</version>
 					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
+						<source>1.8</source>
+						<target>1.8</target>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>com.google.appengine</groupId>
+					<artifactId>appengine-maven-plugin</artifactId>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -122,7 +126,7 @@
 						<sourceEncoding>utf-8</sourceEncoding>
 						<outputEncoding>utf-8</outputEncoding>
 						<outputDirectory>target/site/pmd/</outputDirectory>
-						<targetJdk>1.7</targetJdk>
+						<targetJdk>1.8</targetJdk>
 						<rulesets>
 							<ruleset>code_analysis/pmd_rules.xml</ruleset>
 						</rulesets>
