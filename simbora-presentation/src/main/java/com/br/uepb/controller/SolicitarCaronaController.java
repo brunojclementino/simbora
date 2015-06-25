@@ -67,6 +67,9 @@ public class SolicitarCaronaController {
 		if(CaronaBusiness.ehMotorista(login, idCarona)){
 			return new ModelAndView("errosolicitandovaganasuacarona");
 		}
+		if(new CaronaBusiness().getAtributoCarona(idCarona, "vagas").equals("0")){
+			return new ModelAndView("errovagascompletas");
+		}
 		solicitarVagasBusiness.solicitarVaga(login, idCarona);
 		session.removeAttribute("idCarona");
 		modelAndView.setViewName("perfil");

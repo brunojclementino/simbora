@@ -53,7 +53,9 @@ public class PerfilController {
 			perfilBusiness = new PerfilBusiness();
 			caronaBusiness = new CaronaBusiness();
 			List<SolicitacaoVagasDomain> solicitacoes = solicitacaoBusiness.getSolicitacoesDoMotorista(login);
+			List<SolicitacaoVagasDomain> solicitacoesRespondidas = solicitacaoBusiness.getSolicitacoesRespondidasDoMotorista(login);
 			modelAndView.addObject("solicitacoes", solicitacoes);
+			modelAndView.addObject("solicitacoesRespondidas", solicitacoesRespondidas);
 			
 			return modelAndView;
 		}

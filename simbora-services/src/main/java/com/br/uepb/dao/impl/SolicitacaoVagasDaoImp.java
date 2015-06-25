@@ -87,7 +87,24 @@ public class SolicitacaoVagasDaoImp implements SolicitacaoVagasDao{
 		List<SolicitacaoVagasDomain> solicitacoes = session.createQuery("from SolicitacaoVagasDomain").list();
 		List<SolicitacaoVagasDomain> s = new ArrayList<>();
 		for (SolicitacaoVagasDomain solicitacao : solicitacoes) {
-			if(lista.contains(Integer.parseInt(solicitacao.getIdCarona()))){
+			if(lista.contains(Integer.parseInt(solicitacao.getIdCarona())) && solicitacao.getStatus().equals("Pendente")){
+				s.add(solicitacao);
+			}
+		}
+		t.commit();
+		HibernateUtil.closedSession();
+		return s;
+	}
+
+	public List<SolicitacaoVagasDomain> getSolicitacoesRespondidasDoMotorista(
+			String login) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		List<Integer> lista = session.createQuery("select id from CaronaDomain where idUsuario=\'"+login+"\'").list();
+		List<SolicitacaoVagasDomain> solicitacoes = session.createQuery("from SolicitacaoVagasDomain").list();
+		List<SolicitacaoVagasDomain> s = new ArrayList<>();
+		for (SolicitacaoVagasDomain solicitacao : solicitacoes) {
+			if(lista.contains(Integer.parseInt(solicitacao.getIdCarona())) && !solicitacao.getStatus().equals("Pendente")){
 				s.add(solicitacao);
 			}
 		}

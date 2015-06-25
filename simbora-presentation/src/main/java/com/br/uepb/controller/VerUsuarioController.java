@@ -23,7 +23,7 @@ public class VerUsuarioController {
 			ModelAndView modelAndView = new ModelAndView();
 			modelAndView.setViewName("verusuario");
 			if(login.equals(request.getSession().getAttribute("sessao"))){
-				return new ModelAndView("perfil");
+				return new ModelAndView("redirect:perfil.html");
 			}
 			usuarioBusiness = new UsuarioBusiness();
 			UsuarioDomain usuario = usuarioBusiness.getUsuarioDomain(login);

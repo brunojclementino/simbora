@@ -251,4 +251,9 @@ public class SolicitacaoVagasBusiness {
 	public SolicitacaoVagasDomain getSolicitacaoVagasDomain(String idSolicitacao){
 		return solicitacaoVagasDaoImp.getSolicitacaoVagas(idSolicitacao);
 	}
+
+	public List<SolicitacaoVagasDomain> getSolicitacoesRespondidasDoMotorista(
+			String login) {
+		return solicitacaoVagasDaoImp.getSolicitacoesRespondidasDoMotorista(login);
+	}
 }

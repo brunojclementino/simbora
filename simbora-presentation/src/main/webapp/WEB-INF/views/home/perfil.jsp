@@ -70,6 +70,30 @@
 					</div>
 				</div>
 			</div>
+			
+			<div class="col-lg-6">
+				<div class="panel panel-primary">
+					<div class="panel-heading"><h4>Aqui são exibidas as solicitações de caronas que outros usuários lhe fizeram
+													e já foram respondidas</h4></div>
+					<div class="panel-body">
+						<table class="table table-hover">
+							<thead>
+								
+							</thead>
+							<c:forEach items="${solicitacoesRespondidas }" var="c">
+								<tbody>
+									<tr>
+										<td class="col-md-1 font13">O usuário ${c.idSessao } solicitou uma vaga na carona ${c.idCarona }</td>
+										<td class="col-md-1 font13">Status: ${c.status }</td>
+										<td class="col-md-1 font13"><a href="requisicaoDeVagaNaCarona.html?idSolicitacao=${c.idSolicitacao }">Saiba mais</a></td>
+									</tr>
+								</tbody>
+							</c:forEach>
+						</table>
+
+					</div>
+				</div>
+			</div>
 		</div>
 
 	</div>

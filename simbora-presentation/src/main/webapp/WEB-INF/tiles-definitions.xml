@@ -66,4 +66,8 @@
 	<definition name="errosolicitandovaganasuacarona" extends="base.layout">
 		<put-attribute name="body" value="/WEB-INF/views/home/ERROSolicitandoVagaNaSuaCarona.jsp" />
 	</definition>
+	
+	<definition name="errovagascompletas" extends="base.layout">
+		<put-attribute name="body" value="/WEB-INF/views/home/ERROVagasCompletas.jsp" />
+	</definition>
 </tiles-definitions>
