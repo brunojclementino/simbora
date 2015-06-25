@@ -1,26 +1,20 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>Login</title>
-<%@ include file="/WEB-INF/views/imports.jsp"%>
-<%@ include file="/WEB-INF/views/includeTags.jsp"%>
-</head>
-<body>
-
-
-	<div class="container">
+<div class="container">
+	<form:form modelAttribute="usuarioDomain" method="post">
 		<div class="row">
 			<div class="col-md-12">
-				<a href="perfil.html"> <h1 class="page-head-line">Perfil</h1> </a>
+				<a href="verUsuario.html?login=${usuarioDomain.login }"> <h1 class="page-head-line">${usuarioDomain.nome }</h1> </a>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4">
 				<div class="panel panel-default">
-					<div class="panel-heading panel-title">Sobre você</div>
+					<div class="panel-heading panel-title">Sobre ele</div>
 					<div class="panel-body">
 
 						<div class="panel-body">
-						<a href="#">	<h4>Visualize ou modifique suas informações</h4></a>
+						<p><h5>${usuarioDomain.nome } reside em ${usuarioDomain.endereco },
+						<p>para entrar em contato com ele basta enviar e-mail através do endereço
+						<p>eletrônico "${usuarioDomain.email }"</h5>
 						</div>
 					</div>
 				</div>
@@ -49,8 +43,7 @@
 						<!-- /.col-lg-4 -->
 			<div class="col-lg-6">
 				<div class="panel panel-primary">
-					<div class="panel-heading"><h4>Aqui são exibidas as solicitações de caronas que outros usuários lhe fizeram
-													e ainda não foram respondidas</h4></div>
+					<div class="panel-heading"><h4>Aqui são exibidas todas as caronas disponíveis oferecidas por ele</h4></div>
 					<div class="panel-body">
 						<table class="table table-hover">
 							<thead>
@@ -70,5 +63,5 @@
 				</div>
 			</div>
 		</div>
-
+ </form:form>
 	</div>

@@ -64,7 +64,7 @@
 							
 								<div class="panel panel-default">
 							      <div class="panel-heading">
-							     	 <a  class="panel-title" href='#'>
+							     	 <a  class="panel-title" href='verUsuario.html?login=${carona.idUsuario }'>
 							     	 <span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${carona.idUsuario }</a>
 							      </div>
 							      
@@ -90,7 +90,7 @@
 							
 								<div class="panel panel-default">
 							      <div class="panel-heading">
-							     	 <a  class="panel-title" href='#'>
+							     	 <a  class="panel-title" href='verUsuario.html?login=${carona.idUsuario }'>
 							     	 <span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${carona.idUsuario }</a>
 							      </div>
 							      
@@ -117,7 +117,7 @@
 							
 								<div class="panel panel-default">
 							      <div class="panel-heading">
-							     	 <a  class="panel-title" href='#'>
+							     	 <a  class="panel-title" href='verUsuario.html?login=${carona.idUsuario }'>
 							     	 <span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${carona.idUsuario }</a>
 							      </div>
 							      

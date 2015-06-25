@@ -36,11 +36,11 @@ public class PaginaPrincipalController {
 			ModelAndView modelAndView = new ModelAndView();
 			modelAndView.setViewName("paginaprincipal");
 			modelAndView.addObject("usuarioDomain", new UsuarioDomain());
-			List<CaronaDomain> lstCaronas = caronaBusiness.getUltimasCaronas("caronaComum", 10);
+			List<CaronaDomain> lstCaronas = caronaBusiness.getUltimasCaronas("caronaComum", 5);
 			request.getSession().setAttribute("lstCaronas", lstCaronas);
-			List<CaronaDomain> lstCaronasMunicipais = caronaBusiness.getUltimasCaronas("caronaMunicipal", 10);
+			List<CaronaDomain> lstCaronasMunicipais = caronaBusiness.getUltimasCaronas("caronaMunicipal", 5);
 			request.getSession().setAttribute("lstCaronasMunicipais", lstCaronasMunicipais);
-			List<CaronaDomain> lstCaronasRelampagos = caronaBusiness.getUltimasCaronas("caronaRelampago", 10);
+			List<CaronaDomain> lstCaronasRelampagos = caronaBusiness.getUltimasCaronas("caronaRelampago", 5);
 			request.getSession().setAttribute("lstCaronasRelampagos", lstCaronasRelampagos);
 	
 			return modelAndView;

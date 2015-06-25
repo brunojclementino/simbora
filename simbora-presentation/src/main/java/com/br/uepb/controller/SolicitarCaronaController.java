@@ -32,22 +32,24 @@ public class SolicitarCaronaController {
 	
 	@RequestMapping(value = "/home/solicitarVagaCarona.html", method = RequestMethod.GET)
 	public ModelAndView mostarInformacoesDonoCarona(@RequestParam("idCarona") String idCarona, HttpServletRequest request) {
-
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("solicitarVagaCarona");
-
-		usuarioBusiness = new UsuarioBusiness();
-		caronaBusiness = new CaronaBusiness();
-		CaronaDomain carona = caronaBusiness.getCaronaDomain(idCarona);
-		UsuarioDomain usuario = usuarioBusiness.getUsuarioDomain(carona.getIdUsuario());
-		
-		modelAndView.addObject("usuarioDomain", usuario);
-
-		caronaBusiness = new CaronaBusiness();
-		 
-		modelAndView.addObject("caronaDomain", carona);	
-		request.getSession().setAttribute("idCarona", idCarona);
-		return modelAndView;
+		if(request.getSession().getAttribute("sessao")!=null){
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("solicitarVagaCarona");
+	
+			usuarioBusiness = new UsuarioBusiness();
+			caronaBusiness = new CaronaBusiness();
+			CaronaDomain carona = caronaBusiness.getCaronaDomain(idCarona);
+			UsuarioDomain usuario = usuarioBusiness.getUsuarioDomain(carona.getIdUsuario());
+			
+			modelAndView.addObject("usuarioDomain", usuario);
+	
+			caronaBusiness = new CaronaBusiness();
+			 
+			modelAndView.addObject("caronaDomain", carona);	
+			request.getSession().setAttribute("idCarona", idCarona);
+			return modelAndView;
+		}
+		return new ModelAndView("redirect:login.html");
 	}
 
 	@RequestMapping(value = "/home/solicitarVagaCarona.html", method = RequestMethod.POST)
@@ -58,17 +60,16 @@ public class SolicitarCaronaController {
 			HttpSession session, ModelMap modelo) throws Exception {
 
 		ModelAndView modelAndView = new ModelAndView();
-		SolicitacaoVagasDomain solicitacaoVagasDomain = new SolicitacaoVagasDomain();
-
-		usuarioBusiness = new UsuarioBusiness();
-		String login = (String) request.getSession().getAttribute("sessao");
-	
-		solicitacaoVagasDomain.setIdCarona(caronaDomain.getIdUsuario());
-
 		solicitarVagasBusiness = new SolicitacaoVagasBusiness();
-		solicitarVagasBusiness.solicitarVaga(login, (String) request.getSession().getAttribute("idCarona"));
+		
+		String login = (String) request.getSession().getAttribute("sessao");
+		String idCarona = (String) request.getSession().getAttribute("idCarona");
+		if(CaronaBusiness.ehMotorista(login, idCarona)){
+			return new ModelAndView("errosolicitandovaganasuacarona");
+		}
+		solicitarVagasBusiness.solicitarVaga(login, idCarona);
 		session.removeAttribute("idCarona");
-		modelAndView.setViewName("buscarCarona");
+		modelAndView.setViewName("perfil");
 
 		return modelAndView;
 	}

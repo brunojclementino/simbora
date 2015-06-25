@@ -52,21 +52,8 @@ public class PerfilController {
 			
 			perfilBusiness = new PerfilBusiness();
 			caronaBusiness = new CaronaBusiness();
-			try {
-				List<CaronaDomain> caronasHistorico = perfilBusiness.getHistoricoCaronas(login);
-				modelAndView.addObject("carHist", caronasHistorico);
-				 
-				List<ReviewDomain> caronasSegurasTranquilas = perfilBusiness.getSegurasTransquilas(login);
-				modelAndView.addObject("carSegTranq", caronasSegurasTranquilas);
-				
-				List<ReviewDomain> caronasNaoFunc = perfilBusiness.getNaoFunc(login);
-				modelAndView.addObject("carNaoFunc", caronasNaoFunc);
-				
-				List<SolicitacaoVagasDomain> solicitacoes = solicitacaoBusiness.getAllSolicitacoesPendentes(login);
-				modelAndView.addObject("solicitacoes", solicitacoes);
-			} catch (PerfilException e) {
-				e.printStackTrace();
-			} 
+			List<SolicitacaoVagasDomain> solicitacoes = solicitacaoBusiness.getSolicitacoesDoMotorista(login);
+			modelAndView.addObject("solicitacoes", solicitacoes);
 			
 			return modelAndView;
 		}

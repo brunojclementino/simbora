@@ -48,4 +48,12 @@
 	<definition name="solicitacoesrecebidas" extends="base.layout">
 		<put-attribute name="body" value="/WEB-INF/views/home/solicitacoesRecebidas.jsp" />
 	</definition>
+	
+	<definition name="verusuario" extends="base.layout">
+		<put-attribute name="body" value="/WEB-INF/views/home/verUsuario.jsp" />
+	</definition>
+	
+	<definition name="errosolicitandovaganasuacarona" extends="base.layout">
+		<put-attribute name="body" value="/WEB-INF/views/home/ERROSolicitandoVagaNaSuaCarona.jsp" />
+	</definition>
 </tiles-definitions>
