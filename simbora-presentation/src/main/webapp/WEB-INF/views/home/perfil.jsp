@@ -60,7 +60,8 @@
 								<tbody>
 									<tr>
 										<td class="col-md-1 font13">O usuário ${c.idSessao } solicitou uma vaga na carona ${c.idCarona }</td>
-										<td class="col-md-1 font13"><a href="#">Saiba mais</a></td>
+										<td class="col-md-1 font13">Status: ${c.status }</td>
+										<td class="col-md-1 font13"><a href="requisicaoDeVagaNaCarona.html?idSolicitacao=${c.idSolicitacao }">Saiba mais</a></td>
 									</tr>
 								</tbody>
 							</c:forEach>

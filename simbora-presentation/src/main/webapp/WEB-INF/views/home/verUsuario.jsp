@@ -52,7 +52,7 @@
 							<c:forEach items="${solicitacoes }" var="c">
 								<tbody>
 									<tr>
-										<td class="col-md-1 font13">O usuário ${c.idSessao } solicitou uma vaga na carona ${c.idCarona }</td>
+										<td class="col-md-1 font13">Ainda não coloquei os dados aqui <0></td>
 										<td class="col-md-1 font13"><a href="#">Saiba mais</a></td>
 									</tr>
 								</tbody>

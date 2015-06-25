@@ -53,6 +53,16 @@
 		<put-attribute name="body" value="/WEB-INF/views/home/verUsuario.jsp" />
 	</definition>
 	
+	<definition name="requisicaodevaganacarona" extends="base.layout">
+		<put-attribute name="body" value="/WEB-INF/views/home/requisicaoDeVagaNaCarona.jsp" />
+	</definition>
+	<definition name="aprovar" extends="base.layout">
+		<put-attribute name="body" value="/WEB-INF/views/home/aprovar.jsp" />
+	</definition>
+	<definition name="rejeitar" extends="base.layout">
+		<put-attribute name="body" value="/WEB-INF/views/home/rejeitar.jsp" />
+	</definition>
+	
 	<definition name="errosolicitandovaganasuacarona" extends="base.layout">
 		<put-attribute name="body" value="/WEB-INF/views/home/ERROSolicitandoVagaNaSuaCarona.jsp" />
 	</definition>

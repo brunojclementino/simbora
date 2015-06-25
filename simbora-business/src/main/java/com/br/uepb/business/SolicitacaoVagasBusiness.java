@@ -247,4 +247,8 @@ public class SolicitacaoVagasBusiness {
 	public List<SolicitacaoVagasDomain> getSolicitacoesDoMotorista(String login){
 		return solicitacaoVagasDaoImp.solicitacoesDoMotorista(login);
 	}
+	
+	public SolicitacaoVagasDomain getSolicitacaoVagasDomain(String idSolicitacao){
+		return solicitacaoVagasDaoImp.getSolicitacaoVagas(idSolicitacao);
+	}
 }
