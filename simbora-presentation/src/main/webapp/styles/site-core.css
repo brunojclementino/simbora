@@ -188,3 +188,14 @@ img {
 .widthForm {
 	width: 75%;
 }
+.linha{
+	height:6px; 
+	border:none; 
+	color:#000; 
+	background-color:#008080; 
+	margin-top: 5px; 
+	margin-bottom: 0px;
+}
+.textoazul{
+	color: #0080ff
+}

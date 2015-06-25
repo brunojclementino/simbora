@@ -555,4 +555,24 @@ public class CaronaBusiness {
 	public CaronaDomain getCaronaDomain(String idCarona){
 		return caronaDaoImp.getCarona(idCarona);
 	}
+	/**
+	 * 
+	 * @param qtd Quantidade de itens a ser buscado na base de dados
+	 * @param tipoCarona se a carona é relampago, municipal ou comum
+	 * @return
+	 */
+	public List<CaronaDomain> getUltimasCaronas(String tipoCarona, int qtd){
+		switch (tipoCarona) {
+		case "caronaComum":
+			return caronaDaoImp.ultimasCaronas(qtd);
+		case "caronaMunicipal":
+			return caronaDaoImp.ultimasCaronasMunicipal(qtd);
+		case "caronaRelampago":
+			return caronaDaoImp.ultimasCaronasRelampago(qtd);
+
+		default:
+			return null;
+		}
+		
+	}
 }

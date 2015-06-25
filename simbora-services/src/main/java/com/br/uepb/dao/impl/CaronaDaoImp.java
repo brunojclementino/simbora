@@ -102,4 +102,31 @@ public class CaronaDaoImp implements CaronaDao{
 		return loginsPrioritarios;
 	}
 	
+	public List<CaronaDomain> ultimasCaronas(int qtd) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		List<CaronaDomain> lista = session.createQuery("from CaronaDomain "
+				+ "where caronaRelampago_id=null and caronaMunicipal=null order by id desc").setMaxResults(qtd).list();
+		t.commit();
+		HibernateUtil.closedSession();
+		return lista;
+	}
+	public List<CaronaDomain> ultimasCaronasMunicipal(int qtd) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		List<CaronaDomain> lista = session.createQuery("from CaronaDomain "
+				+ "where caronaMunicipal!=null order by id desc").setMaxResults(qtd).list();
+		t.commit();
+		HibernateUtil.closedSession();
+		return lista;
+	}
+	public List<CaronaDomain> ultimasCaronasRelampago(int qtd) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		List<CaronaDomain> lista = session.createQuery("from CaronaDomain "
+				+ "where caronaRelampago_id!=null order by id desc").setMaxResults(qtd).list();
+		t.commit();
+		HibernateUtil.closedSession();
+		return lista;
+	}
 }

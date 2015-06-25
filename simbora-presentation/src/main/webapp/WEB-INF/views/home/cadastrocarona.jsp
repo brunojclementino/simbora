@@ -163,7 +163,7 @@
 
 
 							<form:form modelAttribute="caronaDomain" method="POST"
-								class="widthForm" action="cadastrocaronamunicipal.html">
+								class="widthForm" action="cadastrocaronarelampago.html">
 
 								<div class="form-group">
 									<label>Cidade de origem: </label>

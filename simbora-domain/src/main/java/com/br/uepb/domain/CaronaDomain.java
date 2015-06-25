@@ -37,10 +37,10 @@ public class CaronaDomain {
 	private boolean ehPreferencial=false;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	private CaronaRelampagoDomain caronaRelampago = new CaronaRelampagoDomain();
+	private CaronaRelampagoDomain caronaRelampago;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	private CaronaMunicipalDomain caronaMunicipal = new CaronaMunicipalDomain();
+	private CaronaMunicipalDomain caronaMunicipal;
 	/**
 	 * Método construtor default.
 	 */

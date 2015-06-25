@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.br.uepb.business.CaronaBusiness;
+import com.br.uepb.business.CaronaMunicipalBusiness;
+import com.br.uepb.business.CaronaRelampagoBusiness;
 import com.br.uepb.business.SessaoBusiness;
 import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.SessaoDomain;
@@ -97,8 +99,9 @@ public class CadastrarCaronaController {
 		modelo.addAttribute("ehPreferencial", caronaDomain.getEhPreferencial());
 		
 		try {
-			caronaBusiness.cadastrarCarona((String)request.getSession().getAttribute("sessao"), caronaDomain.getOrigem(),
-					caronaDomain.getDestino(), caronaDomain.getData(), caronaDomain.getHora(), caronaDomain.getVagas());
+			new CaronaMunicipalBusiness().cadastrarCaronaMunicipal((String)request.getSession().getAttribute("sessao"), caronaDomain.getOrigem(),
+					caronaDomain.getDestino(), caronaDomain.getCaronaMunicipal().getCidade(),
+					caronaDomain.getData(), caronaDomain.getHora(), caronaDomain.getVagas());
 		} catch (Exception e) {
 			return new ModelAndView("cadastrocarona");
 		}
@@ -132,8 +135,9 @@ public class CadastrarCaronaController {
 		modelo.addAttribute("ehPreferencial", caronaDomain.getEhPreferencial());
 		
 		try {
-			caronaBusiness.cadastrarCarona((String)request.getSession().getAttribute("sessao"), caronaDomain.getOrigem(),
-					caronaDomain.getDestino(), caronaDomain.getData(), caronaDomain.getHora(), caronaDomain.getVagas());
+			new CaronaRelampagoBusiness().cadastrarCaronaRelampago((String)request.getSession().getAttribute("sessao"), caronaDomain.getOrigem(),
+					caronaDomain.getDestino(), caronaDomain.getData(), caronaDomain.getCaronaRelampago().getDataVolta(), 
+					caronaDomain.getHora(), caronaDomain.getVagas());
 		} catch (Exception e) {
 			return new ModelAndView("cadastrocarona");
 		}
