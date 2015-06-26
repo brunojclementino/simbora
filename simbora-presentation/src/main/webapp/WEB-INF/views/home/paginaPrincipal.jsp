@@ -75,7 +75,7 @@
 							<div class="panel-body">
 								<h5>
 									<p>Código: ${carona.id }</p>
-									<p>${carona.vagas }vagas para o dia ${carona.data } às
+									<p>${carona.vagas } vagas para o dia ${carona.data } às
 										${carona.hora } horas saindo de ${carona.origem } com destino
 										a ${carona.destino }</p>
 								</h5>
@@ -108,7 +108,7 @@
 								<h5>
 									<p>Código: ${carona.id }</p>
 									<p>Esta carona ocorre em ${carona.caronaMunicipal.cidade }.</p>
-									<p>${carona.vagas }vagas para o dia ${carona.data } às
+									<p>${carona.vagas } vagas para o dia ${carona.data } às
 										${carona.hora } horas saindo de ${carona.origem } com destino
 										a ${carona.destino }</p>
 								</h5>
@@ -140,7 +140,7 @@
 							<div class="panel-body">
 								<h5>
 									<p>Código: ${carona.id }</p>
-									<p>${carona.vagas }vagas para o dia ${carona.data } às
+									<p>${carona.vagas } vagas para o dia ${carona.data } às
 										${carona.hora } horas saindo de ${carona.origem } com destino
 										a ${carona.destino } e volta no dia
 										${carona.caronaRelampago.dataVolta }</p>

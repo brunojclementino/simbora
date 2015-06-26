@@ -10,7 +10,7 @@
 		</div>
 		<div class="col-md-9">
 			<div class="title-site">
-				<a href='<spring:url value="paginaprincipal.html"></spring:url>'>Simbora</a>
+				<a href='<spring:url value="login.html"></spring:url>'>Simbora</a>
 			</div>
 		</div>	
 		</div>
