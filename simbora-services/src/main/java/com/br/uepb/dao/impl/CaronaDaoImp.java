@@ -129,4 +129,14 @@ public class CaronaDaoImp implements CaronaDao{
 		HibernateUtil.closedSession();
 		return lista;
 	}
+
+	public List<CaronaDomain> getCaronasUsuario(String login) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		List<CaronaDomain> lista = session.createQuery("from CaronaDomain "
+				+ "where idUsuario=\'"+login+"\'").list();
+		t.commit();
+		HibernateUtil.closedSession();
+		return lista;
+	}
 }

@@ -575,4 +575,9 @@ public class CaronaBusiness {
 		}
 		
 	}
+	
+	public List<CaronaDomain> getCaronasUsuario(String login){
+		return caronaDaoImp.getCaronasUsuario(login);
+		
+	}
 }

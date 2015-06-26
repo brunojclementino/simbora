@@ -1,5 +1,7 @@
 package com.br.uepb.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -14,19 +16,18 @@ import com.br.uepb.domain.CaronaDomain;
 import com.br.uepb.domain.UsuarioDomain;
 
 @Controller
-public class VerUsuarioController {
+public class VerCaronasDoUsuarioController {
 
 	UsuarioBusiness usuarioBusiness;
-	@RequestMapping(value = "/home/verUsuario.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/home/verCaronasDoUsuario.html", method = RequestMethod.GET)
 	public ModelAndView mostarInformacoesDonoCarona(@RequestParam("login") String login, HttpServletRequest request) {
 		if(request.getSession().getAttribute("sessao")!=null){
 			ModelAndView modelAndView = new ModelAndView();
-			modelAndView.setViewName("verusuario");
-			if(login.equals(request.getSession().getAttribute("sessao"))){
-				return new ModelAndView("perfil");
-			}
+			modelAndView.setViewName("vercaronasdousuario");
 			usuarioBusiness = new UsuarioBusiness();
 			UsuarioDomain usuario = usuarioBusiness.getUsuarioDomain(login);
+			List<CaronaDomain> lstCaronas = new CaronaBusiness().getCaronasUsuario(login);
+			request.getSession().setAttribute("lstCaronas", lstCaronas);
 			modelAndView.addObject("usuarioDomain", usuario);
 			return modelAndView;
 		}

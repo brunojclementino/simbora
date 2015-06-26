@@ -30,7 +30,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading panel-title">Suas caronas</div>
 						<div class="panel-body">
-						<a href="#">	<h4>Aqui você pode consultar todas as caronas que você ofereceu</h4></a>
+						<a href="verCaronasDoUsuario.html?login=${sessao }">	<h4>Aqui você pode consultar todas as caronas que você ofereceu</h4></a>
 						</div>
 				</div>
 			</div>

@@ -53,6 +53,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/home/verUsuario.jsp" />
 	</definition>
 	
+	<definition name="vercaronasdousuario" extends="base.layout">
+		<put-attribute name="body" value="/WEB-INF/views/home/verCaronasDoUsuario.jsp" />
+	</definition>
+	
 	<definition name="requisicaodevaganacarona" extends="base.layout">
 		<put-attribute name="body" value="/WEB-INF/views/home/requisicaoDeVagaNaCarona.jsp" />
 	</definition>
