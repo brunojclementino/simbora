@@ -1,5 +1,11 @@
 package com.br.uepb.domain;
 
+/**
+ * Resume as informações básicas do usuário.
+ * 
+ * @author Lucas Miranda e Bruno Clementino.
+ *
+ */
 public class ResumoPerfil {
 	
 	private String nomeUsuario;
