@@ -139,8 +139,7 @@ public class PerfilBusiness {
 		if (atributo.equals("caronas seguras e tranquilas")) {
 			int caron = 0;
 
-			for (ReviewDomain review : reviewCaronasDaoImp
-					.getCaronasSegurasTranquilas()) {
+			for (ReviewDomain review : reviewCaronasDaoImp.getCaronasSegurasTranquilas()) {
 				if (CaronaBusiness.ehMotorista(login, review.getIdAvaliado())) {
 					caron++;
 				}
@@ -150,7 +149,6 @@ public class PerfilBusiness {
 
 		if (atributo.equals("caronas que não funcionaram")) {
 			int caron = 0;
-			String caronas = "";
 			for (ReviewDomain review : reviewCaronasDaoImp
 					.getCaronasNaoFuncionaram()) {
 				if (CaronaBusiness.ehMotorista(login, review.getIdAvaliado())) {
@@ -429,5 +427,4 @@ public class PerfilBusiness {
 		}
 		return lstreview;
 	}
-
 }

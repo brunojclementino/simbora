@@ -10,7 +10,7 @@
 	font-size: 55px;
 	font-weight: bold;
 	text-align: center;
-	color: #3011c4;	
+	color: #008080;	
 	padding: 0px;
 	margin: 0px;
 	
@@ -94,16 +94,19 @@ a:HOVER {
 
 .title-site {
 	height: 100px;
-	color: #3011c4;
 	text-align: center;
 	padding-top: 20px;
-	padding-left: 20%;
+	
 	font-size: 50px;
 	text-decoration: none;
 }
 .title-site :HOVER {
 	text-decoration: none;
 } 
+.title-site a {
+	text-decoration: none;
+	color:#008080; 
+}
 img {
 	
 	border: 0px;
@@ -118,7 +121,9 @@ img {
 .margem-top {
 	margin-top: 2%;
 }
-
+.margem-top1 {
+	margin-top: 1%;
+}
 .margem-bottom {
 	margin-bottom: 3%;	
 }	
@@ -134,7 +139,9 @@ img {
 .center {
 	text-align: center;
 }
-
+.text-left th{
+	text-align: left;
+}
 .btn-size {
 	width: 100%;
 	background-color: threedface;
