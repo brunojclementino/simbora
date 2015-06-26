@@ -33,11 +33,11 @@ public class PerfilBusiness {
 
 	public final static Logger logger = Logger.getLogger(PerfilBusiness.class);
 
-	UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
-	CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
-	SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
-	ReviewVagasCaronaDaoImp reviewVagasCaronaDaoImp = new ReviewVagasCaronaDaoImp();
-	ReviewCaronasDaoImp reviewCaronasDaoImp = new ReviewCaronasDaoImp();
+	private UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
+	private CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
+	private SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
+	private ReviewVagasCaronaDaoImp reviewVagasCaronaDaoImp = new ReviewVagasCaronaDaoImp();
+	private ReviewCaronasDaoImp reviewCaronasDaoImp = new ReviewCaronasDaoImp();
 
 	/**
 	 * Retorna o login do usuario.

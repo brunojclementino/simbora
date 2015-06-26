@@ -15,6 +15,7 @@ public class PerfilDomain {
 	final static Logger logger = Logger.getLogger(PerfilDomain.class);
 	private String idUsuario;
 	private List<String> idCaronas;
+	
 	/**
 	 * @return the idUsuario
 	 */
