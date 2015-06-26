@@ -17,8 +17,7 @@
 						<th class="col-md-1 tab">Faltou</th>
 						<th class="col-md-3 tab">Não funcionou</th>
 						<th class="col-md-1 tab">Funcionou</th>
-						<th class="col-md-1 tab">Mais detalhes</th>
-
+						<th class="col-md-1 tab">Detalhes do caroneiro</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -30,7 +29,7 @@
 						<th class="col-md-3">${per.caronaNaoFuncionaram }</th>
 						<th class="col-md-3">${per.caronaFuncionou }</th>
 						<th class="col-md-3">
-							<a href="perfil.html" class="glyphicon glyphicon-plus"/></a>
+							<a href="verUsuario.html?login=${per.nomeUsuario }" class="glyphicon glyphicon-plus"/></a>
 						<th>						
 					</tr>
 				</c:forEach>

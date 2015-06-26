@@ -1,18 +1,20 @@
 package com.br.uepb.domain;
 
 public class ResumoPerfil {
-
+	
 	private String nomeUsuario;
 	private String caronaSeguraTranquila;
 	private String caronaNaoFuncionaram;
 	private String usuarioFaltou;
 	private String caronaFuncionou;
+	
 	/**
 	 * @return the nomeUsuario
 	 */
 	public String getNomeUsuario() {
 		return nomeUsuario;
 	}
+
 	/**
 	 * @param nomeUsuario the nomeUsuario to set
 	 */

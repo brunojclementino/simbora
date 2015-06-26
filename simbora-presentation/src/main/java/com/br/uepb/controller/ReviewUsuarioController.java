@@ -46,6 +46,7 @@ public class ReviewUsuarioController {
 						resumo.setCaronaNaoFuncionaram(perfilBusiness.getAtributoPerfil(usuarioDomain.getLogin(), "caronas que não funcionaram"));
 						resumo.setUsuarioFaltou(perfilBusiness.getAtributoPerfil(usuarioDomain.getLogin(), "faltas em vagas de caronas"));
 						resumo.setCaronaFuncionou(perfilBusiness.getAtributoPerfil(usuarioDomain.getLogin(), "presenças em vagas de caronas"));
+						
 					resumoPerfil.add(resumo);
 				} catch (PerfilException e) {
 					
