@@ -33,11 +33,11 @@ public class PerfilBusiness {
 
 	public final static Logger logger = Logger.getLogger(PerfilBusiness.class);
 
-	UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
-	CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
-	SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
-	ReviewVagasCaronaDaoImp reviewVagasCaronaDaoImp = new ReviewVagasCaronaDaoImp();
-	ReviewCaronasDaoImp reviewCaronasDaoImp = new ReviewCaronasDaoImp();
+	private UsuarioDaoImp usuarioDaoImp = new UsuarioDaoImp();
+	private CaronaDaoImp caronaDaoImp = new CaronaDaoImp();
+	private SolicitacaoVagasDaoImp solicitacaoVagasDaoImp = new SolicitacaoVagasDaoImp();
+	private ReviewVagasCaronaDaoImp reviewVagasCaronaDaoImp = new ReviewVagasCaronaDaoImp();
+	private ReviewCaronasDaoImp reviewCaronasDaoImp = new ReviewCaronasDaoImp();
 
 	/**
 	 * Retorna o login do usuario.
@@ -139,8 +139,7 @@ public class PerfilBusiness {
 		if (atributo.equals("caronas seguras e tranquilas")) {
 			int caron = 0;
 
-			for (ReviewDomain review : reviewCaronasDaoImp
-					.getCaronasSegurasTranquilas()) {
+			for (ReviewDomain review : reviewCaronasDaoImp.getCaronasSegurasTranquilas()) {
 				if (CaronaBusiness.ehMotorista(login, review.getIdAvaliado())) {
 					caron++;
 				}
@@ -150,7 +149,6 @@ public class PerfilBusiness {
 
 		if (atributo.equals("caronas que não funcionaram")) {
 			int caron = 0;
-			String caronas = "";
 			for (ReviewDomain review : reviewCaronasDaoImp
 					.getCaronasNaoFuncionaram()) {
 				if (CaronaBusiness.ehMotorista(login, review.getIdAvaliado())) {
@@ -429,5 +427,4 @@ public class PerfilBusiness {
 		}
 		return lstreview;
 	}
-
 }

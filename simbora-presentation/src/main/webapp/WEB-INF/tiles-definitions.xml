@@ -74,4 +74,8 @@
 	<definition name="errovagascompletas" extends="base.layout">
 		<put-attribute name="body" value="/WEB-INF/views/home/ERROVagasCompletas.jsp" />
 	</definition>
+	
+	<definition name="reviewusuario" extends="base.layout">
+		<put-attribute name="body" value="/WEB-INF/views/home/reviewusuario.jsp" />
+	</definition>
 </tiles-definitions>

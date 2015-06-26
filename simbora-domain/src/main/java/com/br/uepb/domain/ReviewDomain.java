@@ -19,6 +19,7 @@ public class ReviewDomain {
 	private int id;
 	private String login;//Quem faz a avaliação
 	private String idAvaliado;//Identificação do que está sendo avaliado
+	
 	public int getId() {
 		return id;
 	}

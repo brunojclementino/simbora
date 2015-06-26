@@ -54,9 +54,9 @@
 							<td class="col-md-1">${car.hora }</td>
 							<td class="col-md-1">${car.data }</td>
 							<td class="col-md-1">${car.ehPreferencial }</td>
-							<td class="col-md-1"><a
-								href='<spring:url value="solicitarVagaCarona.html?idCarona=${car.id }"></spring:url>'
-								class="glyphicon glyphicon-plus"></a></td>
+							<td class="col-md-1">
+							<a href='<spring:url value="solicitarVagaCarona.html?idCarona=${car.id }"></spring:url>' class="glyphicon glyphicon-plus"/>
+							</td>
 						</tr>
 					</tbody>
 				</c:forEach>
